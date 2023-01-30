@@ -1,5 +1,6 @@
 'use strict';
 const { Model } = require('sequelize');
+const { encryptPass } = require('../helpers/bcrypt');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -57,7 +58,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          notNullL: {
+          notNull: {
             msg: 'role is require',
           },
           notEmpty: {
@@ -82,7 +83,9 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: 'User',
       hooks: {
-        beforeCreate(instance, options) {},
+        beforeCreate(instance, options) {
+          instance.password = encryptPass(instance.password);
+        },
       },
     }
   );

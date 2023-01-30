@@ -30,13 +30,39 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          msg: 'UserId is require',
-        },
-        notEmpty: {
-          msg: 'UserId is require',
+          notNull: {
+            msg: 'UserId is require',
+          },
+          notEmpty: {
+            msg: 'UserId is require',
+          },
         },
       },
       isSubscribe: DataTypes.BOOLEAN,
+      imgUrl: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'imgUrl is require',
+          },
+          notEmpty: {
+            imgUrl: 'imgUrl is require',
+          },
+        },
+      },
+      description: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'description is require',
+          },
+          notEmpty: {
+            imgUrl: 'description is require',
+          },
+        },
+      },
     },
     {
       sequelize,
