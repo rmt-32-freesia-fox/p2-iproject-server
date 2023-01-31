@@ -1,6 +1,9 @@
 'use strict';
 const { Model } = require('sequelize');
+<<<<<<< HEAD
 const { encryptPass } = require('../helpers/bcrypt');
+=======
+>>>>>>> a1497b91cad98e8764c6e47aff5c1f1b82c03dba
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -58,7 +61,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
+<<<<<<< HEAD
           notNull: {
+=======
+          notNullL: {
+>>>>>>> a1497b91cad98e8764c6e47aff5c1f1b82c03dba
             msg: 'role is require',
           },
           notEmpty: {
@@ -83,9 +90,13 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: 'User',
       hooks: {
+<<<<<<< HEAD
         beforeCreate(instance, options) {
           instance.password = encryptPass(instance.password);
         },
+=======
+        beforeCreate(instance, options) {},
+>>>>>>> a1497b91cad98e8764c6e47aff5c1f1b82c03dba
       },
     }
   );
