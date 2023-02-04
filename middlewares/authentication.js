@@ -1,4 +1,5 @@
 const { decodeToken } = require('../helpers/helpers')
+const { User } = require('../models')
 
 async function authentication(req, res, next) {
     try {
@@ -6,25 +7,9 @@ async function authentication(req, res, next) {
         if (!access_token) throw { name: `unAuthentication` }
 
         let payload = decodeToken(access_token)
-        let user = await User.findOne({ where: { username: payload.username } })
+        let user = await User.findOne({ where: { email: payload.email } })
         if (!user) throw { name: `unAuthentication` }
-
-        next()
-    } catch (error) {
-        console.log(error);
-        next(error)
-    }
-}
-
-async function authenticationCustomer(req, res, next) {
-    try {
-        let { access_token } = req.headers
-        if (!access_token) throw { name: `unAuthentication` }
-
-        let payload = decodeToken(access_token)
-        let user = await Customer.findByPk(payload.id)
-        if (!user) throw { name: `unAuthentication` }
-        req.id = user.id
+        req.user.email = payload.email
 
         next()
     } catch (error) {
@@ -34,4 +19,5 @@ async function authenticationCustomer(req, res, next) {
 }
 
 
-module.exports = { authentication, authenticationCustomer }
+
+module.exports = { authentication, }
