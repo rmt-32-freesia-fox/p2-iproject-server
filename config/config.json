@@ -2,14 +2,14 @@
   "development": {
     "username": "postgres",
     "password": "postgres",
-    "database": "linktree",
+    "database": "hacktree_dev",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "test": {
     "username": "postgres",
     "password": "postgres",
-    "database": "linktree_test",
+    "database": "hacktree_test",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
