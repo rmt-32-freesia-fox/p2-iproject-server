@@ -22,17 +22,22 @@ function errorHandler(err, req, res, next) {
             break;
         case "unAuthentication":
             statusCode = 403;
-            message = "Unauthenticate no Access Token";
-            break;
-        case "unauthorized":
-            statusCode = 401;
-            message = "Unauthorized Invalid Access Token";
+            message = "Invalid Token";
             break;
         case "fav bad request":
             statusCode = 400;
             message = "Movie is alread been favorited";
             break;
+        case "alreadyPremium":
+            statusCode = 400;
+            message = "User Already Subscribed";
+            break;
+        case "unauthorized":
+            statusCode = 401;
+            message = "Unauthorized";
+            break;
     }
+    console.log(err);
     return res.status(statusCode).json({ message });
 };
 

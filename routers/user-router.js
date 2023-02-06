@@ -8,10 +8,14 @@ const { authorization } = require('../middlewares/authorization')
 router.post('/login', UserController.handleLogin)
 router.post('/register', UserController.handleRegister)
 
-// router.use(authentication)
+router.use(authentication)
+router.post('/generate-midtrans-token', UserController.handleMidtransToken)
 
-// router.patch('/subscription', authorization, UserController.handleSubscription)
-router.patch('/subscription',  UserController.handleSubscription)
+
+
+
+router.patch('/subscription', authorization, UserController.handleSubscription)
+// router.patch('/subscription', UserController.handleSubscription)
 
 
 module.exports = router

@@ -14,7 +14,6 @@ router.get('/', async (req, res, next) => {
 router.use('/news', newsApi)
 router.use('/user', user)
 
-router.use(authentication)
 
 
 module.exports = router

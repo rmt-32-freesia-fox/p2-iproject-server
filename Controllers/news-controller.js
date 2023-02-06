@@ -51,7 +51,8 @@ class Controller {
 
     static async fetchGameNews(req, res, next) {
         let { page, category } = req.query
-        try {
+        if(!category) category = ""
+        try {   
             let { data } = await axios({
                 url: `https://the-lazy-media-api.vercel.app/api/games/${category}`,
                 method: `get`,

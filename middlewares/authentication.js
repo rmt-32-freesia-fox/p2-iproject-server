@@ -9,15 +9,15 @@ async function authentication(req, res, next) {
         let payload = decodeToken(access_token)
         let user = await User.findOne({ where: { email: payload.email } })
         if (!user) throw { name: `unAuthentication` }
-        req.user.email = payload.email
-
+        req.user = payload.id
+        console.log(req.user);
         next()
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         next(error)
     }
 }
 
 
 
-module.exports = { authentication, }
+module.exports = { authentication }
