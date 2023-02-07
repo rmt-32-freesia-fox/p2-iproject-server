@@ -1,0 +1,38 @@
+{
+  "users": [
+    {
+      "email": "hayyik@gmail.com",
+      "name": "hayyik",
+      "password": "12345"
+    },
+    {
+      "email": "gilang@gmail.com",
+      "name": "gilang",
+      "password": "12345"
+    }
+  ],
+  "auctions": [
+    {
+      "UserId": 1,
+      "name": "Keychron K2 V1 TKL",
+      "category": "keyboard",
+      "color": "black",
+      "startPrice": 500000,
+      "multiple": 25000,
+      "startTime": 1676088883,
+      "finishTime": 1676088883,
+      "finishPrice": 500000,
+      "winnerId": 2
+    }
+  ],
+  "image": [
+    {
+      "AuctionsId": 1,
+      "imageUrl": "https://cdn.mos.cms.futurecdn.net/sCVjjFFcgYh4MeMwzvzQa6-970-80.jpg"
+    },
+    {
+      "AuctionsId": 1,
+      "imageUrl": "https://i.rtings.com/assets/products/wZBvFZvM/keychron-k2-version-2/design-medium.jpg"
+    }
+  ]
+}
