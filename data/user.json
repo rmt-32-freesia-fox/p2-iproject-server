@@ -1,0 +1,18 @@
+[
+  {
+    "username": "Rhazzid",
+    "email": "rhazzid2@gmail.com",
+    "password": "12345",
+    "role": "customer",
+    "phoneNumber": "091776526952",
+    "status": "Member"
+  },
+  {
+    "username": "Zura",
+    "email": "zura@gmail.com",
+    "password": "12345",
+    "role": "customer",
+    "phoneNumber": "091776526952",
+    "status": "UnMember"
+  }
+]
