@@ -9,6 +9,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Log.belongsTo(models.Link, { onDelete: 'cascade' })
+      Log.belongsTo(models.User, { onDelete: 'cascade' })
     }
   }
   Log.init(
