@@ -1,6 +1,7 @@
 const { User } = require("../models");
 const { comparePassword } = require("../helpers/bcrypt");
 const { generateToken } = require("../helpers/jwt");
+const { confirmationRegistered, confirmationSwitchStatus } = require("../helpers/nodemailer");
 const { CLIENT_ID } = process.env;
 const { OAuth2Client } = require("google-auth-library");
 const client = new OAuth2Client(CLIENT_ID);
@@ -10,6 +11,10 @@ class Controller {
     try {
       const { username, email, password, phoneNumber } = req.body;
       const register = await User.create({ username, email, password, role: "customer", phoneNumber, status: "UnMember" });
+
+      const content = `Hi Admin!, user with email ${register.email} has successfully registered, please check in Gymster App.`;
+      const subject = `Information Registered`;
+      confirmationRegistered(register, content, subject);
 
       res.status(201).json({
         message: `User with email ${email} has been succesfully registered`,
