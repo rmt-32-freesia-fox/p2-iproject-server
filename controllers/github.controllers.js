@@ -64,7 +64,8 @@ class GithubController {
   static async link(req, res, next) {
     try {
       const { id } = req.user
-
+      const { code } = req.body
+      
       // if github account already linked, throw an error
       const githubData = await Github.findOne({ where: { UserId: id } })
       if (githubData)
