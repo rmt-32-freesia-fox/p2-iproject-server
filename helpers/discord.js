@@ -9,6 +9,16 @@ if (!DISCORD_CLIENT_ID || !DISCORD_CLIENT_SECRET || !DISCORD_REDIRECT_URL) {
   process.exit(1)
 }
 
+function _encode(obj) {
+  let string = ''
+
+  for (const [key, value] of Object.entries(obj)) {
+    if (!value) continue
+    string += `&${encodeURIComponent(key)}=${encodeURIComponent(value)}`
+  }
+
+  return string.substring(1)
+}
 /**
  * @typedef {object} Credentials
  * @property {string} access_token
@@ -25,11 +35,19 @@ if (!DISCORD_CLIENT_ID || !DISCORD_CLIENT_SECRET || !DISCORD_REDIRECT_URL) {
  *
  */
 const getAccessToken = async (code) => {
+  const f = new FormData()
+  f.append('client_id', DISCORD_CLIENT_ID)
+  f.append('client_secret', DISCORD_CLIENT_SECRET)
+  f.append('grant_type', 'authorization_code')
+  f.append('code', code)
+  f.append('redirect_uri', DISCORD_REDIRECT_URL)
   const payload = {
     client_id: DISCORD_CLIENT_ID,
     client_secret: DISCORD_CLIENT_SECRET,
     grant_type: 'authorization_code',
     code,
+    redirect_uri: DISCORD_REDIRECT_URL,
+    // scope: 'identify email',
   }
   const config = {
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -37,7 +55,7 @@ const getAccessToken = async (code) => {
 
   const { data } = await axios.post(
     'https://discord.com/api/v10/oauth2/token',
-    payload,
+    f,
     config
   )
 
@@ -144,9 +162,9 @@ const getTestAccessToken = async () => {
 }
 
 const getLoginUrl = () =>
-  `https://discord.com/oauth2/authorize?response_type=token&client_id=${DISCORD_CLIENT_ID}&state=${Math.floor(
+  `https://discord.com/oauth2/authorize?response_type=code&client_id=${DISCORD_CLIENT_ID}&state=${Math.floor(
     Math.random() * 1e9
-  )}&scope=identify&redirect_uri=${DISCORD_REDIRECT_URL}`
+  )}&scope=identify%20email&redirect_uri=${DISCORD_REDIRECT_URL}`
 
 module.exports = {
   getAccessToken,

@@ -10,7 +10,7 @@ const { Spotify, User } = require('../models')
 const { signToken } = require('../helpers/jwt')
 const usernameGenerator = require('../helpers/usernameGenerator')
 
-class DiscordController {
+class SpotifyController {
   static async oauthUrl(req, res, next) {
     res.redirect(getLoginUrl())
   }
@@ -98,7 +98,7 @@ class DiscordController {
       const spotifyUser = await Spotify.findOne({ where: { UserId: id } })
 
       if(!spotifyUser) throw { name: 'NotFound', message: 'Data not found' }
-      
+
       await spotifyUser.destroy()
       await revokeUserToken(spotifyUser.access_token)
 
@@ -109,4 +109,4 @@ class DiscordController {
   }
 }
 
-module.exports = DiscordController
+module.exports = SpotifyController
