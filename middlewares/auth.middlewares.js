@@ -22,7 +22,7 @@ const authenticatePublic = async (req, res, next) => {
   try {
     const { access_token } = req.headers
     const payload = noErrorVerifyToken(access_token)
-    if(!payload) {
+    if (!payload) {
       next()
       return
     }
@@ -36,4 +36,17 @@ const authenticatePublic = async (req, res, next) => {
   }
 }
 
-module.exports = { authenticate, authenticatePublic }
+const authorizeLink = async (req, res, next) => {
+  try {
+    const { id: UserId } = req.user
+    const linkData = await Link.findOne({ where: { id } })
+    if (!linkData) throw { nama: 'NotFound', message: 'Data not found' }
+
+    if (linkData.UserId !== UserId)
+      throw { name: 'ValidationError', message: 'Forbidden' }
+    next()
+  } catch (error) {
+    next(error)
+  }
+}
+module.exports = { authenticate, authenticatePublic, authorizeLink }
