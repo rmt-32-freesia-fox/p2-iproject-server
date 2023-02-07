@@ -1,6 +1,6 @@
 const b = require('bcryptjs')
 const j = require('jsonwebtoken')
-const secret = 'rahasia'
+const secret = process.env.JWT_SECRET
 
 function hashPassword(password) {
     return b.hashSync(password, 10)

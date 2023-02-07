@@ -1,4 +1,8 @@
 const { User, Book, UserBook } = require('../models')
+
+// let baseUrl = `http://localhost:3000/` //! Sebelum Deploy
+let baseUrl = `https://this-is-linklink.web.app/` //! Setelah Deploy
+
 class BookController {
 
     static async allBook(req, res, next) {
@@ -21,6 +25,8 @@ class BookController {
                 res.status(404).json({ message: `Books with ID:${id} is not found` })
             }
 
+            let qrCodeGenerator = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${baseUrl}detail/${id}`
+            getBookById.dataValues.qrCodeGenerator = qrCodeGenerator
             res.status(200).json(getBookById)
 
         } catch (error) {
@@ -46,7 +52,6 @@ class BookController {
             res.status(201).json(addBookToMyBook)
 
         } catch (error) {
-            console.log(error, '<--- INI ERRORNYA', 0);
             if (error.name == 'bookNotFound') {
                 res.status(404).json({ message: "Book not found" })
             } else {
@@ -70,8 +75,6 @@ class BookController {
             res.status(500).json({ message: "Internal server error" })
         }
     } //! DONE
-
-
 
 }
 

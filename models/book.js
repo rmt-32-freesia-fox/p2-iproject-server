@@ -16,6 +16,14 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Book.init({
+    imageUrl: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: { msg: 'Image is required' },
+        notEmpty: { msg: 'Image is required' }
+      }
+    },
     title: {
       type: DataTypes.STRING,
       allowNull: false,

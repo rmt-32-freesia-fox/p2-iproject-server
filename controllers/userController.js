@@ -6,6 +6,7 @@ class UserController {
     static async register(req, res, next) {
         const { email, password, address } = req.body
         try {
+
             const user = await User.create({ email, password, address })
 
             res.status(201).json({
@@ -16,7 +17,7 @@ class UserController {
         } catch (error) {
             next(error)
         }
-    } //! DONE - EROR HANDLER BELUM DI BUAT
+    } //! DONE - EROR HANDLER DONE
 
     static async login(req, res, next) {
         const { email, password } = req.body
@@ -49,7 +50,7 @@ class UserController {
             console.log(error);
             next(error)
         }
-    } //! DONE - EROR HANDLER BELUM DI BUAT
+    } //! DONE - EROR HANDLER DONE
 
     static async loginByGoogle(req, res, next) {
         // WIll update soon, ASAP!
