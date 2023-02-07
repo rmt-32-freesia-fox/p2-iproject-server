@@ -18,6 +18,11 @@ const errorMsg = (error, req, res, next) => {
       resStatus = 401;
       resMessage = 'invalid email or password';
       break;
+    case 'invalidToken':
+    case 'JsonWebTokenError':
+      resStatus = 401;
+      resMessage = 'invalid token';
+      break;
     case 'forbidden':
       resStatus = 403;
       resMessage = 'not authorize access';

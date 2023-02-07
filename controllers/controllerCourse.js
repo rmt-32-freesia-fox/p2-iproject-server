@@ -8,7 +8,7 @@ class ControllerCourse {
         url: `https://youtube.googleapis.com/youtube/v3/search?`,
         params: {
           part: 'snippet',
-          maxResults: '12',
+          maxResults: '8',
           q: 'tutorial',
           regionCode: 'id',
           type: 'video',
@@ -46,16 +46,16 @@ class ControllerCourse {
   }
   static async videoById(req, res, next) {
     try {
-      const { idVideo } = req.body;
-      const videoId = await axios({
-        url: 'https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=w_l0-ZtsC6k&key=[YOUR_API_KEY]',
+      const { videoid } = req.query;
+      const { data } = await axios({
+        url: 'https://youtube.googleapis.com/youtube/v3/videos',
         params: {
           part: 'snippet,contentDetails,statistics',
-          id: idVideo,
+          id: videoid,
           key: process.env.YT_key,
         },
       });
-      console.log(videoId.data);
+      res.status(200).json(data);
     } catch (error) {
       next(error);
     }
