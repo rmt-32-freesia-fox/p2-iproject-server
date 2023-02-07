@@ -9,6 +9,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Spotify.belongsTo(models.User)
+    }
+
+    get isExpired() {
+      return Date.now() - new Date(this.updatedAt).getTime() > 3600000
     }
   }
   Spotify.init(
