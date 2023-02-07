@@ -10,10 +10,17 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Link.belongsTo(models.User, { onDelete: 'cascade', onUpdate: 'cascade' })
+      Link.hasMany(models.Log, { onDelete: 'cascade' })
     }
   }
   Link.init(
     {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER,
+      },
       UserId: {
         allowNull: false,
         type: DataTypes.INTEGER,
@@ -21,7 +28,15 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'cascade',
         onUpdate: 'cascade',
       },
-      link: { type: DataTypes.STRING, allowNull: false },
+      link: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          isUrl: {
+            msg: 'Link must be URL formated',
+          },
+        },
+      },
       label: DataTypes.STRING,
       logo: DataTypes.STRING,
     },
