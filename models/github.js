@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Github.belongsTo(models.User)
+      Github.belongsTo(models.User, { onDelete: 'cascade' })
     }
   }
   Github.init(

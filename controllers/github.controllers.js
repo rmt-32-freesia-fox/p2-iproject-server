@@ -2,12 +2,20 @@ const {
   getAccessToken,
   getUserData,
   revokeUserGrant,
+  getLoginUrl,
 } = require('../helpers/github')
 const { Github, User } = require('../models')
 const usernameGenerator = require('../helpers/usernameGenerator')
 const { signToken } = require('../helpers/jwt')
 
 class GithubController {
+  /**
+   *
+   * @type {import('express').RequestHandler}
+   */
+  static async oauthUrl(req, res, next) {
+    res.redirect(getLoginUrl())
+  }
   /**
    *
    * @type {import('express').RequestHandler}
@@ -81,7 +89,7 @@ class GithubController {
 
       res
         .status(201)
-        .json({ message: `Successfuly link your github account ${login}!` })
+        .json({ message: `Successfuly link your github account!` })
       return
     } catch (error) {
       next(error)
