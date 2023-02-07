@@ -60,12 +60,12 @@ const getAccessToken = async (code) => {
  *
  */
 const getUserData = async (access_token) => {
-  const user = await axios.get('https://api.github.com/user', {
+  const { data } = await axios.get('https://api.github.com/user', {
     headers: {
       Authorization: 'Bearer ' + access_token,
     },
   })
-  return user
+  return data
 }
 
 /**
@@ -93,7 +93,9 @@ const revokeUserGrant = async (access_token) => {
   )
 }
 
-const getLoginUrl = (state) =>
-  `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&scope=user&redirect_uri=${GITHUB_REDIRECT_URL}`
+const getLoginUrl = () =>
+  `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&scope=user&state=${Math.floor(
+    Math.random() * 1e9
+  )}&redirect_uri=${GITHUB_REDIRECT_URL}`
 
 module.exports = { getAccessToken, getUserData, revokeUserGrant, getLoginUrl }

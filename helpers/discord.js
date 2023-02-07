@@ -143,8 +143,10 @@ const getTestAccessToken = async () => {
   return data
 }
 
-const getLoginUrl = (state) =>
-  `https://discord.com/oauth2/authorize?response_type=token&client_id=${DISCORD_CLIENT_ID}&state=${state}&scope=identify&redirect_uri=${DISCORD_REDIRECT_URL}`
+const getLoginUrl = () =>
+  `https://discord.com/oauth2/authorize?response_type=token&client_id=${DISCORD_CLIENT_ID}&state=${Math.floor(
+    Math.random() * 1e9
+  )}&scope=identify&redirect_uri=${DISCORD_REDIRECT_URL}`
 
 module.exports = {
   getAccessToken,
