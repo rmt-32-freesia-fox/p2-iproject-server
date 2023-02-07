@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.Log)
       // User.hasMany(models.Following)
       User.hasOne(models.Github)
+      User.hasOne(models.Spotify)
       User.belongsToMany(models.User, { through: models.Following, as: 'Followings', foreignKey: 'UserId' })
       User.belongsToMany(models.User, { through: models.Following, as: 'Followers', foreignKey: 'FollowId' })
     }

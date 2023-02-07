@@ -4,6 +4,7 @@ const {
   getNewAccessToken,
   getUserData,
   revokeUserToken,
+  getListening,
 } = require('../helpers/spotify')
 
 const { Spotify, User } = require('../models')
@@ -21,11 +22,7 @@ class SpotifyController {
 
       const response = await getAccessToken(code)
       const data = await getUserData(response.access_token)
-      const {
-        display_name,
-        email,
-        id: spotifyId,
-      } = data
+      const { display_name, email, id: spotifyId } = data
 
       // login
       const spotifyUser = await Spotify.findOne({ where: { spotifyId } })
@@ -72,11 +69,7 @@ class SpotifyController {
       const { access_token, refresh_token } = await getAccessToken(code)
 
       const data = await getUserData(access_token)
-      const {
-        email,
-        display_name,
-        id: spotifyId,
-      } = data
+      const { email, display_name, id: spotifyId } = data
 
       await Github.create({
         UserId: id,
@@ -98,12 +91,38 @@ class SpotifyController {
       const { id } = req.user
       const spotifyUser = await Spotify.findOne({ where: { UserId: id } })
 
-      if(!spotifyUser) throw { name: 'NotFound', message: 'Data not found' }
+      if (!spotifyUser) throw { name: 'NotFound', message: 'Data not found' }
 
       await spotifyUser.destroy()
       await revokeUserToken(spotifyUser.access_token)
 
       res.json({ message: 'Spotify unlinked!' })
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  static async listening(req, res, next) {
+    try {
+      const { username } = req.params
+      const user = await User.findOne({
+        where: { username },
+        include: [{ model: Spotify, required: true}],
+      })
+
+      if (!user) {
+        throw { name: 'NotFound', message: 'Data not found' }
+      }
+      let access_token = user.Spotify.access_token
+      if(user.Spotify.isExpired) {
+        const { refresh_token } = user.Spotify
+        const response = await getNewAccessToken(refresh_token)
+        access_token = response.access_token
+      }
+
+      const data = await getListening(access_token)
+      
+      res.json(data)
     } catch (error) {
       next(error)
     }

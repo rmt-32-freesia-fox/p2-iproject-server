@@ -3,12 +3,13 @@ const auth = require('./auth.routes')
 const profile = require('./profile.routes')
 const link = require('./link.routes')
 const home = require('./home.routes')
-
+const err = require('../middlewares/error.middlewares')
 const router = Router()
 
 router.use('/auth', auth)
 router.use('/profile', profile)
 router.use('/link', link)
 router.use('/home', home)
+router.use(err)
 
 module.exports = router

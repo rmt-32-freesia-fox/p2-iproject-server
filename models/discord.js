@@ -11,6 +11,9 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Discord.belongsTo(models.User)
     }
+    get isExpired() {
+      return Date.now() - new Date(this.updatedAt).getTime() > 3600000
+    }
   }
   Discord.init(
     {

@@ -1,4 +1,5 @@
 const axios = require('axios')
+const { Spotify } = require('../models')
 
 const { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, SPOTIFY_REDIRECT_URL } =
   process.env
@@ -14,7 +15,7 @@ const getAccessToken = async (code) => {
   const config = {
     headers: {
       Accept: 'application/json',
-      'Content-Type':'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
     },
     auth: {
       username: SPOTIFY_CLIENT_ID,
@@ -25,7 +26,7 @@ const getAccessToken = async (code) => {
   const payload = {
     code,
     grant_type: 'authorization_code',
-    redirect_uri:SPOTIFY_REDIRECT_URL
+    redirect_uri: SPOTIFY_REDIRECT_URL,
   }
 
   const { data } = await axios.post(
@@ -47,6 +48,7 @@ const getUserData = async (access_token) => {
 }
 
 const getNewAccessToken = async (refresh_token) => {
+  const spotify = await Spotify.findOne({ where: { refresh_token } })
   const config = {
     headers: {
       Accept: 'application/json',
@@ -68,7 +70,7 @@ const getNewAccessToken = async (refresh_token) => {
     config
   )
 
-  // const { refresh_token, access_token } = data
+  spotify.update(data)
   return data
 }
 
@@ -77,9 +79,26 @@ const getLoginUrl = () =>
     Math.random() * 1e9
   )}&redirect_uri=${SPOTIFY_REDIRECT_URL}`
 
+const getListening = async (access_token) => {
+  const { data } = await axios.get(
+    'https://api.spotify.com/v1/me/player/currently-playing',
+    {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + access_token,
+      },
+    }
+  )
+
+  if(!data) return { is_playing: false }
+  return data
+}
+
 module.exports = {
   getAccessToken,
   getLoginUrl,
   getNewAccessToken,
   getUserData,
+  getListening
 }
