@@ -63,6 +63,42 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
+      title: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'title is require',
+          },
+          notEmpty: {
+            imgUrl: 'title is require',
+          },
+        },
+      },
+      channelTitle: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'channelTitle is require',
+          },
+          notEmpty: {
+            imgUrl: 'channelTitle is require',
+          },
+        },
+      },
+      publishedAt: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'publishedAt is require',
+          },
+          notEmpty: {
+            imgUrl: 'publishedAt is require',
+          },
+        },
+      },
     },
     {
       sequelize,
