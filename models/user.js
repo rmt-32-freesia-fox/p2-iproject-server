@@ -2,7 +2,7 @@
 const {
   Model
 } = require('sequelize');
-const { hashPassword } = require('../helpers/helper');
+const { hashPassword } = require('../helpers');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
 
-      User.belongsToMany(models.Book, { through: models.UserBook, foreignKey: UserId })
+      User.belongsToMany(models.Book, { through: models.UserBook, foreignKey: 'UserId' })
     }
   }
   User.init({

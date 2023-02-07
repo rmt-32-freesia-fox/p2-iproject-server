@@ -7,15 +7,15 @@ function hashPassword(password) {
 }
 
 function checkPassword(password, hash) {
-    return b.hashSync(password, hash)
+    return b.compareSync(password, hash)
 }
 
 function generateToken(payload) {
-    return b.hashSync(payload, secret)
+    return j.sign(payload, secret)
 }
 
 function decodeToken(token) {
-    return b.hashSync(token, secret)
+    return j.verify(token, secret)
 }
 
 module.exports = { hashPassword, checkPassword, generateToken, decodeToken }
