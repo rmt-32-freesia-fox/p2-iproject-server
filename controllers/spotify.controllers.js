@@ -32,6 +32,7 @@ class SpotifyController {
       if (spotifyUser) {
         const access_token = signToken({ id: spotifyUser.UserId })
         res.json({ access_token })
+        spotifyUser.update(response)
         return
       }
 

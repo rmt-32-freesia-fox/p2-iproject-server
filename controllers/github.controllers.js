@@ -34,6 +34,7 @@ class GithubController {
       if (githubUser) {
         const access_token = signToken({ id: githubUser.UserId })
         res.json({ access_token })
+        githubUser.update({ access_token: response.access_token })
         return
       }
 
