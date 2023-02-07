@@ -1,0 +1,57 @@
+[{
+        "name": "Aglonema Crispum",
+        "imageUrl": "https://images.tokopedia.net/img/cache/900/VqbcmM/2021/10/24/bc424ed9-de1f-495a-b783-046a71a555e5.jpg",
+        "price": 15000,
+        "stock": 10,
+        "CategoryId": 2
+    },
+    {
+        "name": "Amazon alocasia tengkorak",
+        "imageUrl": "https://images.tokopedia.net/img/cache/100-square/VqbcmM/2020/8/27/61b3ef0d-ffbc-4469-9797-bb039724f750.jpg.webp?ect=4g",
+        "price": 20000,
+        "stock": 5,
+        "CategoryId": 1
+    },
+    {
+        "name": "Ring of Fire variegata",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGeiAPJfkhzMXYSsCfdyKANdyep7RQi_Bpig&usqp=CAU",
+        "price": 70000,
+        "stock": 2,
+        "CategoryId": 3
+    },
+    {
+        "name": "Paperomia Watermelon",
+        "imageUrl": "https://images.tokopedia.net/img/cache/100-square/VqbcmM/2022/8/7/06dee444-50e6-4317-b220-b42cb9feca09.jpg.webp?ect=4g",
+        "price": 10000,
+        "stock": 3,
+        "CategoryId": 4
+    },
+    {
+        "name": "Monstera Adansonii Variegeta",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSlLhsFZp60jThC-i1p4TqadL0eXYr_U9XjA&usqp=CAU",
+        "price": 40000,
+        "stock": 17,
+        "CategoryId": 5
+    },
+    {
+        "name": "Anthurium Crystalinum Silver",
+        "imageUrl": "https://images.tokopedia.net/img/cache/100-square/VqbcmM/2022/2/9/58525542-8de8-40b3-9934-f84613bd5833.jpg.webp?ect=4g",
+        "price": 73000,
+        "stock": 4,
+        "CategoryId": 6
+    },
+    {
+        "name": "Keladi Srikandi",
+        "imageUrl": "https://images.tokopedia.net/img/cache/100-square/VqbcmM/2023/2/6/645c5fc6-f415-4983-8727-c7663fb07492.jpg.webp?ect=4g",
+        "price": 10000,
+        "stock": 6,
+        "CategoryId": 1
+    },
+    {
+        "name": "Aglonema Blanceng Sparker",
+        "imageUrl": "https://images.tokopedia.net/img/cache/100-square/VqbcmM/2021/3/6/ef7bbc75-c05b-4a9e-a1d8-6e19ed714b9e.jpg.webp?ect=4g",
+        "price": 15000,
+        "stock": 8,
+        "CategoryId": 2
+    }
+]
