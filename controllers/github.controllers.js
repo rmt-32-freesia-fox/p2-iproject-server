@@ -105,7 +105,9 @@ class GithubController {
     try {
       const { id } = req.user
       const githubUser = await Github.findOne({ where: { UserId: id } })
-
+      
+      if(!githubUser) throw { name: 'NotFound', message: 'Data not found' }
+      
       await githubUser.destroy()
       await revokeUserGrant(githubUser.access_token)
 
