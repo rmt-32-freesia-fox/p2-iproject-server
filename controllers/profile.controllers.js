@@ -1,6 +1,6 @@
 const { User, Following, Link } = require('../models')
 
-class UserController {
+class ProfileController {
   static async detail(req, res, next) {
     try {
       const { username } = req.params
@@ -107,4 +107,4 @@ class UserController {
 }
 
 
-module.exports = UserController
+module.exports = ProfileController
