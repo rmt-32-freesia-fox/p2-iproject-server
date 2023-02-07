@@ -9,6 +9,16 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Following.belongsTo(models.User, {
+        foreignKey: 'UserId',
+        unique: false,
+        as: 'Followers'
+      })
+      Following.belongsTo(models.User, {
+        foreignKey: 'FollowId',
+        unique: false,
+        as: 'Followings'
+      })
     }
   }
   Following.init(
@@ -22,7 +32,11 @@ module.exports = (sequelize, DataTypes) => {
       UserId: {
         allowNull: false,
         type: DataTypes.INTEGER,
-        references: { model: 'Users', key: 'id' },
+        references: {
+          model: 'Users',
+          key: 'id',
+          as: 'Followers'
+        },
         onDelete: 'cascade',
         onUpdate: 'cascade',
       },
@@ -32,6 +46,7 @@ module.exports = (sequelize, DataTypes) => {
         references: {
           model: 'Users',
           key: 'id',
+          as: 'Followings'
         },
         onDelete: 'cascade',
         onUpdate: 'cascade',
