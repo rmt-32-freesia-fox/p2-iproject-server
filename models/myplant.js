@@ -11,11 +11,33 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      MyPlant.belongsTo(models.User)
+      MyPlant.belongsTo(models.Plant)
     }
   }
   MyPlant.init({
-    UserId: DataTypes.STRING,
-    ProductId: DataTypes.INTEGER,
+    UserId:{
+      type:DataTypes.INTEGER,
+      references: {
+        model: "User",
+        key: "id"
+      },
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
+
+,    },
+      
+    ProductId: {
+      type:DataTypes.INTEGER,
+      references: {
+        model: "Plant",
+        key: "id"
+      },
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'
+
+    },
+    
     quantity: DataTypes.INTEGER,
     status: DataTypes.BOOLEAN
   }, {

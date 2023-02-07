@@ -11,14 +11,42 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Plant.belongsTo(models.Categorie,{
+        foreignKey:'CategoryId'
+      })
     }
   }
   Plant.init({
-    name: DataTypes.STRING,
-    imageUrl: DataTypes.STRING,
-    price: DataTypes.STRING,
-    stock: DataTypes.INTEGER,
-    CategoryId: DataTypes.INTEGER
+    name:{
+      type:DataTypes.STRING,
+
+    },
+    imageUrl: {
+      type:DataTypes.STRING,
+
+    },
+    price: {
+      type:DataTypes.STRING,
+      defaultValue:0
+
+    },
+
+    stock: {
+      type:DataTypes.INTEGER,
+      defaultValue:0
+      
+    },
+    CategoryId: {
+      type:DataTypes.INTEGER,
+      references:{
+        model:"Category",
+        key:"id"
+      },
+      onDelete:"CASCADE",
+      onUpdate:"CASCADE",
+
+    }
+    
   }, {
     sequelize,
     modelName: 'Plant',
