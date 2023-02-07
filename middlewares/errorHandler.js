@@ -1,6 +1,6 @@
 function errorHandler(error, req, res, next) {
 
-    console.log(error, '<- ini error dari error handler');
+    // console.log(error, '<- ini error dari error handler');
 
     let status = 500
     let message = "Internal Server Error"

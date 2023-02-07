@@ -1,7 +1,9 @@
 const { User, Book, UserBook } = require('../models')
+const axios = require('axios')
+const nodemailer = require('nodemailer')
 
 // let baseUrl = `http://localhost:3000/` //! Sebelum Deploy
-let baseUrl = `https://this-is-linklink.web.app/` //! Setelah Deploy
+let baseUrl = `berliterasi-production.up.railway.app/` //! Setelah Deploy
 
 class BookController {
 
@@ -75,6 +77,83 @@ class BookController {
             res.status(500).json({ message: "Internal server error" })
         }
     } //! DONE
+
+    static async translateWord(req, res, next) {
+        try {
+            const { translate } = req.query
+
+            const encodedParams = new URLSearchParams();
+            encodedParams.append("source_language", "en");
+            encodedParams.append("target_language", "id");
+            encodedParams.append("text", translate);
+
+            const options = {
+                method: 'POST',
+                url: 'https://text-translator2.p.rapidapi.com/translate',
+                headers: {
+                    'content-type': 'application/x-www-form-urlencoded',
+                    'X-RapidAPI-Key': process.env.Text_Translator,
+                    'X-RapidAPI-Host': 'text-translator2.p.rapidapi.com'
+                },
+                data: encodedParams
+            };
+
+
+            const response = await axios(options)
+            res.status(200).json({ data: response.data.data.translatedText })
+
+        } catch (error) {
+            console.log(error);
+            next(error)
+        }
+    }
+
+    static async currencyConverter(req, res, next) {
+        try {
+            const { input } = req.query
+
+            const options = {
+                method: 'GET',
+                url: 'https://currency-converter-by-api-ninjas.p.rapidapi.com/v1/convertcurrency',
+                params: { have: 'USD', want: 'IDR', amount: input },
+                headers: {
+                    'X-RapidAPI-Key': process.env.Currency_Converter,
+                    'X-RapidAPI-Host': 'currency-converter-by-api-ninjas.p.rapidapi.com'
+                }
+            };
+
+            const response = await axios(options)
+            res.status(200).json({ data: response.data.new_amount })
+
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    static async nodeMailer(req, res, next) {
+        let transposter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'office.berliterasi@gmail.com',
+                password: 'adityakasyidi'
+            }
+        })
+
+        let mailOptions = {
+            from: 'office.berliterasi@gmail.com',
+            to: 'adityakasyidi09@gmail.com',
+            subject: 'Test email with nodemailer',
+            text: 'Hi! this a test message from nodemailer'
+        }
+
+        transposter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Email sent:' + info.response);
+            }
+        })
+    }
 
 }
 
