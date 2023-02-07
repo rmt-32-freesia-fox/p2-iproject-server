@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       email: { type: DataTypes.STRING, allowNull: false },
       discordId: {
         unique: true,
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
       },
       username: { type: DataTypes.STRING, allowNull: false },

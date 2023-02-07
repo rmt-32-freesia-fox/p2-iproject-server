@@ -21,7 +21,7 @@ class DiscordController {
       const response = await getAccessToken(code)
       const data = await getUserData(response.access_token)
       const {
-        discrimnator,
+        discriminator,
         email,
         username: discordUsername,
         id: discordId,
@@ -32,6 +32,7 @@ class DiscordController {
       if (discordUser) {
         const access_token = signToken({ id: discordUser.UserId })
         res.json({ access_token })
+        discordUser.update(response)
         return
       }
 
@@ -44,7 +45,7 @@ class DiscordController {
         email,
         discordId,
         username: discordUsername,
-        discrimnator,
+        discriminator,
         access_token: response.access_token,
         refresh_token: response.refresh_token,
       })
@@ -53,6 +54,7 @@ class DiscordController {
 
       res.status(201).json({ access_token })
     } catch (error) {
+      console.log(error)
       next(error)
     }
   }
@@ -100,7 +102,7 @@ class DiscordController {
       const { id } = req.user
       const discordUser = await Discord.findOne({ where: { UserId: id } })
 
-      if(!discordUser) throw { name: 'NotFound', message: 'Data not found' }
+      if (!discordUser) throw { name: 'NotFound', message: 'Data not found' }
 
       await discordUser.destroy()
       await revokeUserToken(discordUser.access_token)

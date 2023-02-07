@@ -75,7 +75,7 @@ const getNewAccessToken = async (refresh_token) => {
 const getLoginUrl = () =>
   `https://accounts.spotify.com/authorize?response_type=code&client_id=${SPOTIFY_CLIENT_ID}&scope=user-read-private%20user-read-email%20user-read-currently-playing&state=${Math.floor(
     Math.random() * 1e9
-  )}&redirect=${SPOTIFY_REDIRECT_URL}`
+  )}&redirect_uri=${SPOTIFY_REDIRECT_URL}`
 
 module.exports = {
   getAccessToken,
