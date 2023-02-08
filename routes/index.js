@@ -10,4 +10,7 @@ router.use('/foods', foodRoute)
 router.use(authenticated)
 router.use(paymentRoute)
 
+router.use(authenticated)
+router.use(paymentRoute)
+
 module.exports = router
