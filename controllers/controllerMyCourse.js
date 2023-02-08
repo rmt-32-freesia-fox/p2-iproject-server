@@ -7,6 +7,8 @@ class ControllerMyCourse {
     try {
       const { idCourse, imgUrl, description, title, channelTitle, publishedAt } = req.query;
       const { id } = req.user;
+      const findId = await MyCourse.findOne({ where: { UserId: id, idCourse } });
+      if (findId) throw { name: 'data already' };
       const addFavorite = await MyCourse.create({ idCourse, UserId: id, imgUrl, description, title, channelTitle, publishedAt });
       res.status(201).json({ message: 'success add to list', id: addFavorite.id, UserId: addFavorite.UserId, idCourse: addFavorite.idCourse });
     } catch (error) {
