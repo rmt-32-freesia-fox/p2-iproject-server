@@ -281,15 +281,48 @@ class Controller {
     }
   }
   
+  
   static async userSubscribed(req, res, next) { 
     const {access_token, payment_token} = req.headers 
+    try {
+      let profile = await Controller.getProfile(access_token)
+      let { country, display_name, id } = profile
+      
+      let findUser = await User.findOne({
+        where: {
+          userId: id
+        }
+      }) 
+      
+      const {paymentToken} = findUser
+      
+      console.log(paymentToken);
+      console.log(payment_token);
+      if(payment_token !== paymentToken) throw {code: 403}
+      
+      let subscribed = await User.update({isPaid:true}, {
+        where: {
+          userId: id
+        }
+      })
+      res.status(200).json('subscribed')
+    } catch (error) {
+      console.log(error, 'error gaes'); 
+    }
+  }
+  
+  static async downloadSong(req, res, next) { 
+    const {access_token} = req.headers
+    const {id} = req.params
+    let url = `https://spotify-downloader.p.rapidapi.com/SpotifytrackDownloader?id=` + id 
     try {
       const {data} = await 
       axios({
         method:'get',
         url,
         headers: {
-          Authorization: `Bearer `+ access_token,
+          "X-RapidAPI-Key": '98612de3b8msh808880aadd1053ep1f2e72jsn1161fad1a865',
+          "X-RapidAPI-Host": 'spotify-downloader.p.rapidapi.com'
         }
       })   
       res.status(200).json(data) 
@@ -325,6 +358,9 @@ app.get('/findSongs', Controller.findsomeSongs)
 app.get('/topGlobal', Controller.getTopGlobal)
 
 app.patch('/subcribed', Controller.userSubscribed)
+
+
+app.get('/download/:id', Controller.downloadSong)
 
 
 app.get('/test', (req, res, next) => {
