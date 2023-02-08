@@ -63,17 +63,20 @@
         {
             "name": "Javascript Basic",
             "description": "Javascript itu sulit sulit gampang, ayo belajar berasama kami",
-            "TeacherId": 1
+            "TeacherId": 1,
+            "CategoryId":1
         },
         {
             "name": "Sequelize Basic",
             "description": "sequelize itu mempermudah anda untuk kelola query loh, jadi ayo belajar wkwk",
-            "TeacherId": 2
+            "TeacherId": 2,
+            "CategoryId":2
         },
         {
-            "name": "Golang Basic",
-            "description": "Golang itu sulit sulit gampang, ayo belajar berasama kami. golang golang golanggaling hehe",
-            "TeacherId": 3
+            "name": "Python Basic",
+            "description": "Python itu sulit sulit gampang, ayo belajar berasama kami. golang golang golanggaling hehe",
+            "TeacherId": 3,
+            "CategoryId":3
         }
     ],
     "materials": [
@@ -100,6 +103,17 @@
             "videoId": "600tSjGw",
             "docsId": "",
             "CourseId": 3
+        }
+    ],
+    "categories":[
+        {
+            "name":"web development"
+        },
+        {
+            "name":"database"
+        },
+        {
+            "name":"data science"
         }
     ]
 }

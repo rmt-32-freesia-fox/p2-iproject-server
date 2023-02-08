@@ -24,6 +24,15 @@ module.exports = {
         },
         onDelete:'cascade'
       },
+      CategoryId: {
+        type:Sequelize.INTEGER,
+        allowNull:false,
+        references:{
+          model:'Categories',
+          key:'id'
+        },
+        onDelete:'cascade'
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

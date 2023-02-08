@@ -39,7 +39,12 @@ _Class_ (belongsTo student) (belongTo Course)
 - StudentId: integer, required
 - CourseId: integer, required
 - status: string, required
+_Category_ (hasMany Course)
 ```
+- name: string, required
+```
+
+
 
 
 ## Relation :

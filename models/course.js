@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       Course.belongsTo(models.Teacher, { foreignKey:'TeacherId' })
       Course.hasMany(models.Material, {foreignKey:'CourseId'})
       Course.hasMany(models.Class, {foreignKey:'CourseId'})
+      Course.belongsTo(models.Category,{foreignKey:'CategoryId'})
     }
   }
   Course.init({
@@ -46,6 +47,15 @@ module.exports = (sequelize, DataTypes) => {
       allowNull:false,
       references:{
         model:'Teachers',
+        key:'id'
+      },
+      onDelete:'cascade'
+    },
+    CategoryId: {
+      type:DataTypes.INTEGER,
+      allowNull:false,
+      references:{
+        model:'Categories',
         key:'id'
       },
       onDelete:'cascade'
