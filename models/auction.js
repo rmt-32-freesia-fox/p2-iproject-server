@@ -96,10 +96,6 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
-      socketRoom: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
       status: {
         type: DataTypes.STRING,
         allowNull: false,

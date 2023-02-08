@@ -40,10 +40,6 @@ module.exports = {
         type: Sequelize.DATEONLY,
         allowNull: false,
       },
-      socketRoom: {
-        type: Sequelize.STRING,
-        allowNull: true,
-      },
       status: {
         type: Sequelize.STRING,
         allowNull: false,

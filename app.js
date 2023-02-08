@@ -11,7 +11,9 @@ const cors = require("cors");
 const router = require("./routes");
 const errorHandler = require("./middlewares/errorHandler");
 const AuctionController = require("./controllers/AuctionController");
+const { verifyToken } = require("./helpers/jwt");
 const httpServer = createServer(app);
+const { Auction, History } = require("./models");
 
 const io = new Server(httpServer, {
   cors: {
@@ -35,18 +37,43 @@ io.on("connection", (socket) => {
 
   socket.on("join", (payload) => {
     const { access_token, roomId } = payload;
+    const { id, name } = verifyToken(access_token);
+
     socket.join(roomId);
-    console.log(payload);
-    io.to(roomId).emit("hello", { id: access_token, message: "hello unWorld" });
+    io.to(roomId).emit("connectionSuccess", {
+      message: `${name} Join This Room`,
+    });
   });
-  socket.on("kirimPesan", (payload) => {
-    const { input, roomId } = payload;
-    console.log(payload);
-    io.to(roomId).emit("teriak", { message: input });
+  socket.on("bid", async (payload) => {
+    const { access_token, roomId, bid } = payload;
+    const { id, name } = verifyToken(access_token);
+    const auction = await Auction.findByPk(roomId);
+    const history = await History.findOne({
+      where: {
+        AuctionId: roomId,
+      },
+    });
+    if (auction.status !== "available") {
+      socket.emit("bidFailed", { message: "Bidding Session is Closed" });
+    } else if (history.bid >= bid) {
+      socket.emit("bidFailed", { message: "Bid cannot less than recent bid" });
+    } else if ((bid - auction.startPrice) % auction.multiple !== 0) {
+      socket.emit("bidFailed", {
+        message: `Bid must be multiple of ${auction.multiple}`,
+      });
+    } else {
+      await history.update({ bid: bid, UserId: id });
+      io.to(roomId).emit("bidSuccess", {
+        message: `${name} has bidding to ${bid}`,
+        bid,
+        name,
+      });
+    }
   });
-  // ! HANDLE BID >> UPDATE DATABASE WINNER
 });
 
+cron.schedule("0 21 * * *", AuctionController.closeBid);
+
 httpServer.listen(port, () => {
-  console.log("listening on port", port);
+  console.log("Flying on port", port);
 });

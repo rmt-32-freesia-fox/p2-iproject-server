@@ -6,6 +6,7 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 router.get("/", AuctionController.getAuction);
+router.get("/detail/:id", AuctionController.getAuctionById);
 router.use(authentication);
 router.get("/myauctions", AuctionController.getMyAuction);
 router.get("/winner/:id", AuctionController.getWinner);
@@ -16,6 +17,8 @@ router.post(
   AuctionController.postAuction
 );
 router.get("/recentauction", AuctionController.getRecentAuction);
-router.get("/:id", AuctionController.getAuctionById);
+router.get("/transaction", AuctionController.getTransaction);
+router.post("/transaction/:id", AuctionController.postTransaction);
+router.patch("/changestatus/:id", AuctionController.changeStatus);
 
 module.exports = router;

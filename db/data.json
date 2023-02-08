@@ -38,11 +38,6 @@
       "AuctionId": 1,
       "UserId": 2,
       "bid": 525000
-    },
-    {
-      "AuctionId": 1,
-      "UserId": 2,
-      "bid": 550000
     }
   ]
 }

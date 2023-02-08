@@ -1,18 +1,46 @@
 "use strict";
 const { User, Auction, Image, History } = require("../models");
+const midtransClient = require("midtrans-client");
+const nodemailer = require("nodemailer");
 const axios = require("axios");
 const { imgbox } = require("imgbox");
 const { Op } = require("sequelize");
+let transporter = nodemailer.createTransport({
+  host: "smtp.ethereal.email",
+  port: 587,
+  secure: false, // true for 465, false for other ports
+  auth: {
+    user: process.env.GMAIL_EMAIL, // generated ethereal user
+    pass: process.env.GMAIL_KEY, // generated ethereal password
+  },
+});
 
 module.exports = class AuctionController {
   static async getAuction(req, res, next) {
     try {
-      const auctions = await Auction.findAll({
+      const { search, category, page } = req.query;
+      const option = {
         where: {
-          status: "available",
+          name: {
+            [Op.iLike]: `%%`, //KALO GAK DIKASIH INI ERROR TERUS
+          },
         },
-      });
-      res.status(200).json(auctions);
+        order: [["date", "desc"]],
+      };
+
+      if (search) {
+        option.where.name[Op.iLike] = `%${search}%`;
+      }
+      if (category) {
+        option.where["category"] = category;
+      }
+      if (page) {
+        const limiter = 8;
+        option.limit = limiter;
+        option.offset = (page - 1) * limiter;
+      }
+      const { count, rows } = await Auction.findAndCountAll(option);
+      res.status(200).json({ totalItem: count, auctions: rows });
     } catch (err) {
       next(err);
     }
@@ -42,12 +70,7 @@ module.exports = class AuctionController {
         where: {
           AuctionId,
         },
-        order: [["bid", "desc"]],
-        limit: 1,
       });
-      if (!winner) {
-        res.status(200).json({ bid: "-", User: { name: "-" } });
-      }
       res.status(200).json(winner);
     } catch (err) {
       next(err);
@@ -92,6 +115,11 @@ module.exports = class AuctionController {
         date,
         status: "available",
       });
+      await History.create({
+        AuctionId: newAuction.id,
+        UserId: newAuction.UserId,
+        bid: newAuction.startPrice,
+      });
       for (let i = 0; i < response.files.length; i++) {
         await Image.create({
           AuctionId: newAuction.id,
@@ -120,9 +148,6 @@ module.exports = class AuctionController {
   }
   static async getRecentAuction(req, res, next) {
     try {
-      const today = new Date();
-      const tomorrow = new Date(today);
-      tomorrow.setDate(tomorrow.getDate() + 1);
       const auction = await Auction.findAll({
         where: {
           date: {
@@ -130,11 +155,87 @@ module.exports = class AuctionController {
           },
         },
       });
-      // console.log(auction);
       res.status(200).json(auction);
     } catch (err) {
       next(err);
     }
   }
-  static async closeRoom(req, res, next) {}
+  static async closeBid(req, res) {
+    try {
+      await Auction.update(
+        { status: "pending" },
+        {
+          where: {
+            date: {
+              [Op.eq]: new Date(),
+            },
+          },
+        }
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  static async getTransaction(req, res, next) {
+    try {
+      const UserId = req.user.id;
+      const transactions = await History.findAll({
+        include: {
+          model: User,
+          attributes: ["id", "name", "email"],
+        },
+        where: {
+          UserId,
+        },
+        order: [["updatedAt", "desc"]],
+      });
+      res.status(200).json(transactions);
+    } catch (err) {
+      next(err);
+    }
+  }
+  static async postTransaction(req, res, next) {
+    try {
+      const { email, id, name, price } = req.body;
+      const auctionId = req.params.id;
+      const auction = await Auction.findByPk(auctionId);
+      if (auction.status !== "pending") throw { name: "alreadyPay" };
+      let snap = new midtransClient.Snap({
+        // Set to true if you want Production Environment (accept real transaction).
+        isProduction: false,
+        serverKey: process.env.MIDTRANS_SERVER,
+      });
+      let parameter = {
+        transaction_details: {
+          order_id: `${name}-INVOICE-ORDER-ID-${
+            10000 + Math.floor(Math.random() * 30000)
+          }`,
+          gross_amount: price,
+        },
+        credit_card: {
+          secure: true,
+        },
+        customer_details: {
+          first_name: name,
+          email: email,
+        },
+      };
+      let midtransToken = await snap.createTransaction(parameter);
+      res.status(200).json(midtransToken);
+    } catch (err) {
+      next(err);
+    }
+  }
+  static async changeStatus(req, res, next) {
+    try {
+      const { id } = req.params;
+      console.log(id);
+      const auction = await Auction.findByPk(id);
+      if (!auction) throw { name: "notFound" };
+      await auction.update({ status: "sold" });
+      res.status(200).json("Thankyou for purchasing this auction");
+    } catch (err) {
+      next(err);
+    }
+  }
 };

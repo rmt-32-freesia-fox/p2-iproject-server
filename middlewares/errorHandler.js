@@ -38,6 +38,10 @@ module.exports = (err, req, res, next) => {
       message =
         "There's No Email in Your Account, Please Set Public Email in Your Github Profile First";
       break;
+    case "alreadyPay":
+      code = 400;
+      message = "Invoice Has Been Pay";
+      break;
     default:
       code = 500;
       message = "Internal server error";
