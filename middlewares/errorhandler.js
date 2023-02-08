@@ -8,6 +8,7 @@ function errorHandler(err, req, res, next) {
             message = err.errors[0].message
             break;
 
+
         case "loginError":
             statusCode = 400;
             message = "Invalid Username or Password";
@@ -21,6 +22,7 @@ function errorHandler(err, req, res, next) {
             message = "Data Not Found";
             break;
         case "unAuthentication":
+        case "JsonWebTokenError":
             statusCode = 403;
             message = "Invalid Token";
             break;

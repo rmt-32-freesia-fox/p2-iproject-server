@@ -7,6 +7,7 @@ const { authorization } = require('../middlewares/authorization')
 // handle user 
 router.post('/login', UserController.handleLogin)
 router.post('/register', UserController.handleRegister)
+router.post('/google-sign-in', UserController.googleSignIn)
 
 router.use(authentication)
 router.post('/generate-midtrans-token', UserController.handleMidtransToken)
