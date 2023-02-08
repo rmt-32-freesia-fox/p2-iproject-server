@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Event.init({
     title: {
-      allowNull:false,
+      allowNull: false,
       type: DataTypes.STRING,
       validate: {
         notNull: {
@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     link: {
-      allowNull:false,
+      allowNull: false,
       type: DataTypes.STRING,
       validate: {
         notNull: {
@@ -40,7 +40,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     eventDate: {
-      allowNull:false,
+      allowNull: false,
       type: DataTypes.DATE,
       validate: {
         notNull: {
@@ -52,7 +52,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     imageUrl: {
-      allowNull:false,
+      allowNull: false,
       type: DataTypes.STRING,
       validate: {
         notNull: {
@@ -64,7 +64,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     desc: {
-      allowNull:false,
+      allowNull: false,
       type: DataTypes.TEXT,
       validate: {
         notNull: {
@@ -76,7 +76,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     price: {
-      allowNull:false,
+      allowNull: false,
       type: DataTypes.INTEGER,
       validate: {
         notNull: {
@@ -86,6 +86,9 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'Price is required'
         },
       }
+    },
+    status: {
+      type: DataTypes.INTEGER,
     }
   }, {
     sequelize,
