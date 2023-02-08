@@ -102,5 +102,18 @@ class Controller {
       next(error);
     }
   }
+
+  static async deleteMyExercise(req, res, next) {
+    try {
+      const { id } = req.params;
+      const myexercise = await MyExercise.destroy({ where: { id: id } });
+      if (!myexercise) {
+        return res.status(404).json({ message: `Exercise Not Found` });
+      }
+      res.status(200).json({ message: "Exercise has been deleted" });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 module.exports = Controller;
