@@ -15,7 +15,7 @@ class LinkController {
       next(error)
     }
   }
-
+  
   static async detail(req, res, next) {
     try {
       const { id: UserId } = req.user
@@ -33,8 +33,9 @@ class LinkController {
       const { id } = req.params
       const linkData = await Link.findByPk(id)
       if (!linkData) throw { name: 'NotFound', message: 'Data not found' }
-
+      
       const data = await linkData.update({ link, label, logo })
+      createLog('edited', req.user.id, id)
       res.json(data)
     } catch (error) {
       next(error)

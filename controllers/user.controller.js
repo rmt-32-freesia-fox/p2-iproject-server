@@ -4,7 +4,28 @@ class UserController {
   static async getMe(req, res, next) {
     try {
       const { id } = req.user
-      const user = await User.findByPk(id)
+      const user = await User.findByPk(id, {
+        include: [
+          {
+            model: Github,
+            attributes: {
+              exclude: ['access_token', 'refresh_token'],
+            },
+          },
+          {
+            model: Discord,
+            attributes: {
+              exclude: ['access_token', 'refresh_token'],
+            },
+          },
+          {
+            model: Spotify,
+            attributes: {
+              exclude: ['access_token', 'refresh_token'],
+            },
+          },
+        ],
+      })
 
       res.json(user)
     } catch (error) {
