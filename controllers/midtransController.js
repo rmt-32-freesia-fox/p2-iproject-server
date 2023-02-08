@@ -4,7 +4,7 @@ const midtransClient = require('midtrans-client');
 const { User } = require('../models')
 
 class MidtransController {
-  static async generateTokenMids() {
+  static async generateTokenMids(req, res, next) {
     try {
       const { id } = req.user
 
@@ -30,8 +30,8 @@ class MidtransController {
         }
       };
 
-      const res = await snap.createTransaction(parameter)
-      res.status(201).json(res)
+      const token = await snap.createTransaction(parameter)
+      res.status(201).json(token)
     } catch (error) {
       next(error)
     }
