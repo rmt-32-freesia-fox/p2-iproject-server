@@ -143,7 +143,7 @@ class GithubController {
           message: 'Cant unlink, must have at least 1 link',
         }
       await githubUser.destroy()
-      await revokeUserGrant(githubUser.access_token)
+      // await revokeUserGrant(githubUser.access_token)
 
       res.json({ message: 'Github unlinked!' })
     } catch (error) {

@@ -3,7 +3,6 @@ const {
   getLoginUrl,
   getNewAccessToken,
   getUserData,
-  revokeUserToken,
   getListening,
 } = require('../helpers/spotify')
 
@@ -71,7 +70,7 @@ class SpotifyController {
       const data = await getUserData(access_token)
       const { email, display_name, id: spotifyId } = data
 
-      await Github.create({
+      await Spotify.create({
         UserId: id,
         email,
         spotifyId,
@@ -129,7 +128,7 @@ class SpotifyController {
           message: 'Cant unlink, must have at least 1 link',
         }
       await spotifyUser.destroy()
-      await revokeUserToken(spotifyUser.access_token)
+      // await revokeUserToken(spotifyUser.access_token)
 
       res.json({ message: 'Spotify unlinked!' })
     } catch (error) {

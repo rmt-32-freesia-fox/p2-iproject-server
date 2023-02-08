@@ -75,7 +75,7 @@ class DiscordController {
 
       const data = await getUserData(access_token)
       const {
-        discrimnator,
+        discriminator,
         email,
         username: discordUsername,
         id: discordId,
@@ -86,7 +86,7 @@ class DiscordController {
         email,
         discordId,
         username: discordUsername,
-        discrimnator,
+        discriminator,
         access_token: access_token,
         refresh_token: refresh_token,
       })
@@ -140,7 +140,7 @@ class DiscordController {
           message: 'Cant unlink, must have at least 1 link',
         }
       await discordUser.destroy()
-      await revokeUserToken(discordUser.access_token)
+      // await revokeUserToken(discordUser.access_token)
 
       res.json({ message: 'Discord unlinked!' })
     } catch (error) {
