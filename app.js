@@ -51,11 +51,21 @@ class Controller {
       const data = token.data.access_token
       
       const request = await Controller.getProfile(data) 
-      console.log(request);
+      const {id} = request 
+      
+      let [user, created] = await User.findOrCreate({
+        where: {
+          userId: id
+        }
+      }) 
+      // console.log(user, created);
+      // let {id: idi} = user
+      // let access_token = generateToken({ id }) 
+      // let status = (created) ? 201 : 200
+      // res.status(status).json({access_token})  
       
       // console.log(token.data.access_token);
-      res.redirect('http://localhost:5173/?token=' + data)
-  
+      res.redirect('http://localhost:5173/?token=' + data) 
     } catch (error) {
       console.log(error, 'error nich');
     }
@@ -155,13 +165,110 @@ class Controller {
     const {access_token} = req.headers
     try {
       const data = await Controller.getProfile(access_token)
-    
+      
       res.status(200).json(data)
     } catch (error) {
       console.log(error, 'error gaes');
     }
   }
   
+  static async myTopTracks(req, res, next) {
+    const {limit} = req.query
+    const {access_token} = req.headers
+    let url = 'https://api.spotify.com/v1/me/top/tracks' 
+    if(limit) url += `?limit=${limit}` 
+    try {
+      const {data} = await 
+      axios({
+        method:'get',
+        url,
+        headers: {
+          Authorization: `Bearer `+ access_token,
+        }
+      })   
+      res.status(200).json(data) 
+    } catch (error) { 
+      console.log(error, 'error gaes');
+    }
+  }
+  
+  static async myTopArtists(req, res, next) {
+    const {limit} = req.query
+    const {access_token} = req.headers
+    let url = 'https://api.spotify.com/v1/me/top/artists' 
+    if(limit) url += `?limit=${limit}` 
+    try {
+      const {data} = await 
+      axios({
+        method:'get',
+        url,
+        headers: {
+          Authorization: `Bearer `+ access_token,
+        }
+      })   
+      res.status(200).json(data) 
+    } catch (error) {
+      console.log(error, 'error gaes'); 
+    }
+  }
+  
+  static async myRecentlyPlayed(req, res, next) {
+    const {limit} = req.query
+    const {access_token} = req.headers
+    let url = 'https://api.spotify.com/v1/me/player/recently-played'  
+    if(limit) url += `?limit=${limit}` 
+    try {
+      const {data} = await 
+      axios({
+        method:'get',
+        url,
+        headers: {
+          Authorization: `Bearer `+ access_token,
+        }
+      })   
+      res.status(200).json(data) 
+    } catch (error) {
+      console.log(error, 'error gaes'); 
+    }
+  }
+  
+  static async findsomeSongs(req, res, next) {
+    const {limit, q} = req.query
+    const {access_token} = req.headers
+    let url = `https://api.spotify.com/v1/search?q=${q}&type=track`  
+    if(limit) url += `&limit=${limit}` 
+    try {
+      const {data} = await 
+      axios({
+        method:'get',
+        url,
+        headers: {
+          Authorization: `Bearer `+ access_token,
+        }
+      })   
+      res.status(200).json(data) 
+    } catch (error) {
+      console.log(error, 'error gaes'); 
+    }
+  }
+  
+  static async getTopGlobal(req, res, next) { 
+    const {access_token} = req.headers
+    let url = `https://api.spotify.com/v1/playlists/37i9dQZEVXbMDoHDwVN2tF?limit=1` 
+    try {
+      const {data} = await 
+      axios({
+        method:'get',
+        url,
+        headers: {
+          Authorization: `Bearer `+ access_token,
+        }
+      })   
+      res.status(200).json(data) 
+    } catch (error) {
+      console.log(error, 'error gaes'); 
+    }
+  }
 }
 
 app.get('/', Controller.get)
@@ -178,6 +285,16 @@ app.post('/login', Controller.login)
 
 
 app.get('/profile', Controller.myProfile)
+
+app.get('/topTracks', Controller.myTopTracks)
+
+app.get('/topArtists', Controller.myTopArtists)
+
+app.get('/recently', Controller.myRecentlyPlayed)
+
+app.get('/findSongs', Controller.findsomeSongs)
+
+app.get('/topGlobal', Controller.getTopGlobal)
 
 
 app.get('/test', (req, res, next) => {
