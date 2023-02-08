@@ -75,7 +75,14 @@ class Controller {
   }
  
   static async getMidtransToken(req, res, next) {  
+    const {access_token} = req.headers
+    
     try {
+        
+        let profile = await Controller.getProfile(access_token)
+        
+        let { country, display_name, id } = profile
+      
         // Create Snap API instance
         let snap = new midtransClient.Snap({
         // Set to true if you want Production Environment (accept real transaction).
@@ -92,16 +99,21 @@ class Controller {
                 "secure" : true
             },
             "customer_details": {
-                "first_name": "budi",
-                "last_name": "pratama",
-                "email": "budi.pra@example.com",
-                "phone": "08111222333"
+                "first_name": display_name 
             }
         };
         
         const request = await snap.createTransaction(parameter)
         
         let transactionToken = request.token;
+        
+        console.log(id, 'id');
+        const updateDb = await User.update({paymentToken: transactionToken }, {
+          where : {
+            userId: id
+          }
+        })  
+        console.log(updateDb);
         
         // trans action token
         console.log('transactionToken:',request); 

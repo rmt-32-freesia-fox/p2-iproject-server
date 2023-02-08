@@ -32,6 +32,9 @@ module.exports = (sequelize, DataTypes) => {
     isPaid:{
       type: DataTypes.BOOLEAN,
       defaultValue: false,
+    },
+    paymentToken:{
+      type: DataTypes.STRING, 
     }
   }, {
     sequelize,
