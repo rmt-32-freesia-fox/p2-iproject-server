@@ -1,9 +1,9 @@
 const { Event, Subscribe, User } = require('../models')
 
 class EventController {
-  static async getEvents(req, res) {
+  static async getEvents(req, res, next) {
     try {
-      const event = await Event.findAndCountAll({ include: User })
+      const event = await Event.findAndCountAll({ include: { model: Subscribe, include: User } })
 
       res.status(200).json(event)
     } catch (error) {
@@ -11,7 +11,7 @@ class EventController {
     }
   }
 
-  static async addEvent(req, res) {
+  static async addEvent(req, res, next) {
     try {
       const { title, link, eventDate, imageUrl, desc, price } = req.body
       const event = await Event.create({ title, link, eventDate, imageUrl, desc, price })
@@ -22,7 +22,7 @@ class EventController {
     }
   }
 
-  static async getById(req, res) {
+  static async getById(req, res, next) {
     try {
       const { id } = req.params
       const event = await Event.findByPk(id)
