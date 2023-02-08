@@ -4,6 +4,8 @@ class ProfileController {
   static async detail(req, res, next) {
     try {
       const { username } = req.params
+      if(username.toLowerCase() === 'callback') return res.send()
+      
       const user = await User.findOne({
         where: { username },
         include: [
@@ -25,8 +27,8 @@ class ProfileController {
 
       data.Followings = data.Followings.length
       data.Followers = data.Followers.length
-
-      res.json(user)
+      
+      res.json(data)
     } catch (error) {
       next(error)
     }

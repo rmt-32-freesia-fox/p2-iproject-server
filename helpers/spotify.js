@@ -52,6 +52,7 @@ const getNewAccessToken = async (refresh_token) => {
   const config = {
     headers: {
       Accept: 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded',
     },
     auth: {
       username: SPOTIFY_CLIENT_ID,
