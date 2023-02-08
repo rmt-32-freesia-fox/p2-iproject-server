@@ -30,6 +30,10 @@ const errHandler = (error, req, res, next) => {
       status = 403;
       message = "Forbidden";
       break;
+    case "Already_Success":
+      status = 400;
+      message = "You Already a Member";
+      break;
   }
   res.status(status).json({ message: message });
 };

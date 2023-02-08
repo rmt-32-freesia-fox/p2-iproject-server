@@ -1,0 +1,91 @@
+[
+  {
+    "image": "https://wger.de/media/exercise-images/91/Crunches-1.png",
+    "name": "cruch"
+  },
+  {
+    "image": "https://wger.de/media/exercise-images/93/Decline-crunch-1.png",
+    "name": "abs"
+  },
+  {
+    "image": "https://wger.de/media/exercise-images/128/Hyperextensions-1.png",
+    "name": "back"
+  },
+  {
+    "image": "https://wger.de/media/exercise-images/88/Narrow-grip-bench-press-1.png",
+    "name": "body"
+  },
+  {
+    "image": "https://wger.de/media/exercise-images/129/Standing-biceps-curl-1.png",
+    "name": "bisep"
+  },
+  {
+    "image": "https://wger.de/media/exercise-images/81/Biceps-curl-1.png",
+    "name": "shoulder"
+  },
+  {
+    "image": "https://wger.de/media/exercise-images/74/Bicep-curls-1.png",
+    "name": "bisep"
+  },
+  {
+    "image": "https://wger.de/media/exercise-images/83/Bench-dips-1.png",
+    "name": "tricep"
+  },
+  {
+    "image": "https://wger.de/media/exercise-images/151/Dumbbell-shrugs-2.png",
+    "name": "shoulder"
+  },
+  {
+    "image": "https://wger.de/media/exercise-images/150/Barbell-shrugs-1.png",
+    "name": "chest"
+  },
+  {
+    "image": "https://wger.de/media/exercise-images/86/Bicep-hammer-curl-1.png",
+    "name": "shoulder"
+  },
+  {
+    "image": "https://wger.de/media/exercise-images/138/Hammer-curls-with-rope-1.png",
+    "name": "arm"
+  },
+  {
+    "image": "https://wger.de/media/exercise-images/195/Push-ups-1.png",
+    "name": "chest"
+  },
+  {
+    "image": "https://wger.de/media/exercise-images/84/Lying-close-grip-triceps-press-to-chin-1.png",
+    "name": "tricep"
+  },
+  {
+    "image": "https://wger.de/media/exercise-images/116/Good-mornings-2.png",
+    "name": "back"
+  },
+  {
+    "image": "https://wger.de/media/exercise-images/192/Bench-press-1.png",
+    "name": "chest"
+  },
+  {
+    "image": "https://wger.de/media/exercise-images/181/Chin-ups-2.png",
+    "name": "bisep"
+  },
+  {
+    "image": "https://wger.de/media/exercise-images/106/T-bar-row-1.png",
+    "name": "tricep"
+  },
+
+  {
+    "image": "https://wger.de/media/exercise-images/193/Preacher-curl-3-1.png",
+    "name": "bisep"
+  },
+  {
+    "image": "https://wger.de/media/exercise-images/16/Incline-press-1.png",
+    "name": "chest"
+  },
+  {
+    "image": "https://wger.de/media/exercise-images/61/Close-grip-bench-press-1.png",
+    "name": "chest"
+  },
+  {
+    "image": "https://wger.de/media/exercise-images/98/Butterfly-machine-2.png",
+    "name": "chest"
+  }
+]
