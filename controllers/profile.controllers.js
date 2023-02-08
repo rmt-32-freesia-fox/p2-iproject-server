@@ -1,15 +1,35 @@
-const { User, Following, Link } = require('../models')
+const { User, Following, Link, Discord, Github, Spotify } = require('../models')
 
 class ProfileController {
   static async detail(req, res, next) {
     try {
       const { username } = req.params
+      if (username.toLowerCase() === 'callback') return res.send()
+
       const user = await User.findOne({
         where: { username },
         include: [
           { model: User, as: 'Followings', attributes: ['id'] },
           { model: User, as: 'Followers', attributes: ['id'] },
           Link,
+          {
+            model: Github,
+            attributes: {
+              exclude: ['access_token', 'refresh_token'],
+            },
+          },
+          {
+            model: Discord,
+            attributes: {
+              exclude: ['access_token', 'refresh_token'],
+            },
+          },
+          {
+            model: Spotify,
+            attributes: {
+              exclude: ['access_token', 'refresh_token'],
+            },
+          },
         ],
       })
       if (!user) throw { name: 'NotFound', message: 'User not found!' }
@@ -26,7 +46,7 @@ class ProfileController {
       data.Followings = data.Followings.length
       data.Followers = data.Followers.length
 
-      res.json(user)
+      res.json(data)
     } catch (error) {
       next(error)
     }
@@ -71,7 +91,7 @@ class ProfileController {
       const FollowId = user.id
 
       const following = await Following.findOne({
-        wheren: { UserId, FollowId },
+        where: { UserId, FollowId },
       })
       if (following)
         throw { name: 'ValidationError', message: 'Already following' }
@@ -96,7 +116,10 @@ class ProfileController {
         wheren: { UserId, FollowId },
       })
       if (!following)
-        throw { name: 'ValidationError', message: 'You are not following this user' }
+        throw {
+          name: 'ValidationError',
+          message: 'You are not following this user',
+        }
 
       await following.destroy()
       res.status(200).json({ message: 'Unfollowing ' + user.username })
@@ -105,6 +128,5 @@ class ProfileController {
     }
   }
 }
-
 
 module.exports = ProfileController

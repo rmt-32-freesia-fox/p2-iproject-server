@@ -1,5 +1,5 @@
 const { verifyToken, noErrorVerifyToken } = require('../helpers/jwt')
-const { User } = require('../models')
+const { User, Link } = require('../models')
 /**
  *
  * @type {import('express').RequestHandler}
@@ -26,7 +26,7 @@ const authenticatePublic = async (req, res, next) => {
       next()
       return
     }
-    const user = await User.findByPk(id)
+    const user = await User.findByPk(payload.id)
     if (!user) throw { name: 'AuthenticationFailed', message: 'Invalid Token' }
 
     req.user = payload // { id }
@@ -39,7 +39,7 @@ const authenticatePublic = async (req, res, next) => {
 const authorizeLink = async (req, res, next) => {
   try {
     const { id: UserId } = req.user
-    const linkData = await Link.findOne({ where: { id } })
+    const linkData = await Link.findOne({ where: { id: req.params.id } })
     if (!linkData) throw { nama: 'NotFound', message: 'Data not found' }
 
     if (linkData.UserId !== UserId)
