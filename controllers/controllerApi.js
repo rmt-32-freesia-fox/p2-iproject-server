@@ -16,6 +16,5 @@ class ControllerApi {
       next(error);
     }
   }
-
 }
 module.exports = ControllerApi;

@@ -12,6 +12,7 @@ class ControllerCourse {
           maxResults: '8',
           q: `tutorial ${search}`,
           regionCode: 'id',
+          q: `tutorial ${search}`,
           type: 'video',
           videoCategoryId: '28',
           key: process.env.YT_KEY,
