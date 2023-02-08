@@ -3,7 +3,6 @@ const axios = require("axios");
 class Controller {
   static async getExercises(req, res, next) {
     try {
-      const { search } = req.query;
       const options = {
         method: "GET",
         url: `https://exercisedb.p.rapidapi.com/exercises`,
@@ -14,9 +13,36 @@ class Controller {
       };
 
       const result = await axios(options);
-      const output = result.data.slice(0, 100);
-      console.log(output.length);
-      res.status(200).json({ data: output });
+      const output = result.data.slice(0, 200);
+
+      let { page, filter, search } = req.query;
+
+      let bodyPart;
+      let find;
+
+      let query = {
+        limit: 9,
+      };
+
+      if (search && filter) {
+        find = output.filter((el) => el.target == search);
+        bodyPart = find.filter((el) => el.bodyPart == filter);
+      } else if (search) {
+        bodyPart = output.filter((el) => el.target == search);
+      } else if (filter) {
+        bodyPart = output.filter((el) => el.bodyPart == filter);
+      } else {
+        bodyPart = output;
+      }
+
+      if (page) {
+        query.offset = query.limit * page - query.limit;
+      } else {
+        query.offset = 0;
+      }
+
+      const data = bodyPart.slice(query.offset, query.offset + query.limit);
+      res.status(200).json({ length: data.length, data });
     } catch (error) {
       next(error);
     }
