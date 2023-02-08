@@ -20,6 +20,8 @@ module.exports = {
           model: 'Links',
           key: 'id',
         },
+        onDelete: 'cascade',
+        onUpdate: 'cascade',
       },
       UserId: {
         allowNull: false,
@@ -28,6 +30,8 @@ module.exports = {
           model: 'Users',
           key: 'id',
         },
+        onDelete: 'cascade',
+        onUpdate: 'cascade',
       },
       createdAt: {
         allowNull: false,
