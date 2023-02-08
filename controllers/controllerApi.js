@@ -16,6 +16,5 @@ class ControllerApi {
       next(error);
     }
   }
-  static async forQr(req, res, next) {}
 }
 module.exports = ControllerApi;

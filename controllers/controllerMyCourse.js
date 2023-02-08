@@ -3,10 +3,10 @@ const { MyCourse } = require('../models');
 class ControllerMyCourse {
   static async addFavorite(req, res, next) {
     try {
-      const { idCourse, imgUrl, description } = req.body;
+      const { idCourse, imgUrl, description, title, channelTitle, publishedAt } = req.query;
       const { id } = req.user;
-      const addCourse = await MyCourse.create({ idCourse, UserId: id, imgUrl, description });
-      res.status(200).json({ id: addCourse.id, idCourse: addCourse.idCourse, isSubscribe: addCourse.isSubscribe, imgUrl: addCourse.imgUrl });
+      const addFavorite = await MyCourse.create({ idCourse, UserId: id, imgUrl, description, title, channelTitle, publishedAt });
+      res.status(201).json({ message: 'success add to list', id: addFavorite.id, UserId: addFavorite.UserId, idCourse: addFavorite.idCourse });
     } catch (error) {
       next(error);
     }
