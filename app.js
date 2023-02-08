@@ -3,7 +3,6 @@ if (process.env.NODE_ENV !== "production") {
 }
 const express = require("express");
 const { createServer } = require("http");
-const { Server } = require("socket.io");
 var cron = require("node-cron");
 const app = express();
 const port = 3000;
@@ -15,9 +14,10 @@ const { verifyToken } = require("./helpers/jwt");
 const httpServer = createServer(app);
 const { Auction, History } = require("./models");
 
-const io = new Server(httpServer, {
+const io = require("socket.io")(httpServer, {
   cors: {
-    origin: "*",
+    origin: "https://hlr-auction.web.app",
+    methods: ["GET", "POST"],
   },
 });
 

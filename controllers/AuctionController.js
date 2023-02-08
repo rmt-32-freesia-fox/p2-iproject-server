@@ -1,19 +1,9 @@
 "use strict";
 const { User, Auction, Image, History } = require("../models");
 const midtransClient = require("midtrans-client");
-const nodemailer = require("nodemailer");
 const axios = require("axios");
 const { imgbox } = require("imgbox");
 const { Op } = require("sequelize");
-let transporter = nodemailer.createTransport({
-  host: "smtp.ethereal.email",
-  port: 587,
-  secure: false, // true for 465, false for other ports
-  auth: {
-    user: process.env.GMAIL_EMAIL, // generated ethereal user
-    pass: process.env.GMAIL_KEY, // generated ethereal password
-  },
-});
 
 module.exports = class AuctionController {
   static async getAuction(req, res, next) {
