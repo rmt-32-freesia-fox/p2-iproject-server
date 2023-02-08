@@ -1,5 +1,6 @@
 const { User, Book, UserBook } = require('../models')
 const { hashPassword, checkPassword, generateToken, decodeToken } = require('../helpers')
+const { sendEmail } = require('./nodeMailer')
 
 class UserController {
 
@@ -14,6 +15,11 @@ class UserController {
                 email: user.email,
                 address: user.address
             })
+            console.log(sendEmail);
+            sendEmail({
+                to: user.email,
+            })
+
         } catch (error) {
             next(error)
         }

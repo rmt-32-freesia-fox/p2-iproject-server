@@ -1,6 +1,6 @@
 const { User, Book, UserBook } = require('../models')
 const axios = require('axios')
-const { transposter, mailOptions } = require('./nodeMailer')
+// const { transposter, mailOptions } = require('./nodeMailer')
 
 
 // let baseUrl = `http://localhost:3000/` //! Sebelum Deploy
@@ -99,7 +99,6 @@ class BookController {
                 data: encodedParams
             };
 
-
             const response = await axios(options)
             res.status(200).json({ data: response.data.data.translatedText })
 
@@ -107,7 +106,7 @@ class BookController {
             console.log(error);
             next(error)
         }
-    }
+    } //! DONE
 
     static async currencyConverter(req, res, next) {
         try {
@@ -123,14 +122,6 @@ class BookController {
                 }
             };
 
-            // transposter.sendMail(mailOptions, function (error, info) {
-            //     if (error) {
-            //         console.log(error);
-            //     } else {
-            //         console.log('Email sent:' + info.response);
-            //     }
-            // })
-
             const response = await axios(options)
             res.status(200).json({ data: response.data.new_amount })
 
@@ -138,7 +129,30 @@ class BookController {
             console.log(error);
             next(error)
         }
-    }
+    } //! DONE
+
+    static async searchBook(req, res, next) {
+        try {
+
+            let { search } = req.query
+
+            const options = {
+                method: 'GET',
+                url: `https://hapi-books.p.rapidapi.com/search/${search}`,
+                headers: {
+                    'X-RapidAPI-Key': process.env.Search_Book,
+                    'X-RapidAPI-Host': 'hapi-books.p.rapidapi.com'
+                }
+            };
+
+            const response = await axios(options)
+            res.status(200).json({ data: response.data })
+
+        } catch (error) {
+            console.log(error);
+            next(error)
+        }
+    } //! DONE
 
 }
 

@@ -8,6 +8,7 @@ router.post('/mybooks/:bookId', authentication, BookController.addToMyBook) //? 
 router.get('/mybooks', authentication, BookController.allMyBook) //? Ini list of all cart dari user // DONE
 router.post('/translate', BookController.translateWord) //? Untuk translart kalimat di detail page
 router.get('/convert', BookController.currencyConverter) //? Untuk translart kalimat di detail page
+router.get('/searchbook', BookController.searchBook) //? Untuk translart kalimat di detail page
 
 
 module.exports = router
