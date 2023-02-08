@@ -1,6 +1,7 @@
 module.exports = ((error, req, res, next) => {
     let status;
     let message;
+    console.log(error);
     switch (error.name) {
         case "SequelizeValidationError":
         case "SequelizeUniqueConstraintError":

@@ -40,6 +40,42 @@ class UserController {
             next(error)
         }
     }
+    static async googleLogin(req, res, next) {
+        try {
+            const token = req.headers["google-auth-token"]
+            const ticket = await client.verifyIdToken({
+                idToken: token,
+                audience: 338073874974 - rrups1f7nt5urgppren0eiunnvhlm6hk.apps.googleusercontent.com,
+            });
+            const payload = ticket.getPayload();
+            const { email, name } = payload
+
+            let [user, created] = await User.findOrCreate({
+                where: {
+                    email
+                },
+                defaults: {
+                    username: name,
+                    email: email,
+                    password: String(Math.random()),
+                }
+            })
+            let message, code;
+            if (created) {
+                message = `customer with email ${email} has been created`
+                code = 201
+            } else {
+                message = `customer with email ${email} has been Found`
+                code = 200
+            }
+            const access_token = generateToken({
+                id: User.id
+            })
+            res.status(code).json({ message, access_token, username: user.username })
+        } catch (error) {
+            next(error)
+        }
+    }
 }
 
 module.exports = UserController
