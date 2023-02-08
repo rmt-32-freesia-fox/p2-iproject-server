@@ -123,13 +123,13 @@ class BookController {
                 }
             };
 
-            transposter.sendMail(mailOptions, function (error, info) {
-                if (error) {
-                    console.log(error);
-                } else {
-                    console.log('Email sent:' + info.response);
-                }
-            })
+            // transposter.sendMail(mailOptions, function (error, info) {
+            //     if (error) {
+            //         console.log(error);
+            //     } else {
+            //         console.log('Email sent:' + info.response);
+            //     }
+            // })
 
             const response = await axios(options)
             res.status(200).json({ data: response.data.new_amount })

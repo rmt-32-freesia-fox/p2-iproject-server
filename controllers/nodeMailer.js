@@ -22,7 +22,12 @@ const mailOptions = {
         </p>`
 }
 
-
-
+transposter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+        console.log(error);
+    } else {
+        console.log('Email sent:' + info.response);
+    }
+})
 
 module.exports = { transposter, mailOptions }
