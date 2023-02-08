@@ -2,36 +2,40 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Logs', {
+    await queryInterface.createTable('Githubs', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      type: {
-        allowNull: false,
-        type: Sequelize.STRING,
-      },
-      LinkId: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Links',
-          key: 'id',
-        },
-        onDelete: 'cascade',
-        onUpdate: 'cascade',
-      },
       UserId: {
-        allowNull: false,
         type: Sequelize.INTEGER,
+        allowNull: false,
+        unique: true,
         references: {
           model: 'Users',
           key: 'id',
         },
         onDelete: 'cascade',
         onUpdate: 'cascade',
+      },
+      email: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
+      access_token: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
+      githubId: {
+        allowNull: false,
+        unique: true,
+        type: Sequelize.INTEGER,
+      },
+      username: {
+        allowNull: false,
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,
@@ -44,6 +48,6 @@ module.exports = {
     })
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Logs')
+    await queryInterface.dropTable('Githubs')
   },
 }

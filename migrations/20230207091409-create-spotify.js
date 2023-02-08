@@ -2,29 +2,16 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Logs', {
+    await queryInterface.createTable('Spotifies', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      type: {
-        allowNull: false,
-        type: Sequelize.STRING,
-      },
-      LinkId: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Links',
-          key: 'id',
-        },
-        onDelete: 'cascade',
-        onUpdate: 'cascade',
-      },
       UserId: {
         allowNull: false,
+        unique: true,
         type: Sequelize.INTEGER,
         references: {
           model: 'Users',
@@ -32,6 +19,27 @@ module.exports = {
         },
         onDelete: 'cascade',
         onUpdate: 'cascade',
+      },
+      email: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
+      spotifyId: {
+        allowNull: false,
+        unique: true,
+        type: Sequelize.STRING,
+      },
+      username: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
+      access_token: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
+      refresh_token: {
+        allowNull: false,
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,
@@ -44,6 +52,6 @@ module.exports = {
     })
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Logs')
+    await queryInterface.dropTable('Spotifies')
   },
 }

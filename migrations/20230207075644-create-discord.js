@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Followings', {
+    await queryInterface.createTable('Discords', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -11,6 +11,7 @@ module.exports = {
       },
       UserId: {
         allowNull: false,
+        unique: true,
         type: Sequelize.INTEGER,
         references: {
           model: 'Users',
@@ -19,15 +20,30 @@ module.exports = {
         onDelete: 'cascade',
         onUpdate: 'cascade',
       },
-      FollowId: {
+      email: {
         allowNull: false,
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Users',
-          key: 'id'
-        },
-        onDelete: 'cascade',
-        onUpdate: 'cascade',
+        type: Sequelize.STRING
+      },
+      discordId: {
+        unique: true,
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      username: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      discriminator: {
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
+      access_token: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      refresh_token: {
+        allowNull: false,
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
@@ -40,6 +56,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Followings');
+    await queryInterface.dropTable('Discords');
   }
 };

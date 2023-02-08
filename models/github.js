@@ -1,7 +1,7 @@
 'use strict'
 const { Model } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
-  class Log extends Model {
+  class Github extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -9,32 +9,31 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Log.belongsTo(models.Link, { onDelete: 'cascade' })
-      Log.belongsTo(models.User, { onDelete: 'cascade' })
+      Github.belongsTo(models.User)
     }
   }
-  Log.init(
+  Github.init(
     {
-      type: { allowNull: false, type: DataTypes.STRING },
-      LinkId: {
-        allowNull: false,
-        type: DataTypes.INTEGER,
-        references: { model: 'Links', key: 'id' },
-        onDelete: 'cascade',
-        onUpdate: 'cascade',
-      },
       UserId: {
-        allowNull: false,
         type: DataTypes.INTEGER,
-        references: { model: 'Users', key: 'id' },
+        allowNull: false,
+        unique: true,
+        references: {
+          model: 'Users',
+          key: 'id',
+        },
         onDelete: 'cascade',
         onUpdate: 'cascade',
       },
+      email: { type: DataTypes.STRING, allowNull: false },
+      access_token: { type: DataTypes.STRING, allowNull: false },
+      githubId: { type: DataTypes.INTEGER, unique: true, allowNull: false },
+      username: { type: DataTypes.STRING, allowNull: false },
     },
     {
       sequelize,
-      modelName: 'Log',
+      modelName: 'Github',
     }
   )
-  return Log
+  return Github
 }
