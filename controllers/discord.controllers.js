@@ -6,7 +6,7 @@ const {
   revokeUserToken,
 } = require('../helpers/discord')
 
-const { Discord, User } = require('../models')
+const { Discord, User, Github, Spotify } = require('../models')
 const { signToken } = require('../helpers/jwt')
 const usernameGenerator = require('../helpers/usernameGenerator')
 class DiscordController {
@@ -103,7 +103,42 @@ class DiscordController {
       const discordUser = await Discord.findOne({ where: { UserId: id } })
 
       if (!discordUser) throw { name: 'NotFound', message: 'Data not found' }
+      const user = await User.findByPk(id, {
+        include: [
+          {
+            model: Github,
+            attributes: {
+              exclude: ['access_token', 'refresh_token'],
+            },
+          },
+          {
+            model: Discord,
+            attributes: {
+              exclude: ['access_token', 'refresh_token'],
+            },
+          },
+          {
+            model: Spotify,
+            attributes: {
+              exclude: ['access_token', 'refresh_token'],
+            },
+          },
+        ],
+      })
 
+      const providers = [
+        user.Discord ? 'Discord' : null,
+        user.Spotify ? 'Spotify' : null,
+        user.Github ? 'Github' : null,
+      ].filter((p) => p !== 'Discord')
+
+      const isOkToUnlink = providers.some((p) => p)
+
+      if (!isOkToUnlink)
+        throw {
+          name: 'ValidationError',
+          message: 'Cant unlink, must have at least 1 link',
+        }
       await discordUser.destroy()
       await revokeUserToken(discordUser.access_token)
 

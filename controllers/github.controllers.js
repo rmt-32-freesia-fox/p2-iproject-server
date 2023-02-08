@@ -4,7 +4,7 @@ const {
   revokeUserGrant,
   getLoginUrl,
 } = require('../helpers/github')
-const { Github, User } = require('../models')
+const { Github, User, Discord, Spotify } = require('../models')
 const usernameGenerator = require('../helpers/usernameGenerator')
 const { signToken } = require('../helpers/jwt')
 
@@ -66,7 +66,7 @@ class GithubController {
     try {
       const { id } = req.user
       const { code } = req.body
-      
+
       // if github account already linked, throw an error
       const githubData = await Github.findOne({ where: { UserId: id } })
       if (githubData)
@@ -89,9 +89,7 @@ class GithubController {
         access_token,
       })
 
-      res
-        .status(201)
-        .json({ message: `Successfuly link your github account!` })
+      res.status(201).json({ message: `Successfuly link your github account!` })
       return
     } catch (error) {
       next(error)
@@ -106,9 +104,44 @@ class GithubController {
     try {
       const { id } = req.user
       const githubUser = await Github.findOne({ where: { UserId: id } })
-      
-      if(!githubUser) throw { name: 'NotFound', message: 'Data not found' }
-      
+
+      if (!githubUser) throw { name: 'NotFound', message: 'Data not found' }
+      const user = await User.findByPk(id, {
+        include: [
+          {
+            model: Github,
+            attributes: {
+              exclude: ['access_token', 'refresh_token'],
+            },
+          },
+          {
+            model: Discord,
+            attributes: {
+              exclude: ['access_token', 'refresh_token'],
+            },
+          },
+          {
+            model: Spotify,
+            attributes: {
+              exclude: ['access_token', 'refresh_token'],
+            },
+          },
+        ],
+      })
+
+      const providers = [
+        user.Discord ? 'Discord' : null,
+        user.Spotify ? 'Spotify' : null,
+        user.Github ? 'Github' : null,
+      ].filter((p) => p !== 'Github')
+
+      const isOkToUnlink = providers.some((p) => p)
+
+      if (!isOkToUnlink)
+        throw {
+          name: 'ValidationError',
+          message: 'Cant unlink, must have at least 1 link',
+        }
       await githubUser.destroy()
       await revokeUserGrant(githubUser.access_token)
 
