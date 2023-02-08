@@ -36,12 +36,16 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      startTime: {
-        type: Sequelize.DATE,
+      date: {
+        type: Sequelize.DATEONLY,
         allowNull: false,
       },
-      finishTime: {
-        type: Sequelize.DATE,
+      socketRoom: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      status: {
+        type: Sequelize.STRING,
         allowNull: false,
       },
       createdAt: {
