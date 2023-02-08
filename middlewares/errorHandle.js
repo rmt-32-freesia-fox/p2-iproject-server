@@ -23,6 +23,9 @@ const errorMsg = (error, req, res, next) => {
       resStatus = 401;
       resMessage = 'invalid token';
       break;
+    case 'subsribe_now':
+      resStatus = 401;
+      resStatus = 'subscribe first';
     case 'forbidden':
       resStatus = 403;
       resMessage = 'not authorize access';
