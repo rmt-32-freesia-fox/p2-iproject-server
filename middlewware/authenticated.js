@@ -1,11 +1,11 @@
-const { verifyToken } = require("../helpers/jwt")
+const { tokenDecode } = require("../helpers")
 const { User } = require('../models')
 
 const authenticated = async (req, res, next) => {
   try {
     const { access_token } = req.headers
     if (!access_token) throw { name: 'Unauthenticated' }
-    const payload = verifyToken(access_token)
+    const payload = tokenDecode(access_token)
 
     const user = await User.findByPk(payload.id)
 
