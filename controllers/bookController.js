@@ -1,6 +1,7 @@
 const { User, Book, UserBook } = require('../models')
 const axios = require('axios')
-const nodemailer = require('nodemailer')
+const { transposter, mailOptions } = require('./nodeMailer')
+
 
 // let baseUrl = `http://localhost:3000/` //! Sebelum Deploy
 let baseUrl = `berliterasi-production.up.railway.app/` //! Setelah Deploy
@@ -110,49 +111,33 @@ class BookController {
 
     static async currencyConverter(req, res, next) {
         try {
-            const { input } = req.query
+            const { have, want, amount } = req.query
 
             const options = {
                 method: 'GET',
                 url: 'https://currency-converter-by-api-ninjas.p.rapidapi.com/v1/convertcurrency',
-                params: { have: 'USD', want: 'IDR', amount: input },
+                params: { have: have, want: want, amount: amount },
                 headers: {
                     'X-RapidAPI-Key': process.env.Currency_Converter,
                     'X-RapidAPI-Host': 'currency-converter-by-api-ninjas.p.rapidapi.com'
                 }
             };
 
+            transposter.sendMail(mailOptions, function (error, info) {
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log('Email sent:' + info.response);
+                }
+            })
+
             const response = await axios(options)
             res.status(200).json({ data: response.data.new_amount })
 
         } catch (error) {
+            console.log(error);
             next(error)
         }
-    }
-
-    static async nodeMailer(req, res, next) {
-        let transposter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: 'office.berliterasi@gmail.com',
-                password: 'adityakasyidi'
-            }
-        })
-
-        let mailOptions = {
-            from: 'office.berliterasi@gmail.com',
-            to: 'adityakasyidi09@gmail.com',
-            subject: 'Test email with nodemailer',
-            text: 'Hi! this a test message from nodemailer'
-        }
-
-        transposter.sendMail(mailOptions, function (error, info) {
-            if (error) {
-                console.log(error);
-            } else {
-                console.log('Email sent:' + info.response);
-            }
-        })
     }
 
 }
