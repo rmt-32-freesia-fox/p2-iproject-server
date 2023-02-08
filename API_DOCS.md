@@ -3,6 +3,7 @@
 ## Models :
 
 _Student_
+
 ```
 - username : string, required
 - email : string, required, unique
@@ -12,6 +13,7 @@ _Student_
 ```
 
 _Teacher_ (hasManyCourses)
+
 ```
 - username : string, required
 - email : string, required, unique
@@ -21,12 +23,16 @@ _Teacher_ (hasManyCourses)
 ```
 
 _Course_ (HasMany material) (belongsTo Teacher)
+
 ```
 - name : string, required
+- thumbnail:string,required
 - description: string, required
 - TeacherId: integer, required
 ```
+
 _Material_ (belongsTo courses)
+
 ```
 - name : string, required
 - videoId: string, required
@@ -35,13 +41,16 @@ _Material_ (belongsTo courses)
 ```
 
 _Class_ (belongsTo student) (belongTo Course)
+
 ```
 - StudentId: integer, required
 - CourseId: integer, required
 - status: string, required
 _Category_ (hasMany Course)
 ```
+
 - name: string, required
+
 ```
 
 
@@ -54,3 +63,4 @@ _Category_ (hasMany Course)
 >- Course dan material = **One-to-Many**
 >### **Many-to-Many**
 >- Student dan Course = **Many-to-Many**
+```

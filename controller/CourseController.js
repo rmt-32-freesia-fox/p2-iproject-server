@@ -1,4 +1,4 @@
-const { Course, Material } = require('../models')
+const { Course, Material,Category } = require('../models')
 module.exports = class CourseController {
     static async getCourse(req, res, next) {
         try {
@@ -87,6 +87,35 @@ module.exports = class CourseController {
             res.status(200).json({message:'success to delete'})
         } catch (err) {
             console.log('=========== deletematerial error')
+            console.log(err)
+            next(err)
+        }
+    }
+    static async getCategories(req, res, next) {
+        try {
+            const categories = await Category.findAll()
+            res.status(200).json(categories)
+        } catch (err) {
+            console.log('=========== get categories error')
+            console.log(err)
+            next(err)
+        }
+    }
+    static async getCategoryByPk(req, res, next) {
+        const {id} = req.params
+        try {
+            const category = await Category.findOne({
+                where:{
+                    id
+                },
+                include:{
+                    model:Course,
+                    key:'id',
+                }
+            })
+            res.status(200).json(category)
+        } catch (err) {
+            console.log('=========== get categories error')
             console.log(err)
             next(err)
         }
