@@ -46,12 +46,8 @@ async function onlyStudentAuthorization(req, res, next) {
                     name: "NotFound"
                 }
             }
-            if (userId !== course.TeacherId) {
-                throw {
-                    name: "Forbidden"
-                }
-            }
         }
+        console.log(role, '====================')
         if (role !== "student") {
             throw {
                 name: "Forbidden"

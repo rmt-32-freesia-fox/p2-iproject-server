@@ -1,6 +1,6 @@
 const { checkPassword } = require('../helpers/bcrypt')
 const { signToken } = require('../helpers/jwt')
-const {Student} = require('../models')
+const {Student, Class,Course, Material} = require('../models')
 module.exports = class StudentController {
     static async register(req,res,next){
         const { username,email, password,profileImg } = req.body
@@ -34,16 +34,47 @@ module.exports = class StudentController {
 
             if (!checkPassword(password, user.password)) throw { name: 'InvalidCredentials' }
 
-            res.status(200).json({ access_token: signToken({ id: user.id }) })
+            res.status(200).json({ access_token: signToken({ id: user.id, email:user.email}) })
         } catch (err) {
             console.log(err)
             next(err)
         }
     }
     static async join(req,res,next){
+        const {courseId} = req.params
+        const {id} = req.user
         try {
-            
+            const result = await Class.create({
+                StudentId:id,
+                CourseId:courseId,
+                status:"unwatched"
+            })
+            res.status(200).json(result)
         } catch (err) {
+            console.log(err)
+            next(err)
+        }
+    }
+
+    static async courseList(req,res,next){
+        const {id} = req.user
+        try {
+            const result = await Class.findAll({
+                where:{
+                    StudentId:id
+                },
+                include:{
+                    model:Course,
+                    key:'id',
+                    include:{
+                        model:Material,
+                        key:'id'
+                    }
+                }
+            })
+            res.status(200).json(result)
+        } catch (err) {
+            console.log(err)
             next(err)
         }
     }

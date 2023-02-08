@@ -33,7 +33,7 @@ module.exports = class TeacherController {
 
             if (!checkPassword(password, user.password)) throw { name: 'InvalidCredentials' }
 
-            res.status(200).json({ access_token: signToken({ id: user.id }) })
+            res.status(200).json({ access_token: signToken({ id: user.id, email:user.email }) })
         } catch (err) {
             next(err)
         }

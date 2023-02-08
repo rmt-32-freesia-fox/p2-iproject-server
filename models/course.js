@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Course.belongsTo(models.Teacher, { foreignKey:'TeacherId' })
       Course.hasMany(models.Material, {foreignKey:'CourseId'})
+      Course.hasMany(models.Class, {foreignKey:'CourseId'})
     }
   }
   Course.init({

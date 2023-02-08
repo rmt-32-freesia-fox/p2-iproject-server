@@ -55,8 +55,14 @@ module.exports = class CourseController {
     static async getCourseByPk(req, res, next) {
         const {courseId} = req.params
         try {
-            const course = await Course.findByPk(courseId)
-            req.status(200).json(course)
+            const course = await Course.findOne({
+                where:{id:courseId},
+                include:{
+                    model:Material,
+                    key:'id'
+                }
+            })
+            res.status(200).json(course)
         } catch (err) {
             console.log('=========== getCourseByPk error')
             console.log(err)
