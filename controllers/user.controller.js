@@ -36,9 +36,9 @@ class UserController {
   static async edit(req, res, next) {
     try {
       const { username, bio, name } = req.body
-      const profilePicture = req.file?.url || null
+      const { profilePicture, background } = req.imgbox
       const user = await User.findByPk(req.user.id)
-      await user.update({ username, bio, name, profilePicture })
+      await user.update({ username, bio, name, profilePicture, background })
       res.json({ message: 'Updated!' })
     } catch (error) {
       next(error)

@@ -14,19 +14,54 @@ const upload = multer({
   },
 })
 
-const handleImage = upload.single('profilePicture')
-
 const uploadImgbox = async (req, res, next) => {
   try {
-    if (req.file) {
-      const data = await imgbox(req.file.buffer)
-      const file = data.files[0]
-      req.file.url = file.original_url
+    const { profilePicture, background } = req.files
+    const images = []
+    req.imgbox = {}
+
+    if (profilePicture) {
+      images.push({
+        buffer: profilePicture[0].buffer,
+        filename: profilePicture[0].originalname,
+      })
+    }
+    if (background) {
+      images.push({
+        buffer: background[0].buffer,
+        filename: background[0].originalname,
+      })
+    }
+
+    if (images.length) {
+      const data = await imgbox(images)
+      const { files } = data
+      if (background) {
+        req.imgbox.background = files.find(
+          ({ name }) => name === background[0].originalname
+        )
+      }
+      if (profilePicture) {
+        req.imgbox.profilePicture = files.find(
+          ({ name }) => name === profilePicture[0].originalname
+        )
+      }
     }
     next()
   } catch (error) {
     next(error)
   }
 }
+
+const handleImage = upload.fields([
+  {
+    name: 'profilePicture',
+    maxCount: 1,
+  },
+  {
+    name: 'background',
+    maxCount: 1,
+  },
+])
 
 module.exports = { uploadImgbox, handleImage }
