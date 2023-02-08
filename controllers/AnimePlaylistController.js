@@ -46,7 +46,6 @@ class AnimePlaylistController {
        const anime = await AnimePlaylist.findOne({
         where: { AnimeId, UserId },
       });
-      console.log(anime,"anime");
       let status = "Not Finish Watched"
       if (anime.totalEpisodes == watchedEpisodes) {
         status = "Watched"
@@ -59,6 +58,20 @@ class AnimePlaylistController {
     })
     //   console.log(created,"created");
       res.status(200).json(dataPlaylist);
+    } catch (error) {
+      next(error);
+    }
+  }
+  static async deletePlaylist(req, res, next) {
+    try {
+       let {UserId,AnimeId} = req.body
+       console.log(req.body);
+       const anime = await AnimePlaylist.findOne({
+        where: { AnimeId, UserId },
+      });
+     
+    let dataPlaylist = await anime.destroy()
+      res.status(200).json({message : "Anime has been deleted"});
     } catch (error) {
       next(error);
     }

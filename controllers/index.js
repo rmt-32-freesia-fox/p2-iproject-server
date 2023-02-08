@@ -87,6 +87,20 @@ class UserController {
         console.error(error);
       });
   }
+
+  static async allEvent(req, res, next) {
+    try {
+        let {UserId} = req.params 
+        console.log(req.params);
+      let animePlaylist = await AnimePlaylist.findAll({where : {UserId} , include : Anime, order: [
+        ['id'],
+    ],});
+    // console.log(animePlaylist);
+      res.status(201).json(animePlaylist);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = UserController;

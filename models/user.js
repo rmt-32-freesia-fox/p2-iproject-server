@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       User.belongsToMany(models.Anime,{through: models.AnimePlaylist, foreignKey:"UserId"})
+      User.belongsToMany(models.Event,{through: models.MyEvent, foreignKey:"UserId"})
     }
   }
   User.init({
