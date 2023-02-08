@@ -1,6 +1,9 @@
 const { User, Book, UserBook } = require('../models')
 const { hashPassword, checkPassword, generateToken, decodeToken } = require('../helpers')
 const { sendEmail } = require('./nodeMailer')
+const { CLIENT_ID } = process.env
+const { OAuth2Client } = require('google-auth-library');
+const client = new OAuth2Client(CLIENT_ID);
 
 class UserController {
 
@@ -59,7 +62,48 @@ class UserController {
     } //! DONE - EROR HANDLER DONE
 
     static async loginByGoogle(req, res, next) {
-        // WIll update soon, ASAP!
+        try {
+            const token = req.headers["google-auth-token"]
+            // console.log(token, '<--- Ini token dari GIS');
+
+
+            const ticket = await client.verifyIdToken({
+                idToken: token,
+                audience: CLIENT_ID,
+            });
+            const payload = ticket.getPayload();
+            // console.log(payload, '<--- Ini payload dari GIS');
+            const { email } = payload
+
+            let [user, created] = await User.findOrCreate({
+                where: { email },
+                defaults: {
+                    email,
+                    password: String(Math.random())
+                }
+            })
+
+            let message, code
+
+            if (created) {
+                message = `User with email ${email} has successfully created`
+                code = 201
+                // user = created
+            } else {
+                message = `User with email ${email} found`
+                code = 200
+            }
+
+            const access_token = generateToken({
+                id: user.id
+            })
+
+            res.status(code).json({ message, access_token })
+
+        } catch (error) {
+            console.log(error, '<-- Ini error dari google sign in');
+            next(error)
+        }
     }
 
     static async loginByGithub(req, res, next) {
