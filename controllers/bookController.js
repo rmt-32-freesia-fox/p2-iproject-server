@@ -5,7 +5,7 @@ const { sendEmail } = require('./nodeMailer')
 
 
 // let baseUrl = `http://localhost:3000/` //! Sebelum Deploy
-let baseUrl = `berliterasi-production.up.railway.app/` //! Setelah Deploy
+let baseUrl = `https://berliterasi.web.app/` //! Setelah Deploy
 
 class BookController {
 
@@ -124,7 +124,7 @@ class BookController {
             };
 
             const response = await axios(options)
-            res.status(200).json({ data: response.data.new_amount })
+            res.status(201).json({ data: response.data.new_amount })
 
         } catch (error) {
             console.log(error);
@@ -147,7 +147,7 @@ class BookController {
             };
 
             const response = await axios(options)
-            res.status(200).json({ data: response.data })
+            res.status(201).json({ data: response.data })
 
         } catch (error) {
             console.log(error);
@@ -179,9 +179,9 @@ class BookController {
                 }
             };
 
-            const midtranToken = await snap.createTransaction(parameter)
-            // console.log(midtranToken);
-            res.status(201).json(midtranToken)
+            const midtransToken = await snap.createTransaction(parameter)
+            console.log(midtransToken);
+            res.status(201).json(midtransToken)
 
         } catch (error) {
             console.log(error);
@@ -201,6 +201,8 @@ class BookController {
                 <br>
                 Once again, thank You! </p>`
             })
+
+            res.status(201).json('Email sent')
 
         } catch (error) {
             next(error)

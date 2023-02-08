@@ -11,6 +11,12 @@ List of available endpoints:
 - `GET /books/:id`
 - `GET /mybooks`
 - `POST /mybooks/:id`
+- `POST /translate`
+- `GET /convert`
+- `GET /searchbook`
+- `POST /generate-midtrans-token`
+- `GET /send-email`
+
 
 &nbsp;
 
@@ -223,3 +229,191 @@ _Response (200 - OK)_
 
 
 ## 6. POST /mybooks/:id
+
+Description:
+- Add book to MyBook page
+
+Request:
+
+- headers:
+
+```json
+{
+  "access_token": "string"
+}
+```
+
+- params:
+
+```json
+{
+  "id": "integer"
+}
+```
+
+_Response (201 - Created)_
+
+```json
+{
+    "UserId": "integer",
+    "BookId": "integer",
+    "updatedAt": "date",
+    "createdAt": "date"
+}
+```
+
+_Response (404 - Not Found)_
+
+```json
+{
+  "message": "Book not found"
+}
+```
+
+
+## 7. POST /translate
+
+Description:
+- Translate words/sentence using 3rd party API
+
+Request:
+
+- params:
+
+```json
+{
+"translate": "string" 
+}
+```
+
+_Response (200 - Created)_
+
+```json
+{
+    "data": "string"
+}
+```
+
+
+## 8. GET /convert
+
+Description:
+- Convert currency using 3rd party API
+
+Request:
+
+- params:
+
+```json
+{
+"have": "USD",
+"want": "IDR",
+"amount": "integer"
+}
+```
+
+_Response (201 - OK)_
+
+```json
+{
+    "data": "integer"
+}
+```
+
+
+## 9. GET /searchbook
+
+Description:
+- Search and get trivia about books & author using 3rd party API
+
+Request:
+
+- params:
+
+```json
+{
+"search": "string" 
+}
+```
+
+_Response (201 - OK)_
+
+```json
+{
+    "data": "object"
+}
+```
+
+
+## 10. GET /generate-midtrans-token
+
+Description:
+- Get token from Midtrans for authentication payment
+
+Request:
+
+- headers:
+
+```json
+{
+  "access_token": "string"
+}
+```
+
+_Response (201 - OK)_
+
+```json
+{
+    "token": "string",
+    "redirect_url": "string"
+}
+```
+
+
+## 11. GET /send-email
+
+Description:
+- Send email from NodeMailer
+
+Request:
+
+- headers:
+
+```json
+{
+  "access_token": "string"
+}
+```
+
+_Response (201 - OK)_
+
+```json
+"string""
+```
+
+
+## Global Error
+
+_Response (401 - Unauthorized)_
+
+```json
+{
+  "message": "Invalid token"
+}
+```
+
+_Response (403 - Forbidden)_
+
+```json
+{
+  "message": "You are not authorized"
+}
+```
+
+_Response (500 - Internal Server Error)_
+
+```json
+{
+  "message": "Internal server error"
+}
+```
