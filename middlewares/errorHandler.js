@@ -61,12 +61,12 @@ const errorHandler = (err, req, res, next) => {
       break;
 
     case 'AlreadyCheckout':
-      status = 404;
+      status = 400;
       message = 'You have rented this item';
       break;
 
     case 'NotEnoughItem':
-      status = 404;
+      status = 400;
       message = 'Cannot add item to cart';
       break;
   }

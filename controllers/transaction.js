@@ -120,12 +120,14 @@ class TransactionController {
         throw { name: 'AlreadyCheckout' };
       }
 
+      let serverKey = process.env.serverKey;
+      let clientKey = process.env.clientKey;
       let total = transactionById.subtotal;
       const user = await User.findByPk(transactionById.UserId);
       let snap = new midtransClient.Snap({
         isProduction: false,
-        serverKey: 'SB-Mid-server-8rXxTkpI9rhyuwXL0y6l2a7j',
-        clientKey: 'SB-Mid-client-eQbd0WdxVXlcUkL0',
+        serverKey,
+        clientKey,
       });
       let parameter = {
         transaction_details: {

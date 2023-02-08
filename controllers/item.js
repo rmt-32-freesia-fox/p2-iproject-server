@@ -54,6 +54,9 @@ class ItemController {
           },
           {
             model: User,
+            attributes: {
+              exclude: ['password', 'createdAt', 'updatedAt'],
+            },
           },
           {
             model: Transaction,
