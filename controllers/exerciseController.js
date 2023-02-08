@@ -9,7 +9,7 @@ class Controller {
       };
 
       const result = await axios(options);
-      const output = result.data.slice(0, 100);
+      const output = result.data.results;
       console.log(output);
       let { page, filter, search } = req.query;
 
@@ -21,10 +21,10 @@ class Controller {
       };
 
       if (search && filter) {
-        find = output.filter((el) => el.target == search);
+        find = output.filter((el) => el.license_author == search);
         bodyPart = find.filter((el) => el.bodyPart == filter);
       } else if (search) {
-        bodyPart = output.filter((el) => el.target == search);
+        bodyPart = output.filter((el) => el.license_author == search);
       } else if (filter) {
         bodyPart = output.filter((el) => el.bodyPart == filter);
       } else {
