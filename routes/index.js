@@ -2,8 +2,6 @@ const router = require('express').Router()
 const foodRoute = require('./foodRoute')
 const eventRoute = require('./eventRoute')
 const paymentRoute = require('./paymentRoute')
-const foodRoute = require('./foodRoute')
-const paymentRoute = require('./paymentRoute')
 const userRoute = require('./userRoute')
 const authenticated = require('../middlewware/authenticated')
 
