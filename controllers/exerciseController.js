@@ -1,46 +1,43 @@
 const axios = require("axios");
+const { User, Exercise, MyExercise } = require("../models");
+const { Op } = require("sequelize");
 
 class Controller {
   static async getExercises(req, res, next) {
     try {
-      const options = {
-        method: "GET",
-        url: `https://wger.de/api/v2/exerciseimage/`,
+      const { page, size, search, name } = req.query;
+
+      let result;
+      if (search && name) {
+        result = { [Op.and]: [{ name: { [Op.iLike]: `%${search}%` } }, { name }] };
+      }
+      if (search) {
+        result = { [Op.and]: [{ name: { [Op.iLike]: `%${search}%` } }] };
+      }
+      if (name) {
+        result = { [Op.and]: [{ name }] };
+      }
+      if (!search && !name) {
+        result;
+      }
+      const getPage = (page, size) => {
+        const limit = size ? size + 1 : 6;
+        const offset = page ? page * limit : 0;
+
+        return { limit, offset };
+      };
+      const { limit, offset } = getPage(page, size);
+
+      const getDataPerPage = (data, page, limit) => {
+        const { count: countPage, rows: Exercise } = data;
+        const currentPage = page ? page + 1 : 0;
+        const totalPages = Math.ceil(countPage / limit);
+        return { countPage, Exercise, totalPages, currentPage };
       };
 
-      const result = await axios(options);
-      const output = result.data.results;
-      console.log(output);
-      let { page, filter, search } = req.query;
-
-      let bodyPart;
-      let find;
-
-      let query = {
-        limit: 9,
-      };
-
-      if (search && filter) {
-        find = output.filter((el) => el.license_author == search);
-        bodyPart = find.filter((el) => el.bodyPart == filter);
-      } else if (search) {
-        bodyPart = output.filter((el) => el.license_author == search);
-      } else if (filter) {
-        bodyPart = output.filter((el) => el.bodyPart == filter);
-      } else {
-        bodyPart = output;
-      }
-
-      if (page) {
-        query.offset = query.limit * page - query.limit;
-      } else {
-        query.offset = 0;
-      }
-      const currentPage = +page ? +page : 0;
-      const totalPage = Math.ceil(output.length / query.limit);
-
-      const data = bodyPart.slice(query.offset, query.offset + query.limit);
-      res.status(200).json({ currentPage, totalPage: totalPage, data });
+      const dataExercises = await Exercise.findAndCountAll({ where: result, limit, offset });
+      const response = getDataPerPage(dataExercises, page, limit);
+      res.status(200).json({ response });
     } catch (error) {
       next(error);
     }
@@ -73,6 +70,34 @@ class Controller {
       const result = await axios(options);
 
       res.status(200).json({ data: result.data });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async getMyExercise(req, res, next) {
+    try {
+      const UserId = req.user.id;
+      const myexercise = await MyExercise.findAll({ where: { UserId }, include: Exercise });
+      res.status(200).json(myexercise);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async addMyExercise(req, res, next) {
+    try {
+      const { exerciseId } = req.params;
+      const { id } = req.user;
+
+      const exercise = await Exercise.findByPk(exerciseId);
+      if (!exercise) throw { name: "NotFound" };
+
+      const myexercise = await MyExercise.findOne({ where: { UserId: id, ExerciseId: exerciseId } });
+      if (myexercise) throw { name: "Forbidden" };
+
+      const myexer = await MyExercise.create({ UserId: id, ExerciseId: exerciseId });
+      res.status(201).json(myexer);
     } catch (error) {
       next(error);
     }

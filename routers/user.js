@@ -7,9 +7,8 @@ router.post("/login", userController.login);
 router.post("/google-sign-in", userController.loginWithGoogle);
 
 // Midtrans Payment
-router.use(authentication);
-router.post("/generate-midtrans-token", userController.midtransToken);
+router.post("/generate-midtrans-token", authentication, userController.midtransToken);
 
-router.patch("/subscribe", userController.editStatus);
+router.patch("/subscribe", authentication, userController.editStatus);
 
 module.exports = router;
