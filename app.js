@@ -4,6 +4,10 @@ const port = 3000
 
 const cors = require('cors')
 
+const axios = require('axios')
+
+const baseUrl = 'http://localhost:3000'
+
 app.use(cors())
 app.use(express.json())
 
@@ -25,12 +29,29 @@ var access_token = "BQAg-qaRNc7G2ZNxaxlQ1xzjNdgr5ELWJGbBf0-7QF_u7gLGGFFZHdVVxQyx
 
 var server_key = "SB-Mid-server-LLsj1r0T21cb2IQx_o6shDCS"
 
+const  buffer = 'Basic ' + (new Buffer.from(client_id + ':' + client_secret).toString('base64'))
+// Basic Mjk2OTRkOTNlMWQyNDUxOGFlYzM0NTUxZWQzNDljNWU6YmI2NTk2ZjkzMTkzNDA3OGIzMGY5OTNiYjM2YWI4Mzk=
+
 class Controller {
   
   static async get(req, res, next) { 
     res.send(req.query)
   }
   static async redirect(req, res, next) { 
+    try {
+      const {code} = req.query  
+      const token = await Controller.secondCall(code)
+      const {access_token} = token
+      console.log(token);
+      const data = token.data.access_token
+      console.log(token.data.access_token);
+      res.redirect('http://localhost:5173/?token=' + data)
+  
+    } catch (error) {
+      console.log(error, 'error nich');
+    }
+  }
+  static getClientId(req, res, next) { 
     res.send(req.query)
   }
  
@@ -72,11 +93,26 @@ class Controller {
   }
   
   
-  static async secondCall() {
+  static async secondCall(code) {
     try {
-      
+      const req = await 
+      axios({
+        method:'post',
+        url:'https://accounts.spotify.com/api/token',
+        data: {
+          code,
+          redirect_uri: baseUrl + "/redirect/",
+          grant_type: "authorization_code"
+        },
+        headers: {
+          // Authorization: 'Basic Mjk2OTRkOTNlMWQyNDUxOGFlYzM0NTUxZWQzNDljNWU6YmI2NTk2ZjkzMTkzNDA3OGIzMGY5OTNiYjM2YWI4Mzk=',
+          Authorization: buffer,
+          "Content-Type": 'application/x-www-form-urlencoded'
+        }
+      })
+      return req
     } catch (error) {
-      console.log(error);
+      console.log(error, 'error gaes');
     }
   }
   
@@ -90,6 +126,24 @@ class Controller {
     // res.send(req.query)
   }
   
+  static async getProfile(req, res, next) { 
+    const {access_token} = req.headers
+    try {
+      const req = await 
+      axios({
+        method:'get',
+        url:'https://api.spotify.com/v1/me', 
+        headers: {
+          Authorization: `Bearer `+ access_token,
+        }
+      })
+      console.log(req);
+      res.status(200).json(req)
+    } catch (error) {
+      console.log(error, 'error gaes');
+    }
+  }
+  
 }
 
 app.get('/', Controller.get)
@@ -100,16 +154,21 @@ app.post('/midtransToken', Controller.midtrans)
 
 
 
+app.get('/clientId', Controller.getClientId)
 
 app.post('/login', Controller.login)
 
 
+app.get('/profile', Controller.getProfile)
+
+
+app.get('/test', (req, res, next) => {
+  res.redirect('https://www.google.com')
+})
 
 
 
 
-const  reqToken = 'Basic ' + (new Buffer.from(client_id + ':' + client_secret).toString('base64'))
-// Basic Mjk2OTRkOTNlMWQyNDUxOGFlYzM0NTUxZWQzNDljNWU6YmI2NTk2ZjkzMTkzNDA3OGIzMGY5OTNiYjM2YWI4Mzk=
 
 // console.log(reqToken);
 
@@ -118,5 +177,7 @@ const  reqToken = 'Basic ' + (new Buffer.from(client_id + ':' + client_secret).t
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
+
+
 
 
