@@ -40,11 +40,13 @@ class Controller {
   static async redirect(req, res, next) { 
     try {
       const {code} = req.query  
-      const token = await Controller.secondCall(code)
-      const {access_token} = token
-      console.log(token);
+      const token = await Controller.secondCall(code) 
+      // console.log(token);
       const data = token.data.access_token
-      console.log(token.data.access_token);
+      
+      
+      
+      // console.log(token.data.access_token);
       res.redirect('http://localhost:5173/?token=' + data)
   
     } catch (error) {
@@ -126,19 +128,28 @@ class Controller {
     // res.send(req.query)
   }
   
-  static async getProfile(req, res, next) { 
-    const {access_token} = req.headers
+  static async getProfile(access_token) {
     try {
-      const req = await 
+      const {data} = await 
       axios({
         method:'get',
         url:'https://api.spotify.com/v1/me', 
         headers: {
           Authorization: `Bearer `+ access_token,
         }
-      })
-      console.log(req);
-      res.status(200).json(req)
+      })   
+      return data   
+    } catch (error) {
+      throw error
+    }
+  }
+  
+  static async myProfile(req, res, next) { 
+    const {access_token} = req.headers
+    try {
+      const data = await Controller.getProfile(access_token)
+    
+      res.status(200).json(data)
     } catch (error) {
       console.log(error, 'error gaes');
     }
@@ -159,7 +170,7 @@ app.get('/clientId', Controller.getClientId)
 app.post('/login', Controller.login)
 
 
-app.get('/profile', Controller.getProfile)
+app.get('/profile', Controller.myProfile)
 
 
 app.get('/test', (req, res, next) => {
