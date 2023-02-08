@@ -4,8 +4,10 @@ module.exports = class CourseController {
         try {
             const course = await Course.findAll({
                 attributes: [
+                    'id',
                     'name',
-                    'description'
+                    'description',
+                    'imgUrl'
                 ],
                 include: {
                     model: Material,
@@ -93,7 +95,12 @@ module.exports = class CourseController {
     }
     static async getCategories(req, res, next) {
         try {
-            const categories = await Category.findAll()
+            const categories = await Category.findAll({
+                include:{
+                    model:Course,
+                    key:'id'
+                }
+            })
             res.status(200).json(categories)
         } catch (err) {
             console.log('=========== get categories error')

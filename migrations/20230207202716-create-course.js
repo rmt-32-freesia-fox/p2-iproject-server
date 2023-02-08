@@ -15,6 +15,9 @@ module.exports = {
       description: {
         type: Sequelize.STRING
       },
+      imgUrl:{
+        type:Sequelize.STRING
+      },
       TeacherId: {
         type: Sequelize.INTEGER,
         allowNull: false,

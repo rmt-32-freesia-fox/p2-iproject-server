@@ -63,18 +63,42 @@
         {
             "name": "Javascript Basic",
             "description": "Javascript itu sulit sulit gampang, ayo belajar berasama kami",
+            "imgUrl":"https://www.freepnglogos.com/uploads/javascript-png/javascript-vector-logo-yellow-png-transparent-javascript-vector-12.png",
             "TeacherId": 1,
             "CategoryId":1
         },
         {
             "name": "Sequelize Basic",
             "description": "sequelize itu mempermudah anda untuk kelola query loh, jadi ayo belajar wkwk",
+            "imgUrl":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfMmQWvHLCcFPq8vRVXhKW-hx4kwMVOrGiJ1QJBWNodMVbn4o&s",
             "TeacherId": 2,
             "CategoryId":2
         },
         {
+            "name": "Menjadi Jago Gensin Impact Dalam 2 Hari",
+            "description": "Python itu sulit sulit gampang, ayo belajar berasama kami. golang golang golanggaling hehe",
+            "imgUrl":"https://www.freepnglogos.com/uploads/genshin-impact-logo-png/genshin-impact-characters-png-8.png",
+            "TeacherId": 3,
+            "CategoryId":3
+        },
+        {
+            "name": "Cara Bertenak Lele",
+            "description": "Lele Itu Lezat guys, ayo belajar berasama kami. golang golang golanggaling hehe",
+            "imgUrl":"https://media.istockphoto.com/id/1159969333/id/foto/pecel-lele-catfish-indonesia-food.jpg?s=612x612&w=0&k=20&c=qZwu3PnOm9EwnSg25Ll5MoWqTof3mMPwgax1d4aDbVE=",
+            "TeacherId": 3,
+            "CategoryId":3
+        },
+        {
             "name": "Python Basic",
             "description": "Python itu sulit sulit gampang, ayo belajar berasama kami. golang golang golanggaling hehe",
+            "imgUrl":"https://media.istockphoto.com/id/1362729835/id/foto/python-bahasa-pemrograman-dengan-peringkat-bintang-5-dan-kode-elemmets-lencana-3d.jpg?s=612x612&w=0&k=20&c=55KQkUM039OtdOEnlT_Y3lz1UwbQY-m3bsLqFL50Ug4=",
+            "TeacherId": 3,
+            "CategoryId":3
+        },
+        {
+            "name": "Cara Menjinakan Python ",
+            "description": "Python itu sulit sulit gampang, ayo belajar berasama kami. golang golang golanggaling hehe",
+            "imgUrl":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR563vtI_Vba9AnfU1Xo7UoB9fXUcz_RICm8ImSmPNlsRR3fgXx&s",
             "TeacherId": 3,
             "CategoryId":3
         }
@@ -103,6 +127,36 @@
             "videoId": "600tSjGw",
             "docsId": "",
             "CourseId": 3
+        },
+        {
+            "name": "material4",
+            "videoId": "600tSjGw",
+            "docsId": "",
+            "CourseId": 1
+        },
+        {
+            "name": "material4",
+            "videoId": "600tSjGw",
+            "docsId": "",
+            "CourseId": 1
+        },
+        {
+            "name": "material4",
+            "videoId": "600tSjGw",
+            "docsId": "",
+            "CourseId": 1
+        },
+        {
+            "name": "material4",
+            "videoId": "600tSjGw",
+            "docsId": "",
+            "CourseId": 4
+        },
+        {
+            "name": "material4",
+            "videoId": "600tSjGw",
+            "docsId": "",
+            "CourseId": 5
         }
     ],
     "categories":[
@@ -114,6 +168,21 @@
         },
         {
             "name":"data science"
+        },
+        {
+            "name":"pargoy"
+        },
+        {
+            "name":"art"
+        },
+        {
+            "name":"graphical design"
+        },
+        {
+            "name":"mentality"
+        },
+        {
+            "name":"math"
         }
     ]
 }

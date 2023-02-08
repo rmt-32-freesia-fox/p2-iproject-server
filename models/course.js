@@ -42,6 +42,9 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
+    imgUrl:{
+      type:DataTypes.STRING
+    },
     TeacherId: {
       type:DataTypes.INTEGER,
       allowNull:false,
