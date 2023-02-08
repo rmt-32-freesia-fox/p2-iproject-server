@@ -17,6 +17,7 @@ const upload = multer({
 const uploadImgbox = async (req, res, next) => {
   try {
     const { profilePicture, background } = req.files
+
     const images = []
     req.imgbox = {}
 
@@ -38,13 +39,14 @@ const uploadImgbox = async (req, res, next) => {
       const { files } = data
       if (background) {
         req.imgbox.background = files.find(
-          ({ name }) => name === background[0].originalname
-        )
+          ({ name }) => name === background[0].originalname.replace(/ /g, '_')
+        ).original_url
       }
       if (profilePicture) {
         req.imgbox.profilePicture = files.find(
-          ({ name }) => name === profilePicture[0].originalname
-        )
+          ({ name }) =>
+            name === profilePicture[0].originalname.replace(/ /g, '_')
+        ).original_url
       }
     }
     next()
