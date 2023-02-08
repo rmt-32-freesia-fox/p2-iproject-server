@@ -1,5 +1,5 @@
 const { verifyToken, noErrorVerifyToken } = require('../helpers/jwt')
-const { User } = require('../models')
+const { User, Link } = require('../models')
 /**
  *
  * @type {import('express').RequestHandler}
@@ -39,7 +39,7 @@ const authenticatePublic = async (req, res, next) => {
 const authorizeLink = async (req, res, next) => {
   try {
     const { id: UserId } = req.user
-    const linkData = await Link.findOne({ where: { id } })
+    const linkData = await Link.findOne({ where: { id: req.params.id } })
     if (!linkData) throw { nama: 'NotFound', message: 'Data not found' }
 
     if (linkData.UserId !== UserId)
