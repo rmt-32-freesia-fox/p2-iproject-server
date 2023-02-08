@@ -15,6 +15,8 @@ app.use(express.urlencoded({ extended: true }))
 
 const midtransClient = require('midtrans-client');
 
+const {User} = require('./models')
+
 var client_id = '29694d93e1d24518aec34551ed349c5e'; // Your client id
 var client_secret = 'bb6596f931934078b30f993bb36ab839'; // Your secret
 var redirect_uri = 'http://localhost:3000/redirect/'; // Your redirect uri
@@ -32,6 +34,10 @@ var server_key = "SB-Mid-server-LLsj1r0T21cb2IQx_o6shDCS"
 const  buffer = 'Basic ' + (new Buffer.from(client_id + ':' + client_secret).toString('base64'))
 // Basic Mjk2OTRkOTNlMWQyNDUxOGFlYzM0NTUxZWQzNDljNWU6YmI2NTk2ZjkzMTkzNDA3OGIzMGY5OTNiYjM2YWI4Mzk=
 
+
+
+
+
 class Controller {
   
   static async get(req, res, next) { 
@@ -44,7 +50,8 @@ class Controller {
       // console.log(token);
       const data = token.data.access_token
       
-      
+      const request = await Controller.getProfile(data) 
+      console.log(request);
       
       // console.log(token.data.access_token);
       res.redirect('http://localhost:5173/?token=' + data)
