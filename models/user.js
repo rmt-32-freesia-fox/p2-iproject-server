@@ -42,6 +42,9 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           validUsername(username) {
             if (username === 'callback') throw 'Invalid Username'
+            if (username == '0') throw 'Invalid Username'
+            const valid = username.match(/^[a-zA-Z0-9\-\_]+$/)
+            if(!valid) throw 'Invalid Username'
           },
         },
       },
