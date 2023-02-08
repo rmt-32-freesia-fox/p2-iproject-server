@@ -26,7 +26,7 @@ const authenticatePublic = async (req, res, next) => {
       next()
       return
     }
-    const user = await User.findByPk(id)
+    const user = await User.findByPk(payload.id)
     if (!user) throw { name: 'AuthenticationFailed', message: 'Invalid Token' }
 
     req.user = payload // { id }
