@@ -107,13 +107,12 @@ class Controller {
         
         let transactionToken = request.token;
         
-        console.log(id, 'id');
         const updateDb = await User.update({paymentToken: transactionToken }, {
           where : {
             userId: id
           }
         })  
-        console.log(updateDb);
+        // console.log(updateDb);
         
         // trans action token
         console.log('transactionToken:',request); 
@@ -281,6 +280,23 @@ class Controller {
       console.log(error, 'error gaes'); 
     }
   }
+  
+  static async userSubscribed(req, res, next) { 
+    const {access_token, payment_token} = req.headers 
+    try {
+      const {data} = await 
+      axios({
+        method:'get',
+        url,
+        headers: {
+          Authorization: `Bearer `+ access_token,
+        }
+      })   
+      res.status(200).json(data) 
+    } catch (error) {
+      console.log(error, 'error gaes'); 
+    }
+  }
 }
 
 app.get('/', Controller.get)
@@ -307,7 +323,8 @@ app.get('/recently', Controller.myRecentlyPlayed)
 app.get('/findSongs', Controller.findsomeSongs)
 
 app.get('/topGlobal', Controller.getTopGlobal)
- 
+
+app.patch('/subcribed', Controller.userSubscribed)
 
 
 app.get('/test', (req, res, next) => {
