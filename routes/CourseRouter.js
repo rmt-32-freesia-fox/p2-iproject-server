@@ -9,5 +9,5 @@ router.post('/',teacherAuthentication,onlyTeacherAuthorization, CourseController
 router.post('/:courseId',teacherAuthentication,onlyTeacherAuthorization, CourseController.createMaterialCourse)
 router.get('/:courseId',CourseController.getCourseByPk)
 router.delete('/:courseId',teacherAuthentication,onlyTeacherAuthorization, CourseController.deleteCourse)
-
+router.delete('/material/:materialId',teacherAuthentication,onlyTeacherAuthorization, CourseController.deleteMaterial)
 module.exports = router

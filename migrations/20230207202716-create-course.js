@@ -21,7 +21,8 @@ module.exports = {
         references: {
           model: 'Teachers',
           key: 'id'
-        }
+        },
+        onDelete:'cascade'
       },
       createdAt: {
         allowNull: false,

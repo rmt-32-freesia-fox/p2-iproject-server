@@ -40,4 +40,11 @@ module.exports = class StudentController {
             next(err)
         }
     }
+    static async join(req,res,next){
+        try {
+            
+        } catch (err) {
+            next(err)
+        }
+    }
 }

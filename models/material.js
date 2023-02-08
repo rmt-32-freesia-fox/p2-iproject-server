@@ -48,7 +48,8 @@ module.exports = (sequelize, DataTypes) => {
       references:{
         model:"Courses",
         key:"id"
-      }
+      },
+      onDelete:'cascade'
     }
   }, {
     sequelize,

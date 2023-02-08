@@ -45,25 +45,44 @@ module.exports = class CourseController {
             const material = await Material.create({
                 name, videoId,docsId,CourseId:courseId
             })
-            res.status(201).json(course)
+            res.status(201).json(material)
         } catch (err) {
-            console.log('===========')
+            console.log('=========== createMaterialCourse error')
             console.log(err)
             next(err)
         }
     }
     static async getCourseByPk(req, res, next) {
+        const {courseId} = req.params
         try {
-
+            const course = await Course.findByPk(courseId)
+            req.status(200).json(course)
         } catch (err) {
-
+            console.log('=========== getCourseByPk error')
+            console.log(err)
+            next(err)
         }
     }
     static async deleteCourse(req, res, next) {
+        const {courseId} = req.params
         try {
-
+            await Course.destroy({where:{id:courseId}})
+            res.status(200).json({message:'success to delete'})
         } catch (err) {
-
+            console.log('=========== deletecourse error')
+            console.log(err)
+            next(err)
+        }
+    }
+    static async deleteMaterial(req, res, next) {
+        const {materialId} = req.params
+        try {
+            await Material.destroy({where:{id:materialId}})
+            res.status(200).json({message:'success to delete'})
+        } catch (err) {
+            console.log('=========== deletematerial error')
+            console.log(err)
+            next(err)
         }
     }
 }
