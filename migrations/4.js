@@ -18,7 +18,7 @@ module.exports = {
         }
 
       },
-      ProductId: {
+      PlantId: {
         type: Sequelize.INTEGER,
         allowNull:false,
          references:{

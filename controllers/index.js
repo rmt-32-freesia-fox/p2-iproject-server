@@ -121,6 +121,258 @@ class Controller{
         }
     }
 
+    ///FETCHPLANTS
+
+    static async ALLPLANTS (req,res,next){
+        try {
+
+            const PLANTS= await Plant.findAll({
+                include:{
+                    model:Categorie,
+                    attributes:['name']
+                },
+
+                orders:[
+                    ['updatedAt','ASC']
+                ]
+            })
+            res.status(200).json(PLANTS)
+            
+        } catch (error) {
+
+            next(error)
+            
+        }
+    }
+
+    ///POST PLANT
+
+    static async ADDPLANTS (req,res,next){
+        try {
+
+            const ADD = await Plant.create(req.body)
+
+            res.status(201).json({id:ADD.id,name:ADD.name,imageUrl:ADD.imageUrl,price:ADD.price,stock:ADD.stock,CategoryId:ADD.CategoryId})
+            
+        } catch (error) {
+
+            next(error)
+            
+        }
+
+    }
+
+    ///DELETE PLANT
+
+    static async DELETEADMIN(req,res,next){
+        try {
+            const {id} =req.params
+            const FIND= await Plant.findByPk(id)
+
+            if(!FIND){
+                res.status(404).json({
+                    message:"Plant_not_found"
+                })
+            }
+
+            const delet= await Plant.destroy({
+                where:{
+                    id:req.params.id
+                }
+            })
+
+
+            if(delet){
+                res.status(200).json({
+                    message:`succes delete a ${FIND.name} plant`
+                })
+            }
+            
+        } catch (error) {
+            
+            next(error)
+            
+        }
+
+    }
+
+    ///EDIT PLANT
+
+    static async EDITPLANT(req, res, next) {
+        try {
+            const EDIT = await Plant.update(req.body, {
+                where: {
+                    id: req.params.id
+                },
+                returning: true
+            })
+            res.status(200).json(
+              EDIT
+            )
+        } catch (error) {
+            next(error)
+        }
+    }
+
+
+
+
+
+    //CUSTOMER SIDE 
+
+    //ADDMYPLANT
+
+
+    static async ALLMYFAV(req,res,next){
+        try {
+
+            const ALLMY= await MyPlant.findAll({
+                where:{
+                    UserId:req.user.id,status:false
+                },
+                attributes:['id','UserId','PlantId','status','quantity'],
+                include:['Plant'],
+                order:[
+                    ['createdAt','ASC']
+                ]
+            })
+            
+            let totalQ=0
+            const sub = ALLMY.map(el=>{
+                totalQ=el.quantity*el.Plant.price
+                return totalQ
+            })
+
+            let total= sub.reduce((a,b)=> a+b)
+
+            res.status(200).json({ALLMY,sub,total})
+            
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    ///ADDMYFAV
+
+    static async ADDMYFAV(req,res,next){
+        try {
+            
+             const addtomy = {
+                UserId: req.user.id,
+                PlantId: +req.body.PlantId,
+                quantity: +req.body.quantity,
+                status: false
+            }
+        
+            const list = await MyPlant.findOne({
+                where: {
+                    UserId: addtomy.UserId,
+                    PlantId: addtomy.PlantId,
+                    status: false
+                },
+                attributes: ['id', 'UserId', 'PlantId', 'status', 'quantity']
+            })
+         
+            const plantADD = await Plant.findByPk(+req.body.PlantId)
+         
+            if (plantADD.stock === 0) {
+                throw{name:'Out_of_Stock'}
+                return
+            }
+
+            if (!list) {
+                const createlist = await MyPlant.create(addtomy)
+                res.status(201).json(createlist)
+
+            } else {
+                console.log(plantADD.stock, list.quantity, addtomy.quantity);
+                if ((plantADD.stock - list.quantity - addtomy.quantity) < 0) {
+                    // console.log(list.id);
+                    const checkQuantity = await MyPlant.update({
+                        quantity: plantADD.stock
+                    }, {
+                        where: {
+                            id: list.id,
+                            status: false
+                        },
+                    })
+                    throw{name:'Out_of_Stock'}
+                    return
+                } else {
+                    
+                    const updatelist = await MyPlant.update({
+                        quantity: list.quantity + addtomy.quantity
+                    }, {
+                        where: {
+                            id: list.id,
+                            status: false
+                        },
+                        returning: true
+                    })
+                    if (updatelist[1][0].quantity <= 0) {
+                        const deletelist = await MyPlant.destroy({
+                            where: {
+                                id: list.id
+                            }
+                        })
+                        res.status(200).json({
+                            message: 'succes delete plant'
+                        })
+                    } else {
+                        res.status(200).json(updatelist)
+                    }
+                }
+                
+            }
+            
+
+           
+
+
+            
+        } catch (error) {
+            next(error)
+        }
+    }
+
+
+    ///DELETEMYFAV
+
+
+    static async DELETEMY(req,res,next){
+        try {
+
+            const {plantId}=req.params
+            
+
+            const delet= await MyPlant.destroy({
+                where:{
+                    id:plantId
+                }
+            })
+            res.status(200).json({
+                message:`your plant list has been deleted`
+            })
+            
+        } catch (error) {
+
+            next(error)
+            
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
