@@ -14,6 +14,14 @@ const errorMsg = (error, req, res, next) => {
       resStatus = 400;
       resMessage = 'password is require';
       break;
+    case 'data already':
+      resStatus = 400;
+      resMessage = 'Course already in your favorite';
+      break;
+    case 'already subscribe':
+      resStatus = 400;
+      resMessage = 'already subscribe';
+      break;
     case 'invalid':
       resStatus = 401;
       resMessage = 'invalid email or password';
@@ -23,6 +31,9 @@ const errorMsg = (error, req, res, next) => {
       resStatus = 401;
       resMessage = 'invalid token';
       break;
+    case 'subsribe_now':
+      resStatus = 401;
+      resStatus = 'subscribe first';
     case 'forbidden':
       resStatus = 403;
       resMessage = 'not authorize access';

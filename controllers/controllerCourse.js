@@ -10,7 +10,7 @@ class ControllerCourse {
         params: {
           part: 'snippet',
           maxResults: '8',
-          q: `tutorial ${search}`,
+          q: `tutorial programmer ${search}`,
           regionCode: 'id',
           q: `tutorial ${search}`,
           type: 'video',
