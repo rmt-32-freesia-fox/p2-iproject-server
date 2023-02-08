@@ -56,10 +56,12 @@ class ProfileController {
       const { username } = req.params
       const user = await User.findOne({
         where: { username },
-        include: { model: User, as: 'Followers' },
+        include: [
+          // { model: User, as: 'Followings' },
+          { model: User, as: 'Followers' },
+        ],
       })
       if (!user) throw { name: 'NotFound', message: 'User not found!' }
-
       res.json(user)
     } catch (error) {
       next(error)
@@ -71,7 +73,10 @@ class ProfileController {
       const { username } = req.params
       const user = await User.findOne({
         where: { username },
-        include: { model: User, as: 'Followers' },
+        include: [
+          { model: User, as: 'Followings' },
+          // { model: User, as: 'Followers' },
+        ],
       })
       if (!user) throw { name: 'NotFound', message: 'User not found!' }
 
