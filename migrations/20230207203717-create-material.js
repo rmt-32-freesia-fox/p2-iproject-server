@@ -12,10 +12,10 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
-      videoUrl: {
+      videoId: {
         type: Sequelize.STRING
       },
-      docsUrl: {
+      docsId: {
         type: Sequelize.STRING
       },
       CourseId:{

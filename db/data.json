@@ -1,77 +1,105 @@
 {
-    "teachers":[
+    "teachers": [
         {
-            "username":"Pak Mamat",
-            "email":"mamat@senpai.com",
-            "password":"123456",
-            "profileImg":"https://media.istockphoto.com/id/860506136/id/foto/bidikan-studio-pria-tampan-multi-etnis-muda-tampak-cerdas-dengan-latar-belakang-berwarna.jpg?s=612x612&w=0&k=20&c=bjWAkqRZKzKU7qFani6ORobhBqQKzLVcXDcP4KN0TSs="
+            "username": "Pak Mamat",
+            "email": "mamat@senpai.com",
+            "password": "123456",
+            "profileImg": "https://media.istockphoto.com/id/860506136/id/foto/bidikan-studio-pria-tampan-multi-etnis-muda-tampak-cerdas-dengan-latar-belakang-berwarna.jpg?s=612x612&w=0&k=20&c=bjWAkqRZKzKU7qFani6ORobhBqQKzLVcXDcP4KN0TSs=",
+            "role": "teacher"
         },
         {
-            "username":"yono simatupang",
-            "email":"yono@senpai.com",
-            "password":"123456",
-            "profileImg":"https://media.istockphoto.com/id/861195076/id/foto/studio-ditembak-pria-muda-berjenggot-india-dengan-rambut-diikat-kembali-hitam-dan-putih.jpg?s=612x612&w=0&k=20&c=IqDupMqWv5fyi5hAVB4GKS10lvyuY2nqRsR57jiAmKU="
+            "username": "yono simatupang",
+            "email": "yono@senpai.com",
+            "password": "123456",
+            "profileImg": "https://media.istockphoto.com/id/861195076/id/foto/studio-ditembak-pria-muda-berjenggot-india-dengan-rambut-diikat-kembali-hitam-dan-putih.jpg?s=612x612&w=0&k=20&c=IqDupMqWv5fyi5hAVB4GKS10lvyuY2nqRsR57jiAmKU=",
+            "role": "teacher"
         },
         {
-            "username":"mamang rono",
-            "email":"mamang@senpai.com",
-            "password":"123456",
-            "profileImg":"https://media.istockphoto.com/id/1405522719/id/foto/pria-yang-duduk-di-dalam-ruangan-melihat-kamera-berpartisipasi-dalam-konferensi-video-langsung.jpg?s=612x612&w=0&k=20&c=EdWJdG421O2l6lNv4KUFiIBpMlouhcDN17Ntll5q9W8="
+            "username": "mamang rono",
+            "email": "mamang@senpai.com",
+            "password": "123456",
+            "profileImg": "https://media.istockphoto.com/id/1405522719/id/foto/pria-yang-duduk-di-dalam-ruangan-melihat-kamera-berpartisipasi-dalam-konferensi-video-langsung.jpg?s=612x612&w=0&k=20&c=EdWJdG421O2l6lNv4KUFiIBpMlouhcDN17Ntll5q9W8=",
+            "role": "teacher"
         }
     ],
-    "students":[
+    "students": [
         {
-            "username":"gilang",
-            "email":"gilang@student.com",
-            "password":"123456",
-            "profileImg":"https://media.istockphoto.com/id/1300845620/id/vektor/ikon-pengguna-datar-terisolasi-pada-latar-belakang-putih-simbol-pengguna-ilustrasi-vektor.jpg?s=612x612&w=0&k=20&c=QN0LOsRwA1dHZz9lsKavYdSqUUnis3__FQLtZTQ--Ro="
+            "username": "gilang",
+            "email": "gilang@student.com",
+            "password": "123456",
+            "profileImg": "https://media.istockphoto.com/id/1300845620/id/vektor/ikon-pengguna-datar-terisolasi-pada-latar-belakang-putih-simbol-pengguna-ilustrasi-vektor.jpg?s=612x612&w=0&k=20&c=QN0LOsRwA1dHZz9lsKavYdSqUUnis3__FQLtZTQ--Ro=",
+            "role": "student"
         },
         {
-            "username":"hayyik",
-            "email":"hayyik@student.com",
-            "password":"123456",
-            "profileImg":"https://media.istockphoto.com/id/1300845620/id/vektor/ikon-pengguna-datar-terisolasi-pada-latar-belakang-putih-simbol-pengguna-ilustrasi-vektor.jpg?s=612x612&w=0&k=20&c=QN0LOsRwA1dHZz9lsKavYdSqUUnis3__FQLtZTQ--Ro="
+            "username": "hayyik",
+            "email": "hayyik@student.com",
+            "password": "123456",
+            "profileImg": "https://media.istockphoto.com/id/1300845620/id/vektor/ikon-pengguna-datar-terisolasi-pada-latar-belakang-putih-simbol-pengguna-ilustrasi-vektor.jpg?s=612x612&w=0&k=20&c=QN0LOsRwA1dHZz9lsKavYdSqUUnis3__FQLtZTQ--Ro=",
+            "role": "student"
         },
         {
-            "username":"razzid",
-            "email":"razzid@student.com",
-            "password":"123456",
-            "profileImg":"https://media.istockphoto.com/id/1300845620/id/vektor/ikon-pengguna-datar-terisolasi-pada-latar-belakang-putih-simbol-pengguna-ilustrasi-vektor.jpg?s=612x612&w=0&k=20&c=QN0LOsRwA1dHZz9lsKavYdSqUUnis3__FQLtZTQ--Ro="
+            "username": "razzid",
+            "email": "razzid@student.com",
+            "password": "123456",
+            "profileImg": "https://media.istockphoto.com/id/1300845620/id/vektor/ikon-pengguna-datar-terisolasi-pada-latar-belakang-putih-simbol-pengguna-ilustrasi-vektor.jpg?s=612x612&w=0&k=20&c=QN0LOsRwA1dHZz9lsKavYdSqUUnis3__FQLtZTQ--Ro=",
+            "role": "student"
         },
         {
-            "username":"ilyas",
-            "email":"ilyas@student.com",
-            "password":"123456",
-            "profileImg":"https://media.istockphoto.com/id/1300845620/id/vektor/ikon-pengguna-datar-terisolasi-pada-latar-belakang-putih-simbol-pengguna-ilustrasi-vektor.jpg?s=612x612&w=0&k=20&c=QN0LOsRwA1dHZz9lsKavYdSqUUnis3__FQLtZTQ--Ro="
+            "username": "ilyas",
+            "email": "ilyas@student.com",
+            "password": "123456",
+            "profileImg": "https://media.istockphoto.com/id/1300845620/id/vektor/ikon-pengguna-datar-terisolasi-pada-latar-belakang-putih-simbol-pengguna-ilustrasi-vektor.jpg?s=612x612&w=0&k=20&c=QN0LOsRwA1dHZz9lsKavYdSqUUnis3__FQLtZTQ--Ro=",
+            "role": "student"
         },
         {
-            "username":"mitra",
-            "email":"mitra@student.com",
-            "password":"123456",
-            "profileImg":"https://media.istockphoto.com/id/1300845620/id/vektor/ikon-pengguna-datar-terisolasi-pada-latar-belakang-putih-simbol-pengguna-ilustrasi-vektor.jpg?s=612x612&w=0&k=20&c=QN0LOsRwA1dHZz9lsKavYdSqUUnis3__FQLtZTQ--Ro="
+            "username": "mitra",
+            "email": "mitra@student.com",
+            "password": "123456",
+            "profileImg": "https://media.istockphoto.com/id/1300845620/id/vektor/ikon-pengguna-datar-terisolasi-pada-latar-belakang-putih-simbol-pengguna-ilustrasi-vektor.jpg?s=612x612&w=0&k=20&c=QN0LOsRwA1dHZz9lsKavYdSqUUnis3__FQLtZTQ--Ro=",
+            "role": "student"
         }
     ],
-    "courses":[
+    "courses": [
         {
-            "name":"Javascript Basic",
-            "description":"Javascript itu sulit sulit gampang, ayo belajar berasama kami",
-            "TeacherId":1
+            "name": "Javascript Basic",
+            "description": "Javascript itu sulit sulit gampang, ayo belajar berasama kami",
+            "TeacherId": 1
         },
         {
-            "name":"Sequelize Basic",
-            "description":"sequelize itu mempermudah anda untuk kelola query loh, jadi ayo belajar wkwk",
-            "TeacherId":2
+            "name": "Sequelize Basic",
+            "description": "sequelize itu mempermudah anda untuk kelola query loh, jadi ayo belajar wkwk",
+            "TeacherId": 2
         },
         {
-            "name":"Golang Basic",
-            "description":"Golang itu sulit sulit gampang, ayo belajar berasama kami. golang golang golanggaling hehe",
-            "TeacherId":3
+            "name": "Golang Basic",
+            "description": "Golang itu sulit sulit gampang, ayo belajar berasama kami. golang golang golanggaling hehe",
+            "TeacherId": 3
         }
     ],
-    "materials":[
+    "materials": [
         {
-            "name":"hello world",
-            "videoUrl":""
+            "name": "material1",
+            "videoId": "VwfAmMBH",
+            "docsId": "",
+            "CourseId": 1
+        },
+        {
+            "name": "material2",
+            "videoId": "S7enpqy8",
+            "docsId": "",
+            "CourseId": 2
+        },
+        {
+            "name": "material3",
+            "videoId": "ar5H5o3r",
+            "docsId": "",
+            "CourseId": 3
+        },
+        {
+            "name": "material4",
+            "videoId": "600tSjGw",
+            "docsId": "",
+            "CourseId": 3
         }
     ]
 }

@@ -26,6 +26,16 @@ module.exports = {
       e.password = hashPassword(e.password)
       return e
     }), {});
+    await queryInterface.bulkInsert('Courses', require('../db/data.json').courses.map(e=>{
+      e.createdAt = new Date()
+      e.updatedAt = new Date()
+      return e
+    }), {});
+    await queryInterface.bulkInsert('Materials', require('../db/data.json').materials.map(e=>{
+      e.createdAt = new Date()
+      e.updatedAt = new Date()
+      return e
+    }), {});
   },
 
   async down (queryInterface, Sequelize) {
@@ -36,5 +46,7 @@ module.exports = {
     */
     await queryInterface.bulkDelete('Teachers', null, {});
     await queryInterface.bulkDelete('Students', null, {});
+    await queryInterface.bulkDelete('Courses', null, {});
+    await queryInterface.bulkDelete('Materials', null, {});
   }
 };

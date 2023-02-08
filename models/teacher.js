@@ -56,6 +56,9 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
+    role: {
+      type:DataTypes.STRING,
+    },
     profileImg: {
       type:DataTypes.STRING,
     }
@@ -65,6 +68,7 @@ module.exports = (sequelize, DataTypes) => {
     hooks:{
       beforeCreate(user){
         user.password = hashPassword(user.password)
+        user.role = 'teacher'
       }
     }
   });

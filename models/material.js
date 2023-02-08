@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    videoUrl: {
+    videoId: {
       type:DataTypes.STRING,
       allowNull:false,
       validate:{
@@ -39,17 +39,8 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    docsUrl: {
+    docsId: {
       type:DataTypes.STRING,
-      allowNull:false,
-      validate:{
-        notNull:{
-          msg:'is required'
-        },
-        notEmpty:{
-          msg:'is required'
-        }
-      }
     },
     CourseId:{
       type:DataTypes.INTEGER,
