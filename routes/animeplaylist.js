@@ -3,8 +3,9 @@ const authentication = require('../middlewares/authentication')
 
 const router = require('express').Router()
 
-router.get('/animeplaylist', AnimePlaylistController.allPlaylist)
 router.use(authentication)
 router.post('/animeplaylist', AnimePlaylistController.createPlaylist)
+router.patch('/animeplaylist', AnimePlaylistController.updatePlaylist)
+router.get('/animeplaylist/:UserId', AnimePlaylistController.allPlaylist)
 
 module.exports = router

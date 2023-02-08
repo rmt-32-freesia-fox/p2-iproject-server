@@ -15,6 +15,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Anime.init({
+    id: {
+      type : DataTypes.INTEGER,
+      primaryKey: true,
+    },
     title: DataTypes.STRING,
     episodes: DataTypes.INTEGER,
     image: DataTypes.STRING
