@@ -74,7 +74,7 @@ class Controller {
     res.send(req.query)
   }
  
-  static async midtrans(req, res, next) {  
+  static async getMidtransToken(req, res, next) {  
     try {
         // Create Snap API instance
         let snap = new midtransClient.Snap({
@@ -105,7 +105,7 @@ class Controller {
         
         // trans action token
         console.log('transactionToken:',request); 
-        
+        res.status(201).json({payment_token: transactionToken })
     } catch (error) {
         console.log(error);
     }
@@ -275,7 +275,7 @@ app.get('/', Controller.get)
 
 app.get('/redirect', Controller.redirect)
 
-app.post('/midtransToken', Controller.midtrans)
+app.get('/paymentToken', Controller.getMidtransToken)
 
 
 
@@ -295,6 +295,7 @@ app.get('/recently', Controller.myRecentlyPlayed)
 app.get('/findSongs', Controller.findsomeSongs)
 
 app.get('/topGlobal', Controller.getTopGlobal)
+ 
 
 
 app.get('/test', (req, res, next) => {
