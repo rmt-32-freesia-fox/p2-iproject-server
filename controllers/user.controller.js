@@ -32,6 +32,17 @@ class UserController {
       next(error)
     }
   }
+
+  static async edit(req, res, next) {
+    try {
+      const { username, bio, name } = req.body
+      const user = await User.findByPk(req.user.id)
+      await user.update({ username, bio, name })
+      res.json({ message: 'Updated!' })
+    } catch (error) {
+      next(error)
+    }
+  }
 }
 
 module.exports = UserController
