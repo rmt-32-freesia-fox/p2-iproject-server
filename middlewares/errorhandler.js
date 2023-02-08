@@ -7,8 +7,6 @@ function errorHandler(err, req, res, next) {
             statusCode = 400;
             message = err.errors[0].message
             break;
-
-
         case "loginError":
             statusCode = 400;
             message = "Invalid Username or Password";
@@ -41,6 +39,10 @@ function errorHandler(err, req, res, next) {
         case "faved":
             statusCode = 400;
             message = "Already Favorited";
+            break;
+        case "removed":
+            statusCode = 400;
+            message = "Playlist alread removed";
             break;
     }
     console.log(err);
