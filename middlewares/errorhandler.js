@@ -38,6 +38,10 @@ function errorHandler(err, req, res, next) {
             statusCode = 401;
             message = "Unauthorized";
             break;
+        case "faved":
+            statusCode = 400;
+            message = "Already Favorited";
+            break;
     }
     console.log(err);
     return res.status(statusCode).json({ message });

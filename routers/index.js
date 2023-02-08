@@ -5,6 +5,7 @@ const { authentication } = require('../middlewares/authentication')
 // router child
 const newsApi = require('./news-router')
 const user = require('./user-router')
+const playlist = require('./playlist-router')
 
 // for connection test
 router.get('/', async (req, res, next) => {
@@ -13,6 +14,7 @@ router.get('/', async (req, res, next) => {
 
 router.use('/news', newsApi)
 router.use('/user', user)
+router.use('/playlist', playlist)
 
 
 

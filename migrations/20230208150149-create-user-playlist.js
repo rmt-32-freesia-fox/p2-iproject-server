@@ -2,27 +2,26 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Playlists', {
+    await queryInterface.createTable('UserPlaylists', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      title: {
-        type: Sequelize.STRING
+      UserId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Users', // 'Movies' would also work
+          key: 'id'
+        }
       },
-      image: {
-        type: Sequelize.STRING
-      },
-      audio: {
-        type: Sequelize.STRING
-      },
-      post_content: {
-        type: Sequelize.TEXT
-      },
-      published_at: {
-        type: Sequelize.STRING
+      PlaylistId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Playlists', // 'Movies' would also work
+          key: 'id'
+        }
       },
       createdAt: {
         allowNull: false,
@@ -35,6 +34,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Playlists');
+    await queryInterface.dropTable('UserPlaylists');
   }
 };
