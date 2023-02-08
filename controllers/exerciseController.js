@@ -5,16 +5,12 @@ class Controller {
     try {
       const options = {
         method: "GET",
-        url: `https://exercisedb.p.rapidapi.com/exercises`,
-        headers: {
-          "X-RapidAPI-Key": process.env.RapidAPIKey,
-          "X-RapidAPI-Host": process.env.RapidAPIHost,
-        },
+        url: `https://wger.de/api/v2/exerciseimage/`,
       };
 
       const result = await axios(options);
-      const output = result.data.slice(0, 200);
-
+      const output = result.data.slice(0, 100);
+      console.log(output);
       let { page, filter, search } = req.query;
 
       let bodyPart;
@@ -40,9 +36,11 @@ class Controller {
       } else {
         query.offset = 0;
       }
+      const currentPage = +page ? +page : 0;
+      const totalPage = Math.ceil(output.length / query.limit);
 
       const data = bodyPart.slice(query.offset, query.offset + query.limit);
-      res.status(200).json({ length: data.length, data });
+      res.status(200).json({ currentPage, totalPage: totalPage, data });
     } catch (error) {
       next(error);
     }
@@ -52,15 +50,11 @@ class Controller {
     try {
       const options = {
         method: "GET",
-        url: "https://exercisedb.p.rapidapi.com/exercises/targetList",
-        headers: {
-          "X-RapidAPI-Key": process.env.RapidAPIKey,
-          "X-RapidAPI-Host": process.env.RapidAPIHost,
-        },
+        url: "https://wger.de/api/v2/equipment/",
       };
       const result = await axios(options);
 
-      res.status(200).json({ data: result.data });
+      res.status(200).json(result.data.results);
     } catch (error) {
       next(error);
     }
