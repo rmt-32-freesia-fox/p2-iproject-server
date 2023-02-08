@@ -1,6 +1,7 @@
 const { User, Book, UserBook } = require('../models')
 const axios = require('axios')
-// const { transposter, mailOptions } = require('./nodeMailer')
+const midtransClient = require('midtrans-client');
+const { sendEmail } = require('./nodeMailer')
 
 
 // let baseUrl = `http://localhost:3000/` //! Sebelum Deploy
@@ -154,6 +155,57 @@ class BookController {
         }
     } //! DONE
 
+    static async generateTokenMidtrans(req, res, next) {
+        try {
+
+            const findUser = await User.findByPk(req.user.id)
+
+            let snap = new midtransClient.Snap({
+                // Set to true if you want Production Environment (accept real transaction).
+                isProduction: false,
+                serverKey: process.env.MIDTRANS_SERVER_KEY
+            });
+
+            let parameter = {
+                "transaction_details": {
+                    "order_id": "Transaction_" + Math.floor(10000 + Math.random() * 90000),
+                    "gross_amount": 250000
+                },
+                "credit_card": {
+                    "secure": true
+                },
+                "customer_details": {
+                    "email": findUser.email
+                }
+            };
+
+            const midtranToken = await snap.createTransaction(parameter)
+            // console.log(midtranToken);
+            res.status(201).json(midtranToken)
+
+        } catch (error) {
+            console.log(error);
+            next(error)
+        }
+    } //! DONE
+
+    static async sendEmailAfterPayment(req, res, next) {
+        try {
+
+            sendEmail({
+                to: req.user.email,
+                subject: 'Thank you for buying book from us!',
+                html: `<p> Thank you for <strong> supporting the development of this platform </strong> by buying book from us.<br>
+                <br>
+                The book you ordered <strong> will be sent immediately </strong> to the address you registered at sign up. <br>
+                <br>
+                Once again, thank You! </p>`
+            })
+
+        } catch (error) {
+            next(error)
+        }
+    }
 }
 
 module.exports = BookController

@@ -6,9 +6,11 @@ router.get('/books', BookController.allBook) //? Ini list of all book untuk di h
 router.get('/books/:id', BookController.bookById) //? Ini detail book per id // DONE
 router.post('/mybooks/:bookId', authentication, BookController.addToMyBook) //? Ini add to cart dari user // DONE
 router.get('/mybooks', authentication, BookController.allMyBook) //? Ini list of all cart dari user // DONE
-router.post('/translate', BookController.translateWord) //? Untuk translart kalimat di detail page
-router.get('/convert', BookController.currencyConverter) //? Untuk translart kalimat di detail page
-router.get('/searchbook', BookController.searchBook) //? Untuk translart kalimat di detail page
+router.post('/translate', BookController.translateWord) //? Untuk translate kalimat di detail page
+router.get('/convert', BookController.currencyConverter) //? Untuk convert currency di detail page
+router.get('/searchbook', BookController.searchBook) //? Untuk search trivia book di home page
+router.post('/generate-midtrans-token', authentication, BookController.generateTokenMidtrans) //? Untuk dapetin token midtrans
+router.get('/send-email', authentication, BookController.sendEmailAfterPayment) //? Untuk kirim email setelah payment
 
 
 module.exports = router

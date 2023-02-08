@@ -16,10 +16,10 @@ function sendEmail({ to, subject, html }) {
         subject: subject || 'Greetings from Berliterasi!',
         html: html ||
             `<p>
-                Hi! our beloved user, this is a message from <strong> Official Berliterasi. </strong> We want to say thank you for <strong> joining (register/sign up) to our platform. </strong>
-    
-                As an expression of gratitude, we would like to give a discount for your 2nd purchase with 20% discount by using this following <strong> code: 21*ak-M1. </strong>
-    
+                Hi! our beloved user, this is a message from <strong> Official Berliterasi. </strong> We want to say thank you for <strong> joining (register/sign up) to our platform. </strong> <br>
+                <br>
+                As an expression of gratitude, we would like to give a discount for your 2nd purchase with 20% discount by using this following <strong> code: 21*ak-M1. </strong> <br>
+                <br>
                 Once again, thank you!
             </p>`
     }

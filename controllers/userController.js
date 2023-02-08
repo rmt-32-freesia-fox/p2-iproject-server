@@ -15,7 +15,7 @@ class UserController {
                 email: user.email,
                 address: user.address
             })
-            console.log(sendEmail);
+
             sendEmail({
                 to: user.email,
             })
