@@ -14,6 +14,10 @@ const errorMsg = (error, req, res, next) => {
       resStatus = 400;
       resMessage = 'password is require';
       break;
+    case 'already subscribe':
+      resStatus = 400;
+      resMessage = 'already subscribe';
+      break;
     case 'invalid':
       resStatus = 401;
       resMessage = 'invalid email or password';

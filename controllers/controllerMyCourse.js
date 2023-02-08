@@ -1,5 +1,7 @@
 const { default: axios } = require('axios');
 const { MyCourse } = require('../models');
+const midtransClient = require('midtrans-client');
+
 class ControllerMyCourse {
   static async addFavorite(req, res, next) {
     try {
@@ -34,6 +36,48 @@ class ControllerMyCourse {
       const { id } = req.params;
       const dataId = await MyCourse.findByPk(id);
       res.status(200).json({ message: 'thanks for watching', dataLink: `https://www.youtube.com/embed/${dataId.idCourse}`, title: dataId.title });
+    } catch (error) {
+      next(error);
+    }
+  }
+  static async payment(req, res, next) {
+    try {
+      const { id } = req.params;
+      const findId = await MyCourse.findByPk(id);
+      if (!findId) throw { name: 'not found' };
+      if (findId.isSubsribe == true) throw { name: 'already subscribe' };
+      const { username, email } = req.user;
+      let snap = new midtransClient.Snap({
+        // Set to true if you want Production Environment (accept real transaction).
+        isProduction: false,
+        serverKey: process.env.MIDTRANS_API,
+      });
+
+      let parameter = {
+        transaction_details: {
+          order_id: `YOUR-${findId.idCourse}-ORDERID-${1000 + Math.floor(Math.random() * 3000)}`,
+          gross_amount: 10000,
+        },
+        credit_card: {
+          secure: true,
+        },
+        customer_details: {
+          first_name: username,
+          email: email,
+        },
+      };
+
+      let midtransToken = await snap.createTransaction(parameter);
+      res.status(200).json(midtransToken);
+    } catch (error) {
+      next(error);
+    }
+  }
+  static async patchSubsribe(req, res, next) {
+    try {
+      const { id } = req.params;
+      const updateStatus = await MyCourse.update({ isSubscribe: true }, { where: { id } });
+      res.status(200).json({ message: 'Thanks for Subsribe' });
     } catch (error) {
       next(error);
     }
