@@ -118,7 +118,7 @@ class ProfileController {
       const FollowId = user.id
 
       const following = await Following.findOne({
-        wheren: { UserId, FollowId },
+        where: { UserId, FollowId },
       })
       if (!following)
         throw {
