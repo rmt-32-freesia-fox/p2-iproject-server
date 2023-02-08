@@ -12,4 +12,7 @@ router.use('/events', eventRoute)
 router.use(authenticated)
 router.use(paymentRoute)
 
+router.use(authenticated)
+router.use(paymentRoute)
+
 module.exports = router
