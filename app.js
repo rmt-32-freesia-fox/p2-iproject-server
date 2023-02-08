@@ -1,6 +1,10 @@
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+ 
 const express = require('express')
 const app = express()
-const port = 3000
+const port = process.env.PORT || 3000
 
 const cors = require('cors')
 app.use(cors())
@@ -8,8 +12,9 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-app.use(require('./routes'))
-
+const {router} = require('./routes') 
+app.use(router)
+ 
 
 
 app.listen(port, () => {
@@ -19,6 +24,8 @@ app.listen(port, () => {
 
 
 // IMPORTANT COMMENTs
+
+
 // var redirect_uri = 'http://localhost:3000/redirect/'; // Your redirect uri
 
 // var myCode = 'AQC_TIB-Twa01xZMXvBalPtBe1plZaUMjmC7qnjGLzor7u68exboycNJlIzTs6-wSRqIw4xsRQc_0I2P6FHVdVDMHmXsKd-OMbmJiJvIEtCMUmEV2DJPi3bN7SB-ctYHx23rlin-rkuVVGmoYmcNe2QHRd9MpZBPGyS8gGRxsO5Xw62sauwh9-kcyvWM1R2izdZDehu3sHQBQ7NEb3S8wZLOtePKqCLwRnVc1fhmQkBiTkes3NUyi2spKUsjlsQxTiVkIhpN6AZmuA'
@@ -32,3 +39,9 @@ app.listen(port, () => {
 // var server_key = "SB-Mid-server-LLsj1r0T21cb2IQx_o6shDCS"
 
 // Basic Mjk2OTRkOTNlMWQyNDUxOGFlYzM0NTUxZWQzNDljNWU6YmI2NTk2ZjkzMTkzNDA3OGIzMGY5OTNiYjM2YWI4Mzk=
+
+
+
+
+ 
+ 

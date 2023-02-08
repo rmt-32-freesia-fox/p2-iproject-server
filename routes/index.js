@@ -1,19 +1,18 @@
 const { Controller } = require('../controllers')
-const router = require('express').Router() 
+const { errorHandler,  auth } = require('../middlewares')
+const router = require('express').Router()  
 
 
 
+// router.get('/', Controller.get)
 
 
-router.get('/', Controller.get)
 
 router.get('/redirect', Controller.redirect)
 
 router.get('/paymentToken', Controller.getMidtransToken)
 
-router.get('/clientId', Controller.getClientId)
-
-router.post('/login', Controller.login)
+router.use(auth)
 
 router.get('/profile', Controller.myProfile)
 
@@ -35,9 +34,8 @@ router.get('/download/:id', Controller.downloadSong)
 
 
 
-router.get('/test', (req, res, next) => {
-  res.redirect('https://www.google.com')
-})
+
+router.use(errorHandler)
 
 
 module.exports = {

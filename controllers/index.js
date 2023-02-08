@@ -1,10 +1,11 @@
-const {User} = require('..models')
+const {User} = require('../models')
 
 const baseUrl = 'http://localhost:3000'
-const client_redirect_url = 'http://localhost:5173'
+const client_redirect_url = 'http://localhost:5173/login'
 
-const client_id = process.env.client_id; // Your client id
-const client_secret = process.env.client_secret; // Your secret
+const client_id = process.env.CLIENT_ID; // Your client id
+const client_secret = process.env.CLIENT_SECRET; // Your secret
+const server_key = process.env.SERVER_KEY
 const buffer = 'Basic ' + (new Buffer.from(client_id + ':' + client_secret).toString('base64'))
 
 const axios = require('axios')
@@ -16,11 +17,11 @@ class Controller {
   static async get(req, res, next) { 
     res.send(req.query)
   }
+  
   static async redirect(req, res, next) { 
     try {
       const {code} = req.query  
       const token = await Controller.secondCall(code) 
-      // console.log(token);
       const data = token.data.access_token
       
       const request = await Controller.getProfile(data) 
@@ -38,13 +39,36 @@ class Controller {
       // res.status(status).json({access_token})  
       
       // console.log(token.data.access_token);
-      res.redirect(client_redirect_url + '/?token=' + data) 
+      res.redirect(client_redirect_url + '/?token=' + code) 
+      // res.redirect(client_redirect_url + '/?token=' + data) 
     } catch (error) {
-      console.log(error, 'error nich');
+      next(error) 
+      // console.log(error.response.data, 'error nich');
     }
-  }
-  static getClientId(req, res, next) { 
-    res.send(req.query)
+  } 
+  
+  static async secondCall(code) { 
+    try {
+      const req = await 
+      axios({
+        method:'post',
+        url:'https://accounts.spotify.com/api/token',
+        data: {
+          code: code,
+          redirect_uri: `${baseUrl}/redirect/`,
+          grant_type: "authorization_code"
+        },
+        headers: {
+          // Authorization: 'Basic Mjk2OTRkOTNlMWQyNDUxOGFlYzM0NTUxZWQzNDljNWU6YmI2NTk2ZjkzMTkzNDA3OGIzMGY5OTNiYjM2YWI4Mzk=',
+          Authorization: buffer,
+          "Content-Type": 'application/x-www-form-urlencoded'
+        }
+      })
+      return req  
+    } catch (error) {
+      // console.log(error, 'error gaesu');
+      throw error
+    }
   }
  
   static async getMidtransToken(req, res, next) {  
@@ -88,46 +112,16 @@ class Controller {
         // console.log(updateDb);
         
         // trans action token
-        console.log('transactionToken:',request); 
+        // console.log('transactionToken:',request); 
         res.status(201).json({payment_token: transactionToken })
     } catch (error) {
-        console.log(error);
+        next(error)
+        // console.log(error);
     }
   }
   
   
-  static async secondCall(code) {
-    try {
-      const req = await 
-      axios({
-        method:'post',
-        url:'https://accounts.spotify.com/api/token',
-        data: {
-          code,
-          redirect_uri: baseUrl + "/redirect/",
-          grant_type: "authorization_code"
-        },
-        headers: {
-          // Authorization: 'Basic Mjk2OTRkOTNlMWQyNDUxOGFlYzM0NTUxZWQzNDljNWU6YmI2NTk2ZjkzMTkzNDA3OGIzMGY5OTNiYjM2YWI4Mzk=',
-          Authorization: buffer,
-          "Content-Type": 'application/x-www-form-urlencoded'
-        }
-      })
-      return req
-    } catch (error) {
-      console.log(error, 'error gaes');
-    }
-  }
   
-  static async login(req, res, next) { 
-    try {
-        const {code} = req.body
-        console.log(code);
-    } catch (error) {
-        console.log(error);
-    }
-    // res.send(req.query)
-  }
   
   static async getProfile(access_token) {
     try {
@@ -141,20 +135,49 @@ class Controller {
       })   
       return data   
     } catch (error) {
+      // console.log(error);
       throw error
     }
   }
   
   static async myProfile(req, res, next) { 
-    const {access_token} = req.headers
+    const {token} = req 
     try {
-      const data = await Controller.getProfile(access_token)
+      const data = await Controller.getProfile(token)
       
       res.status(200).json(data)
-    } catch (error) {
-      console.log(error, 'error gaes');
+    } catch (error) { 
+      next(error)
+      // console.log(error, 'error gaes');
     }
   }
+//   {
+//     "country": "ID",
+//     "display_name": "Mac",
+//     "explicit_content": {
+//         "filter_enabled": false,
+//         "filter_locked": false
+//     },
+//     "external_urls": {
+//         "spotify": "https://open.spotify.com/user/31agqd53jnrxrn6cz64zatuegxje"
+//     },
+//     "followers": {
+//         "href": null,
+//         "total": 1
+//     },
+//     "href": "https://api.spotify.com/v1/users/31agqd53jnrxrn6cz64zatuegxje",
+//     "id": "31agqd53jnrxrn6cz64zatuegxje",
+//     "images": [
+//         {
+//             "height": null,
+//             "url": "https://i.scdn.co/image/ab6775700000ee8553e1c5f011cca9134d43fdf2",
+//             "width": null
+//         }
+//     ],
+//     "product": "free",
+//     "type": "user",
+//     "uri": "spotify:user:31agqd53jnrxrn6cz64zatuegxje"
+// }
   
   static async myTopTracks(req, res, next) {
     const {limit} = req.query
@@ -172,7 +195,8 @@ class Controller {
       })   
       res.status(200).json(data) 
     } catch (error) { 
-      console.log(error, 'error gaes');
+      next(error)
+      // console.log(error, 'error gaes');
     }
   }
   
@@ -192,7 +216,8 @@ class Controller {
       })   
       res.status(200).json(data) 
     } catch (error) {
-      console.log(error, 'error gaes'); 
+      next(error)
+      // console.log(error, 'error gaes'); 
     }
   }
   
@@ -212,7 +237,8 @@ class Controller {
       })   
       res.status(200).json(data) 
     } catch (error) {
-      console.log(error, 'error gaes'); 
+      next(error)
+      // console.log(error, 'error gaes'); 
     }
   }
   
@@ -232,7 +258,8 @@ class Controller {
       })   
       res.status(200).json(data) 
     } catch (error) {
-      console.log(error, 'error gaes'); 
+      next(error)
+      // console.log(error, 'error gaes'); 
     }
   }
   
@@ -250,7 +277,8 @@ class Controller {
       })   
       res.status(200).json(data) 
     } catch (error) {
-      console.log(error, 'error gaes'); 
+      next(error)
+      // console.log(error, 'error gaes'); 
     }
   }
   
@@ -280,7 +308,8 @@ class Controller {
       })
       res.status(200).json('subscribed')
     } catch (error) {
-      console.log(error, 'error gaes'); 
+      next(error)
+      // console.log(error, 'error gaes'); 
     }
   }
   
@@ -300,7 +329,8 @@ class Controller {
       })   
       res.status(200).json(data) 
     } catch (error) {
-      console.log(error, 'error gaes'); 
+      next(error)
+      // console.log(error, 'error gaes'); 
     }
   }
 }
