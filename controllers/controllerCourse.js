@@ -10,6 +10,7 @@ class ControllerCourse {
         params: {
           part: 'snippet',
           maxResults: '8',
+          q: `tutorial ${search}`,
           regionCode: 'id',
           q: `tutorial ${search}`,
           type: 'video',
@@ -23,6 +24,7 @@ class ControllerCourse {
       next(error);
     }
   }
+
   static async videoById(req, res, next) {
     try {
       const { videoid } = req.query;
