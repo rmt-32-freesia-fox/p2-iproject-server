@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Individual Project - Server",
   "main": "index.js",
+  "engines": {
+    "node": "18.x"
+  },
   "scripts": {
     "reset-dev": "sequelize db:drop && sequelize db:create && sequelize db:migrate",
     "reset-test": "sequelize --env test db:drop && sequelize --env test db:create && sequelize --env test db:migrate",
