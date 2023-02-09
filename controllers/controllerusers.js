@@ -147,12 +147,10 @@ class ControllerUsers {
     }
   }
   static async forReset(req, res, next) {
-    console.log(req.body);
     try {
       const { email, password } = req.body;
       const code = req.body.token;
       const trueToken = await Token.findOne({ where: { code, email, status: false } });
-      console.log(trueToken);
       if (!trueToken) throw { name: 'invalidToken' };
       const updatePassword = await User.update({ password: password }, { where: { email } });
       const updataToken = await Token.update({ status: true }, { where: { email } });
