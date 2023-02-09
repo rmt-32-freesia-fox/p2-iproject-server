@@ -4,7 +4,6 @@ const authentication = require("../middleware/authentication");
 
 // third api
 router.get("/muscle", exerciseController.getTargetMuscle);
-router.get("/bodyParts", exerciseController.getBodyParts);
 
 // rest api
 router.get("/exercise", exerciseController.getExercises);

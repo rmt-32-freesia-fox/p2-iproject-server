@@ -57,24 +57,6 @@ class Controller {
     }
   }
 
-  static async getBodyParts(req, res, next) {
-    try {
-      const options = {
-        method: "GET",
-        url: "https://exercisedb.p.rapidapi.com/exercises/bodyPartList",
-        headers: {
-          "X-RapidAPI-Key": "2e49e0f5b0msh29f18cffd1cf153p1e2596jsnb0ce53987731",
-          "X-RapidAPI-Host": "exercisedb.p.rapidapi.com",
-        },
-      };
-      const result = await axios(options);
-
-      res.status(200).json({ data: result.data });
-    } catch (error) {
-      next(error);
-    }
-  }
-
   static async getMyExercise(req, res, next) {
     try {
       const UserId = req.user.id;
