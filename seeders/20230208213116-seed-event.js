@@ -20,13 +20,14 @@ module.exports = {
    })
     await queryInterface.bulkInsert('Events',data)
   },
-
+  
   async down (queryInterface, Sequelize) {
     /**
      * Add commands to revert seed here.
      *
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
-     */
+    */
+    await queryInterface.bulkDelete('Events')
   }
 };

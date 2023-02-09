@@ -7,6 +7,7 @@ class UserController {
   static async register(req, res, next) {
     try {
       let { username, email, password } = req.body;
+      console.log(req.body);
       let role = "user";
       let user = await User.create({
         username,
