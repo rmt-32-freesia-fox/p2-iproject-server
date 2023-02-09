@@ -3,6 +3,10 @@ const { encodeToken } = require('../helpers/jwt')
 const {Plant,User,MyPlant,Categorie}= require('../models')
 const CLIENT_ID = process.env['CLIENT_ID']
 const { Op } = require('sequelize');
+const mailer = require('../helpers/nodemailer');
+const midtransClient = require('midtrans-client');
+
+
 
 class Controller{
 
@@ -11,10 +15,11 @@ class Controller{
     static async REGIST (req,res,next){
         
         try {
-            console.log(req.body);
+            // console.log(req.body);
             const {email,password,role} =req.body
             const newUser = await User.create({ email,password, role:"admin"})
-            res.status(201).json({message:`Succes create New User With email ${newUser.email} `, id:newUser.id, email:newUser.email})
+            mailer(email)
+            res.status(201).json({message:`Succes create New User With email ${newUser.email} `, id:newUser.id, email:newUser.email}) 
             
         } catch (error) {
             // console.log(error);
@@ -98,11 +103,15 @@ class Controller{
                    
                 },
             })
+
+           
             let message,code
             if(create){
                 code = 201
                 message = `User with ${create.email} has been created`
                 user = create
+                // mailer(email)
+                
             } else{
                 code= 200
                 message = `User with ${create.email} found`
@@ -287,7 +296,6 @@ class Controller{
             } else {
                 console.log(plantADD.stock, list.quantity, addtomy.quantity);
                 if ((plantADD.stock - list.quantity - addtomy.quantity) < 0) {
-                    // console.log(list.id);
                     const checkQuantity = await MyPlant.update({
                         quantity: plantADD.stock
                     }, {
@@ -360,7 +368,70 @@ class Controller{
             
         }
     }
+    
+      static async PAYMENTRANS(req, res, next) {
+        try {
+            const checkoutCarts = await MyPlant.findAll({
+                where: {
+                    UserId: req.user.id,
+                    status: false
+                },
+                attributes: ['id', 'UserId', 'quantity', 'status'],
+                include: ['Plant']
+            })
+            let subTotal = 0
+            const sub = checkoutCarts.map(el => {
+                subTotal = el.quantity * el.Plant.price
+                return subTotal
+            })
+            
+            let total = sub.reduce((a, b) => a + b)
+            const user = await User.findByPk(req.user.id)
 
+            let snap = new midtransClient.Snap({
+                isProduction: false,
+                serverKey: process.env.MIDTRANS_SERVER_KEY
+            })
+            let parameter = {
+                "transaction_details": {
+                    "order_id": "TRANSACTIONS_" + Math.floor(100000 + Math.random() * 900000),
+                    "gross_amount": total
+                },
+                "credit_card": {
+                    "secure": true
+                },
+                "customer_details": {
+                    "name": user.name,
+                    "email": user.email,
+
+                }
+            }
+            const midtransToken = await snap.createTransaction(parameter)
+            res.status(201).json({
+
+                midtransToken
+            })
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    static async CHECKOUT(req,res,next){
+        try {
+            const STATUS= await MyPlant.update({
+                status:true
+            }, {
+                where:{
+                    UserId:req.user.id
+                }
+            })
+            res.status(200).json({message:"thank you for checkout"})
+            
+        } catch (error) {
+            nrxt(error)
+            
+        }
+    }
 
 
 

@@ -13,7 +13,7 @@
 - `DELETE /ArinandaPlants/:id`
 - `PUT /ArinandaPlants/:id`
 
-- `PUT /MyArinandaPlants`
+- `Post /MyArinandaPlants/payment`
 
 ## 1. POST /registers
 
@@ -340,6 +340,35 @@ _Response (200 - OK)_
   "price": "integer",
   "stock": "integer",
   "Categoryd": "integer"
+}
+```
+
+&nbsp;
+
+## 10 POST /MyArinandaPlants/payment
+
+Description:
+
+- payment
+
+Request:
+
+- headers:
+
+```json
+{
+  "access_token": "string"
+}
+```
+
+_Response (201 - Created)_
+
+```json
+{
+  "midtransToken": {
+    "token": "string",
+    "redirect_url": "string"
+  }
 }
 ```
 

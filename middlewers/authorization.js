@@ -34,9 +34,10 @@ const authorizationMYPLANT = async (req,res,next)=>{
             })
             return
         }
-        next()
+ 
+      
 
-        if(!MyPlant.UserId != req.user.id){
+        if(MY.UserId != req.user.id){
             res.status(403).json({
                 message:'forbidden'
             })
