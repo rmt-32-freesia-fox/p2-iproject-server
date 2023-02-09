@@ -3,8 +3,8 @@ const authentication = require('../middlewares/authentication')
 
 const router = require('express').Router()
 
-// router.get('/a', MyEventController.allEvent)
 router.use(authentication)
+router.post('/myevents', MyEventController.createMyEvent)
 
 
 module.exports = router

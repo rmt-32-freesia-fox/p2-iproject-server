@@ -1,4 +1,4 @@
-const { User } = require("../models");
+const { User,Event } = require("../models");
 const { comparePassword } = require("../helpers/bcrypt");
 const { generateToken } = require("../helpers/jwt");
 const axios = require("axios");
@@ -90,17 +90,18 @@ class UserController {
 
   static async allEvent(req, res, next) {
     try {
-        let {UserId} = req.params 
-        console.log(req.params);
-      let animePlaylist = await AnimePlaylist.findAll({where : {UserId} , include : Anime, order: [
+
+      let events = await Event.findAll({ order: [
         ['id'],
     ],});
     // console.log(animePlaylist);
-      res.status(201).json(animePlaylist);
+      res.status(201).json(events);
     } catch (error) {
       next(error);
     }
   }
+
+  static async 
 }
 
 module.exports = UserController;
