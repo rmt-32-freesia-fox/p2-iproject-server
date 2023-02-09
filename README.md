@@ -276,6 +276,35 @@ _Response (200 - OK)_
 }
 ```
 
+## GET /profile
+
+_Response (200 - OK)_
+
+```json
+[
+  {
+    "id": 1,
+    "username": "0wx",
+    "name": "Gilang Ramadhan",
+    "profilePicture": "https://images2.imgbox.com/f2/3b/j2avPpWl_o.jpeg",
+    "bio": "null",
+    "background": null,
+    "createdAt": "2023-02-08T17:31:02.475Z",
+    "updatedAt": "2023-02-08T21:38:48.019Z"
+  },
+  {
+    "id": 2,
+    "username": "nyeh",
+    "name": "Gilang 2a",
+    "profilePicture": "https://images2.imgbox.com/2d/e2/6ooe1G5w_o.png",
+    "bio": "null",
+    "background": "https://images2.imgbox.com/e4/d2/LwkSe87x_o.jpg",
+    "createdAt": "2023-02-08T18:38:22.048Z",
+    "updatedAt": "2023-02-08T21:01:17.654Z"
+  }
+]
+```
+
 ## GET /profile/:username
 
 Request:
@@ -1089,15 +1118,17 @@ Edit user information
 _Response (200 - OK)_
 
 ```json
-{ 
-  "message": "Updated!" 
+{
+  "message": "Updated!"
 }
 ```
 
-
 ## Global Error
+
 #### Response
+
 _500 - internal server error_
+
 ```json
 {
   "message": "Internal server error"
@@ -1105,6 +1136,7 @@ _500 - internal server error_
 ```
 
 _401 - unauthorized_
+
 ```json
 {
   "message": "Unauthorized"
@@ -1112,6 +1144,7 @@ _401 - unauthorized_
 ```
 
 _403 - forbidden_
+
 ```json
 {
   "message": "Forbidden"
@@ -1119,6 +1152,7 @@ _403 - forbidden_
 ```
 
 _404 - not found_
+
 ```json
 {
   "message": "Not found"
@@ -1126,6 +1160,7 @@ _404 - not found_
 ```
 
 _400 - bad request_
+
 ```json
 {
   "message": "Bad request"

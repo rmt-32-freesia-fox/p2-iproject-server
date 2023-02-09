@@ -1,6 +1,19 @@
 const { User, Following, Link, Discord, Github, Spotify } = require('../models')
-
+const { literal } = require('sequelize')
 class ProfileController {
+  static async profiles(req, res, next) {
+    try {
+      const users = await User.findAll({
+        order: literal('random()'),
+        limit: 10,
+      })
+
+      res.json(users)
+    } catch (error) {
+      next(error)
+    }
+  }
+
   static async detail(req, res, next) {
     try {
       const { username } = req.params
