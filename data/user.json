@@ -1,0 +1,17 @@
+[
+    {
+        "email": "a@gmail.com",
+        "password": "123",
+        "address": "Jawa Barat, Indonesia"
+    },
+    {
+        "email": "b@gmail.com",
+        "password": "123",
+        "address": "Jawa Timur, Indonesia"
+    },
+    {
+        "email": "c@gmail.com",
+        "password": "123",
+        "address": "Jawa Tengah, Indonesia"
+    }
+]
