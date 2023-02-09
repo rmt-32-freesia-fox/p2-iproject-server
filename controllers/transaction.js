@@ -131,7 +131,7 @@ class TransactionController {
       });
       let parameter = {
         transaction_details: {
-          order_id: transactionById.id,
+          order_id: 'TRANSACTIONS' + Math.floor(100000 + Math.random() * 900000),
           gross_amount: total,
         },
         credit_card: {
