@@ -5,6 +5,8 @@ const { authenticatePublic, authenticate } = require('../middlewares/auth.middle
 
 const router = Router()
 
+router.get('/', ProfileController.profiles)
+
 router.get('/:username', authenticatePublic, ProfileController.detail)
 router.get('/:username/spotify', SpotifyController.listening)
 
