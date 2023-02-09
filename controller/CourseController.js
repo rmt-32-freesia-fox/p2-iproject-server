@@ -1,4 +1,4 @@
-const { Course, Material,Category } = require('../models')
+const { Course, Material, Category, Teacher } = require('../models')
 module.exports = class CourseController {
     static async getCourse(req, res, next) {
         try {
@@ -7,17 +7,26 @@ module.exports = class CourseController {
                     'id',
                     'name',
                     'description',
-                    'imgUrl'
+                    'imgUrl',
+                    'price'
                 ],
-                include: {
-                    model: Material,
-                    key: 'id',
-                    attributes: [
-                        'name',
-                        'videoId',
-                        'docsId',
-                    ]
-                }
+                include: [
+                    {
+                        model: Material,
+                        key: 'id',
+                        attributes: [
+                            'name',
+                            'videoId',
+                            'docsId',
+                        ]
+                    },
+                    {
+                        model: Category
+                    },
+                    {
+                        model: Teacher
+                    }
+                ]
             })
 
             res.status(200).json(course)
@@ -41,11 +50,11 @@ module.exports = class CourseController {
         }
     }
     static async createMaterialCourse(req, res, next) {
-        const {courseId} = req.params
+        const { courseId } = req.params
         const { name, videoId, docsId } = req.body
         try {
             const material = await Material.create({
-                name, videoId,docsId,CourseId:courseId
+                name, videoId, docsId, CourseId: courseId
             })
             res.status(201).json(material)
         } catch (err) {
@@ -55,14 +64,20 @@ module.exports = class CourseController {
         }
     }
     static async getCourseByPk(req, res, next) {
-        const {courseId} = req.params
+        const { courseId } = req.params
         try {
             const course = await Course.findOne({
-                where:{id:courseId},
-                include:{
-                    model:Material,
-                    key:'id'
-                }
+                where: { id: courseId },
+                include: [{
+                    model: Material,
+                    key: 'id'
+                },
+                { model: Teacher },
+
+                {
+                    model: Category
+                },],
+
             })
             res.status(200).json(course)
         } catch (err) {
@@ -72,10 +87,10 @@ module.exports = class CourseController {
         }
     }
     static async deleteCourse(req, res, next) {
-        const {courseId} = req.params
+        const { courseId } = req.params
         try {
-            await Course.destroy({where:{id:courseId}})
-            res.status(200).json({message:'success to delete'})
+            await Course.destroy({ where: { id: courseId } })
+            res.status(200).json({ message: 'success to delete' })
         } catch (err) {
             console.log('=========== deletecourse error')
             console.log(err)
@@ -83,10 +98,10 @@ module.exports = class CourseController {
         }
     }
     static async deleteMaterial(req, res, next) {
-        const {materialId} = req.params
+        const { materialId } = req.params
         try {
-            await Material.destroy({where:{id:materialId}})
-            res.status(200).json({message:'success to delete'})
+            await Material.destroy({ where: { id: materialId } })
+            res.status(200).json({ message: 'success to delete' })
         } catch (err) {
             console.log('=========== deletematerial error')
             console.log(err)
@@ -96,9 +111,20 @@ module.exports = class CourseController {
     static async getCategories(req, res, next) {
         try {
             const categories = await Category.findAll({
-                include:{
-                    model:Course,
-                    key:'id'
+                include: {
+                    model: Course,
+                    key: 'id',
+                    include:[
+                        {
+                            model:Category
+                        },
+                        {
+                            model:Material
+                        },
+                        {
+                            model:Teacher
+                        }
+                    ]
                 }
             })
             res.status(200).json(categories)
@@ -109,15 +135,26 @@ module.exports = class CourseController {
         }
     }
     static async getCategoryByPk(req, res, next) {
-        const {id} = req.params
+        const { id } = req.params
         try {
             const category = await Category.findOne({
-                where:{
+                where: {
                     id
                 },
-                include:{
-                    model:Course,
-                    key:'id',
+                include: {
+                    model: Course,
+                    key: 'id',
+                    include:[
+                        {
+                            model:Category
+                        },
+                        {
+                            model:Material
+                        },
+                        {
+                            model:Teacher
+                        }
+                    ]
                 }
             })
             res.status(200).json(category)

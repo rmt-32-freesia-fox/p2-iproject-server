@@ -54,6 +54,18 @@ module.exports = (sequelize, DataTypes) => {
       },
       onDelete:'cascade'
     },
+    price:{
+      type:DataTypes.INTEGER,
+      allowNull:false,
+      validate:{
+        notNull:{
+          msg:'price is required'
+        },
+        notEmpty:{
+          msg: 'price is required'
+        }
+      }
+    },
     CategoryId: {
       type:DataTypes.INTEGER,
       allowNull:false,

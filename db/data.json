@@ -63,126 +63,258 @@
         {
             "name": "Javascript Basic",
             "description": "Javascript itu sulit sulit gampang, ayo belajar berasama kami",
-            "imgUrl":"https://www.freepnglogos.com/uploads/javascript-png/javascript-vector-logo-yellow-png-transparent-javascript-vector-12.png",
+            "imgUrl": "https://www.freepnglogos.com/uploads/javascript-png/javascript-vector-logo-yellow-png-transparent-javascript-vector-12.png",
+            "price": 30000,
             "TeacherId": 1,
-            "CategoryId":1
+            "CategoryId": 1
         },
         {
             "name": "Sequelize Basic",
             "description": "sequelize itu mempermudah anda untuk kelola query loh, jadi ayo belajar wkwk",
-            "imgUrl":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfMmQWvHLCcFPq8vRVXhKW-hx4kwMVOrGiJ1QJBWNodMVbn4o&s",
+            "imgUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfMmQWvHLCcFPq8vRVXhKW-hx4kwMVOrGiJ1QJBWNodMVbn4o&s",
+            "price": 40000,
             "TeacherId": 2,
-            "CategoryId":2
+            "CategoryId": 1
         },
         {
             "name": "Menjadi Jago Gensin Impact Dalam 2 Hari",
             "description": "Python itu sulit sulit gampang, ayo belajar berasama kami. golang golang golanggaling hehe",
-            "imgUrl":"https://www.freepnglogos.com/uploads/genshin-impact-logo-png/genshin-impact-characters-png-8.png",
+            "imgUrl": "https://www.freepnglogos.com/uploads/genshin-impact-logo-png/genshin-impact-characters-png-8.png",
+            "price": 50000,
             "TeacherId": 3,
-            "CategoryId":3
+            "CategoryId": 1
         },
         {
             "name": "Cara Bertenak Lele",
             "description": "Lele Itu Lezat guys, ayo belajar berasama kami. golang golang golanggaling hehe",
-            "imgUrl":"https://media.istockphoto.com/id/1159969333/id/foto/pecel-lele-catfish-indonesia-food.jpg?s=612x612&w=0&k=20&c=qZwu3PnOm9EwnSg25Ll5MoWqTof3mMPwgax1d4aDbVE=",
+            "imgUrl": "https://media.istockphoto.com/id/1159969333/id/foto/pecel-lele-catfish-indonesia-food.jpg?s=612x612&w=0&k=20&c=qZwu3PnOm9EwnSg25Ll5MoWqTof3mMPwgax1d4aDbVE=",
+            "price": 40000,
             "TeacherId": 3,
-            "CategoryId":3
+            "CategoryId": 1
         },
         {
             "name": "Python Basic",
             "description": "Python itu sulit sulit gampang, ayo belajar berasama kami. golang golang golanggaling hehe",
-            "imgUrl":"https://media.istockphoto.com/id/1362729835/id/foto/python-bahasa-pemrograman-dengan-peringkat-bintang-5-dan-kode-elemmets-lencana-3d.jpg?s=612x612&w=0&k=20&c=55KQkUM039OtdOEnlT_Y3lz1UwbQY-m3bsLqFL50Ug4=",
+            "imgUrl": "https://media.istockphoto.com/id/1362729835/id/foto/python-bahasa-pemrograman-dengan-peringkat-bintang-5-dan-kode-elemmets-lencana-3d.jpg?s=612x612&w=0&k=20&c=55KQkUM039OtdOEnlT_Y3lz1UwbQY-m3bsLqFL50Ug4=",
+            "price": 60000,
             "TeacherId": 3,
-            "CategoryId":3
+            "CategoryId": 1
         },
         {
             "name": "Cara Menjinakan Python ",
             "description": "Python itu sulit sulit gampang, ayo belajar berasama kami. golang golang golanggaling hehe",
-            "imgUrl":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR563vtI_Vba9AnfU1Xo7UoB9fXUcz_RICm8ImSmPNlsRR3fgXx&s",
+            "price": 30000,
+            "imgUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR563vtI_Vba9AnfU1Xo7UoB9fXUcz_RICm8ImSmPNlsRR3fgXx&s",
             "TeacherId": 3,
-            "CategoryId":3
+            "CategoryId": 1
         }
     ],
     "materials": [
         {
-            "name": "material1",
-            "videoId": "VwfAmMBH",
+            "name": "material - part 1",
+            "videoId": "M98ZkARM",
             "docsId": "",
             "CourseId": 1
         },
         {
-            "name": "material2",
-            "videoId": "S7enpqy8",
+            "name": "material - part 2",
+            "videoId": "zsNuzBl3",
+            "docsId": "",
+            "CourseId": 1
+        },
+        {
+            "name": "material - part 3",
+            "videoId": "RwSz6tQf",
+            "docsId": "",
+            "CourseId": 1
+        },
+        {
+            "name": "material - part 4",
+            "videoId": "64AgV9TW",
+            "docsId": "",
+            "CourseId": 1
+        },
+        {
+            "name": "material - part 5",
+            "videoId": "64AgV9TW",
+            "docsId": "",
+            "CourseId": 1
+        },
+        {
+            "name": "material - part 1",
+            "videoId": "M98ZkARM",
             "docsId": "",
             "CourseId": 2
         },
         {
-            "name": "material3",
-            "videoId": "ar5H5o3r",
+            "name": "material - part 2",
+            "videoId": "zsNuzBl3",
+            "docsId": "",
+            "CourseId": 2
+        },
+        {
+            "name": "material - part 3",
+            "videoId": "RwSz6tQf",
+            "docsId": "",
+            "CourseId": 2
+        },
+        {
+            "name": "material - part 4",
+            "videoId": "64AgV9TW",
+            "docsId": "",
+            "CourseId": 2
+        },
+        {
+            "name": "material - part 5",
+            "videoId": "64AgV9TW",
+            "docsId": "",
+            "CourseId": 2
+        },
+        {
+            "name": "material - part 1",
+            "videoId": "M98ZkARM",
             "docsId": "",
             "CourseId": 3
         },
         {
-            "name": "material4",
-            "videoId": "600tSjGw",
+            "name": "material - part 2",
+            "videoId": "zsNuzBl3",
             "docsId": "",
             "CourseId": 3
         },
         {
-            "name": "material4",
-            "videoId": "600tSjGw",
+            "name": "material - part 3",
+            "videoId": "RwSz6tQf",
             "docsId": "",
-            "CourseId": 1
+            "CourseId": 3
         },
         {
-            "name": "material4",
-            "videoId": "600tSjGw",
+            "name": "material - part 4",
+            "videoId": "64AgV9TW",
             "docsId": "",
-            "CourseId": 1
+            "CourseId": 3
         },
         {
-            "name": "material4",
-            "videoId": "600tSjGw",
+            "name": "material - part 5",
+            "videoId": "64AgV9TW",
             "docsId": "",
-            "CourseId": 1
+            "CourseId": 3
         },
         {
-            "name": "material4",
-            "videoId": "600tSjGw",
+            "name": "material - part 1",
+            "videoId": "M98ZkARM",
             "docsId": "",
             "CourseId": 4
         },
         {
-            "name": "material4",
-            "videoId": "600tSjGw",
+            "name": "material - part 2",
+            "videoId": "zsNuzBl3",
+            "docsId": "",
+            "CourseId": 4
+        },
+        {
+            "name": "material - part 3",
+            "videoId": "RwSz6tQf",
+            "docsId": "",
+            "CourseId": 4
+        },
+        {
+            "name": "material - part 4",
+            "videoId": "64AgV9TW",
+            "docsId": "",
+            "CourseId": 4
+        },
+        {
+            "name": "material - part 5",
+            "videoId": "64AgV9TW",
+            "docsId": "",
+            "CourseId": 4
+        },
+        {
+            "name": "material - part 1",
+            "videoId": "M98ZkARM",
             "docsId": "",
             "CourseId": 5
+        },
+        {
+            "name": "material - part 2",
+            "videoId": "zsNuzBl3",
+            "docsId": "",
+            "CourseId": 5
+        },
+        {
+            "name": "material - part 3",
+            "videoId": "RwSz6tQf",
+            "docsId": "",
+            "CourseId": 5
+        },
+        {
+            "name": "material - part 4",
+            "videoId": "64AgV9TW",
+            "docsId": "",
+            "CourseId": 5
+        },
+        {
+            "name": "material - part 5",
+            "videoId": "64AgV9TW",
+            "docsId": "",
+            "CourseId": 5
+        },
+        {
+            "name": "material - part 1",
+            "videoId": "M98ZkARM",
+            "docsId": "",
+            "CourseId": 6
+        },
+        {
+            "name": "material - part 2",
+            "videoId": "zsNuzBl3",
+            "docsId": "",
+            "CourseId": 6
+        },
+        {
+            "name": "material - part 3",
+            "videoId": "RwSz6tQf",
+            "docsId": "",
+            "CourseId": 6
+        },
+        {
+            "name": "material - part 4",
+            "videoId": "64AgV9TW",
+            "docsId": "",
+            "CourseId": 6
+        },
+        {
+            "name": "material - part 5",
+            "videoId": "64AgV9TW",
+            "docsId": "",
+            "CourseId": 6
         }
     ],
-    "categories":[
+    "categories": [
         {
-            "name":"web development"
+            "name": "web development"
         },
         {
-            "name":"database"
+            "name": "database"
         },
         {
-            "name":"data science"
+            "name": "data science"
         },
         {
-            "name":"pargoy"
+            "name": "pargoy"
         },
         {
-            "name":"art"
+            "name": "art"
         },
         {
-            "name":"graphical design"
+            "name": "graphical design"
         },
         {
-            "name":"mentality"
+            "name": "mentality"
         },
         {
-            "name":"math"
+            "name": "math"
         }
     ]
 }

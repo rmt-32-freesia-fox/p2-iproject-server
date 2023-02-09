@@ -18,6 +18,9 @@ module.exports = {
       imgUrl:{
         type:Sequelize.STRING
       },
+      price:{
+        type: Sequelize.INTEGER,
+      },
       TeacherId: {
         type: Sequelize.INTEGER,
         allowNull: false,

@@ -35,7 +35,7 @@ module.exports = class StudentController {
 
             if (!checkPassword(password, user.password)) throw { name: 'InvalidCredentials' }
 
-            res.status(200).json({ access_token: signToken({ id: user.id, email:user.email}),username:user.username,role:user.role })
+            res.status(200).json({ access_token: signToken({ id: user.id, email:user.email}),username:user.username,role:user.role,id:user.id })
         } catch (err) {
             console.log(err)
             next(err)
