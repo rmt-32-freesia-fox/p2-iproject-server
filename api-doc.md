@@ -205,3 +205,33 @@ Response
   ```
 
   ```
+
+  ### 5. POST /generate-midtrans-token
+
+#### Description
+
+- Post payment gateway
+
+Request :
+
+- Headers
+
+```
+{
+    "access_token": "string"
+}
+```
+
+Response
+
+- _200 - OK_
+
+      ```
+      {
+      "token": <token>
+      "redirect_url": <redirect_url>
+      }
+
+  ```
+
+  ```
