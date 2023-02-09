@@ -11,6 +11,8 @@ async function authentication(req, res, next) {
         let payload = decodeToken(access_token)
         let checkUser = await User.findOne({ where: { email: payload.email } })
 
+        console.log(checkUser);
+
         if (!checkUser) {
             throw ({ name: 'invalidToken' })
         } else {
@@ -23,6 +25,7 @@ async function authentication(req, res, next) {
         next()
 
     } catch (error) {
+        console.log(error, '<-- Ini error dari authentication');
         if (error.name == 'invalidToken') {
             res.status(401).json({ message: "Invalid token" })
         } else if (error.name == 'JsonWebTokenError') {

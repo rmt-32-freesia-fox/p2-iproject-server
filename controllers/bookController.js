@@ -41,7 +41,7 @@ class BookController {
     static async addToMyBook(req, res, next) {
         const { id } = req.user
         const { bookId } = req.params
-
+        console.log(id, bookId, '<--- INI ID DAN BOOKID');
         try {
             const bookById = await Book.findByPk(bookId)
             if (!bookById) {
@@ -56,6 +56,7 @@ class BookController {
             res.status(201).json(addBookToMyBook)
 
         } catch (error) {
+            // console.log(error, '<--- INI ERROR DARI MYBOOK');
             if (error.name == 'bookNotFound') {
                 res.status(404).json({ message: "Book not found" })
             } else {

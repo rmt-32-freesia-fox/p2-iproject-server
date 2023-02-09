@@ -83,7 +83,7 @@ class UserController {
                     address: 'Indonesia'
                 }
             })
-
+            console.log(user, created, '<--- INI TEST LOG');
             let message, code
 
             if (created) {
@@ -97,6 +97,7 @@ class UserController {
 
             const access_token = generateToken({
                 id: user.id,
+                email: user.email,
                 address: "Indonesia"
             })
 
