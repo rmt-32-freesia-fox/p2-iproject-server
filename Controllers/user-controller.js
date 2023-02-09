@@ -5,6 +5,7 @@ const { User } = require('../models')
 const midtransClient = require('midtrans-client');
 const { OAuth2Client } = require('google-auth-library');
 const client = new OAuth2Client(CLIENT_ID);
+const nodemailer = require('nodemailer')
 
 class Controller {
     static async handleLogin(req, res, next) {
@@ -77,13 +78,14 @@ class Controller {
 
 
     static async handleSubscription(req, res, next) {
-        console.log(`masuk nih ke subscription`);
         try {
             const newUser = await User.update({ role: `Premium` }, {
                 where: {
                     id: req.user
                 }
             });
+
+
             res.status(201).json({ msg: `status has been succesfuly updated` })
 
         } catch (error) {
