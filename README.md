@@ -2,4 +2,16 @@
 
 Individual Project - Server
 
-4d63e3d3-b351-4a0e-b085-7283dd5e3ad6
+Client: https://career-portal-375117.web.app/
+Server: https://dreary-receipt-production.up.railway.app/
+
+3rd Party APIs:
+
+- Dota2 API
+- Google OAuth
+
+Features:
+
+- chartjs
+- qrcode
+- social-sharing

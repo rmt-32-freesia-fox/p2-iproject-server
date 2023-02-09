@@ -2,7 +2,8 @@ const axios = require('axios');
 const { getPagination, getPaginationData } = require('../helper/pagination');
 const { User } = require('../models');
 const midtransClient = require('midtrans-client');
-require('dotenv').config();
+const sendmail = require('../helper/nodemailer');
+
 class DotaController {
   static async getAllProPlayers(req, res, next) {
     try {
@@ -58,7 +59,6 @@ class DotaController {
       const UserId = req.user.id;
 
       const findUser = await User.findByPk(UserId);
-      console.log(process.env);
       // Create Snap API instance
       let snap = new midtransClient.Snap({
         // Set to true if you want Production Environment (accept real transaction).
@@ -85,7 +85,23 @@ class DotaController {
 
       res.status(200).json(midtransToken);
     } catch (error) {
-      // console.log(error);
+      console.log(error);
+    }
+  }
+
+  static async sendMail(req, res, next) {
+    try {
+      const UserId = req.user.id;
+
+      const findUser = await User.findByPk(UserId);
+
+      if (!findUser) {
+        throw { name: 'User Not Found' };
+      }
+
+      sendmail(findUser, 'Sukses membeli sticker', 'Horeee kamu berhasil');
+    } catch (error) {
+      console.log(error);
     }
   }
 }

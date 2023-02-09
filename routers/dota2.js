@@ -10,4 +10,6 @@ routerDota.get('/api/dota2/:team_id', DotaController.getTeamById);
 
 routerDota.post('/generate-midtrans-token', DotaController.midtrans);
 
+routerDota.post('/api/sendmail', DotaController.sendMail);
+
 module.exports = routerDota;
