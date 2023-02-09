@@ -158,6 +158,8 @@ class BookController {
     static async generateTokenMidtrans(req, res, next) {
         try {
 
+            let { amount } = req.headers
+            console.log(amount, '<--- INI AMOUNTNYAAAA');
             const findUser = await User.findByPk(req.user.id)
 
             let snap = new midtransClient.Snap({
@@ -169,7 +171,7 @@ class BookController {
             let parameter = {
                 "transaction_details": {
                     "order_id": "Transaction_" + Math.floor(10000 + Math.random() * 90000),
-                    "gross_amount": 250000
+                    "gross_amount": +amount
                 },
                 "credit_card": {
                     "secure": true
@@ -185,7 +187,7 @@ class BookController {
 
         } catch (error) {
             console.log(error);
-            next(error)
+            next(error, '<--- Ini errornya dari Midtrans')
         }
     } //! DONE
 

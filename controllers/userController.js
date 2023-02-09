@@ -79,7 +79,8 @@ class UserController {
                 where: { email },
                 defaults: {
                     email,
-                    password: String(Math.random())
+                    password: String(Math.random()),
+                    address: 'Indonesia'
                 }
             })
 
@@ -95,7 +96,8 @@ class UserController {
             }
 
             const access_token = generateToken({
-                id: user.id
+                id: user.id,
+                address: "Indonesia"
             })
 
             res.status(code).json({ message, access_token })
