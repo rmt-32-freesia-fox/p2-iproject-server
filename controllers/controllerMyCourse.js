@@ -27,7 +27,7 @@ class ControllerMyCourse {
   static async getMyCourse(req, res, next) {
     try {
       const { id } = req.user;
-      const dataMyCourse = await MyCourse.findAll({ where: { UserId: id }, attributes: { exclude: ['createdAt', 'updatedAt'] } });
+      const dataMyCourse = await MyCourse.findAll({ where: { UserId: id }, attributes: { exclude: ['createdAt', 'updatedAt'] }, order: [['id', 'DESC']] });
       res.status(200).json(dataMyCourse);
     } catch (error) {
       next(error);
