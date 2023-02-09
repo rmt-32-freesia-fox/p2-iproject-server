@@ -1,0 +1,93 @@
+[
+  {
+    "name": "Camera Canon 5D Mark 3",
+    "quantity": 5,
+    "description": "Very good",
+    "price": 150000,
+    "status": "Ready",
+    "imageUrl": "https://rb.gy/xicwvy",
+    "CategoryId": 1,
+    "UserId": 1
+  },
+  {
+    "name": "Yamaha N-Max",
+    "quantity": 5,
+    "description": "Ride every moment",
+    "price": 300000,
+    "status": "Ready",
+    "imageUrl": "https://rb.gy/m6mwut",
+    "CategoryId": 2,
+    "UserId": 1
+  },
+  {
+    "name": "Laptop ROG Gaming",
+    "quantity": 6,
+    "description": "All game can play",
+    "price": 300000,
+    "status": "Ready",
+    "imageUrl": "https://rb.gy/mgbvhn",
+    "CategoryId": 1,
+    "UserId": 1
+  },
+  {
+    "name": "Toyota Alphard",
+    "quantity": 3,
+    "description": "Comfortable",
+    "price": 1000000,
+    "status": "Ready",
+    "imageUrl": "https://rb.gy/sbmcl3",
+    "CategoryId": 2,
+    "UserId": 1
+  },
+  {
+    "name": "Rumah",
+    "quantity": 1,
+    "description": "Your house here",
+    "price": 400000,
+    "status": "Ready",
+    "imageUrl": "https://rb.gy/fmerki",
+    "CategoryId": 3,
+    "UserId": 1
+  },
+
+  {
+    "name": "Iphone 14 Pro",
+    "quantity": 10,
+    "description": "Grab fast",
+    "price": 150000,
+    "status": "Ready",
+    "imageUrl": "https://rb.gy/zbq9sq",
+    "CategoryId": 1,
+    "UserId": 1
+  },
+  {
+    "name": "Motor KLX",
+    "quantity": 7,
+    "description": "Ride everywhere",
+    "price": 250000,
+    "status": "Ready",
+    "imageUrl": "https://rb.gy/nrfp4w",
+    "CategoryId": 2,
+    "UserId": 1
+  },
+  {
+    "name": "Mini Cooper",
+    "quantity": 5,
+    "description": "Enjoy life",
+    "price": 1300000,
+    "status": "Ready",
+    "imageUrl": "https://rb.gy/sc1zti",
+    "CategoryId": 2,
+    "UserId": 1
+  },
+  {
+    "name": "Villa",
+    "quantity": 1,
+    "description": "Cozy",
+    "price": 1000000,
+    "status": "Ready",
+    "imageUrl": "https://rb.gy/5cr3co",
+    "CategoryId": 3,
+    "UserId": 1
+  }
+]
