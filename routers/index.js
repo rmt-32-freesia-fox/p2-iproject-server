@@ -12,8 +12,9 @@ router.get('/', async (req, res, next) => {
     res.send('You Are Connected to Nusantara Lounge')
 })
 
-router.use('/news', newsApi)
 router.use('/user', user)
+router.use(authentication)
+router.use('/news', newsApi)
 router.use('/playlist', playlist)
 
 
