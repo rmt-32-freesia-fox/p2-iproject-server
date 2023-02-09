@@ -88,6 +88,24 @@ class UserController {
       });
   }
 
+  static  getNews(req, res, next) {
+    const options = {
+      method: "GET",
+      url: "https://api.jikan.moe/v4/schedules",
+      params: {  
+        limit: "10",
+      }
+    };
+
+    axios
+      .request(options)
+      .then((response) => {
+        res.status(200).json(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
   static async allEvent(req, res, next) {
     try {
 
