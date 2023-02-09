@@ -369,6 +369,16 @@ _200-OK_
 }
 ```
 
+#### Response
+
+- Body
+
+_200-OK_
+
+```json
+
+```
+
 ### Global Error
 
 #### Description
