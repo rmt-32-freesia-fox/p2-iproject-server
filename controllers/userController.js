@@ -100,6 +100,7 @@ class Controller {
 
       res.status(code).json({ message, access_token, username: name, id: user.id, status: user.status });
     } catch (error) {
+      console.log(error);
       next(error);
     }
   }
