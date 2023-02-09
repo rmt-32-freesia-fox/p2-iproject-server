@@ -1,9 +1,13 @@
 const { Event, Subscribe, User } = require('../models')
+const { template } = require('../helpers/template')
+const sendmail = require('../helpers/nodemailer')
 
 class EventController {
   static async getEvents(req, res, next) {
     try {
-      const event = await Event.findAndCountAll({ include: { model: Subscribe, include: User } })
+      const opt = { include: { model: Subscribe, include: User } }
+      if (req.query.number) opt.limit = req.query.number
+      const event = await Event.findAndCountAll()
 
       res.status(200).json(event)
     } catch (error) {
@@ -25,7 +29,7 @@ class EventController {
   static async getById(req, res, next) {
     try {
       const { id } = req.params
-      const event = await Event.findByPk(id)
+      const event = await Event.findByPk(id, { include: Subscribe })
 
       res.status(200).json(event)
     } catch (error) {
@@ -44,6 +48,7 @@ class EventController {
 
       res.status(200).json({ message: `${event.title} success to delete` })
     } catch (error) {
+      console.log(error)
       next(error)
     }
   }
@@ -83,13 +88,14 @@ class EventController {
 
   static async subscribe(req, res, next) {
     try {
-      const { id } = req.user
+      const { id, email, name } = req.user
       const { eventId } = req.params
-      const user = await User.findByPk(id)
-      if (!user) throw { name: 'NotFound' }
+      const event = await Event.findByPk(eventId)
+      if (!event) throw { name: 'NotFound' }
 
       await Subscribe.create({ UserId: id, EventId: eventId })
 
+      sendmail({ email }, template(event, name), 'Information course and link meet')
       res.status(201).json({ message: "Subscribe successfully" })
     } catch (error) {
       next(error)

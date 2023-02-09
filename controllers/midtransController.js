@@ -1,4 +1,7 @@
-require('dotenv').config()
+if (process.env.NODE_ENV != 'production') {
+  require('dotenv').config()
+}
+
 
 const midtransClient = require('midtrans-client');
 const { User } = require('../models')
@@ -7,6 +10,7 @@ class MidtransController {
   static async generateTokenMids(req, res, next) {
     try {
       const { id } = req.user
+      const { price } = req.body
 
       const user = await User.findByPk(id)
 
@@ -17,8 +21,8 @@ class MidtransController {
 
       let parameter = {
         transaction_details: {
-          "order_id": "ORDER_" + Math.floor(100000 + Math.random() + 900000),
-          "gross_amount": 10000
+          "order_id": "TRANSACTION" + new Date().getUTCMilliseconds(),
+          "gross_amount": +price
         },
         "credit_card": {
           "secure": true
@@ -33,6 +37,7 @@ class MidtransController {
       const token = await snap.createTransaction(parameter)
       res.status(201).json(token)
     } catch (error) {
+      console.log(error)
       next(error)
     }
   }

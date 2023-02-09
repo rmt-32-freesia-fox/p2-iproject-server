@@ -13,7 +13,8 @@ const authenticated = async (req, res, next) => {
 
     req.user = {
       id: user.id,
-      email: user.email
+      email: user.email,
+      name: user.name
     }
 
     next()

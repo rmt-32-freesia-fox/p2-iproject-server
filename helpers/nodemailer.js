@@ -13,7 +13,7 @@ function sendmail(payload, content, subject) {
     from: process.env.EMAIL,
     to: payload.email,
     subject: subject,
-    text: content,
+    html: content,
   };
 
   transport.sendMail(mailOptions, (err, info) => {

@@ -1,4 +1,7 @@
-require('dotenv').config()
+if (process.env.NODE_ENV != 'production') {
+  require('dotenv').config()
+}
+
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const secret_key = process.env.SECRET_KEY

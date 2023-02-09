@@ -1,4 +1,7 @@
-require('dotenv').config()
+if (process.env.NODE_ENV != 'production') {
+  require('dotenv').config()
+}
+
 
 const { default: axios } = require("axios")
 const { HOST_SPOON, API_KEY_SPOON } = process.env
@@ -11,6 +14,7 @@ class FoodController {
       })
       res.status(200).json(foods.data)
     } catch (error) {
+      console.log(error)
       next(error)
     }
   }
@@ -32,6 +36,7 @@ class FoodController {
       const foods = await axios.get(`${HOST_SPOON}/recipes/findByIngredients`, {
         params: { ...req.query, apiKey: API_KEY_SPOON }
       })
+      
       res.status(200).json(foods.data)
     } catch (error) {
       next(error)

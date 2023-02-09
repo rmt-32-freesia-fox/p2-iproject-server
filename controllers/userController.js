@@ -1,5 +1,8 @@
 if (process.env.NODE_ENV != 'production') {
+  if (process.env.NODE_ENV != 'production') {
   require('dotenv').config()
+}
+
 }
 
 const { comparePassword, generateToken, hashPassword } = require('../helpers')
@@ -80,9 +83,11 @@ class UserController {
 
       const [user, created] = await User.findOrCreate({
         where: { email },
-        fields: ['email', 'username', 'password', 'role'],
+        fields: ['email', 'name', 'password', 'role', 'address', 'phoneNumber'],
         defaults: {
-          email, username: name, password: String(Math.random), role: 'staff'
+          email, name: name, password: String(Math.random), role: 'customer', 
+          address: 'not set',
+          phoneNumber: '08'
         },
       })
 
@@ -103,6 +108,7 @@ class UserController {
       res.status(code).json({ message, access_token, id: user.id, username: user.username, role: user.role })
 
     } catch (error) {
+      console.log(error)
       next(error)
     }
   }
