@@ -134,6 +134,7 @@ class Controller {
         res.status(201).json(midtransToken);
       }
     } catch (error) {
+      console.log(error);
       next(error);
     }
   }
