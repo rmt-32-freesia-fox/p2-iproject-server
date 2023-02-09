@@ -14,9 +14,9 @@ let spotifyError = {}
 let number = code || 500
 let msg = 'Internal server error' 
   if(response) {
-    number = response.data.error.status
-    msg = response.data.error.message
-  }
+    number = response?.data?.error?.status
+    msg = response?.data?.error?.message
+  } 
   // const {response: { data: { error:  { status, message} } } } = error
   
 // console.log(error);

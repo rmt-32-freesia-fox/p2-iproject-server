@@ -38,8 +38,8 @@ class Controller {
       // let status = (created) ? 201 : 200
       // res.status(status).json({access_token})  
       
-      // console.log(token.data.access_token);
-      res.redirect(client_redirect_url + '/?token=' + code) 
+      console.log('access_tokenhaZeh', data, 'access_tokenhaZeh');
+      res.redirect(client_redirect_url + '/?token=' + data) 
       // res.redirect(client_redirect_url + '/?token=' + data) 
     } catch (error) {
       next(error) 
@@ -144,8 +144,15 @@ class Controller {
     const {token} = req 
     try {
       const data = await Controller.getProfile(token)
+      const  { id } = data
+      const user = await User.findOne({
+        where: {
+          userId: id
+        }
+      })
+      const {isPaid} = user
       
-      res.status(200).json(data)
+      res.status(200).json({spotify: data, isPaid})
     } catch (error) { 
       next(error)
       // console.log(error, 'error gaes');
@@ -265,7 +272,9 @@ class Controller {
   
   static async getTopGlobal(req, res, next) { 
     const {access_token} = req.headers
-    let url = `https://api.spotify.com/v1/playlists/37i9dQZEVXbMDoHDwVN2tF?limit=1` 
+    let url = `https://api.spotify.com/v1/playlists/37i9dQZEVXbMDoHDwVN2tF` 
+    // let url = `https://api.spotify.com/v1/playlists/37i9dQZEVXbMDoHDwVN2tF/tracks?limit=10` 
+    
     try {
       const {data} = await 
       axios({
@@ -306,7 +315,7 @@ class Controller {
           userId: id
         }
       })
-      res.status(200).json('subscribed')
+      res.status(200).json({message: 'subscribed'})
     } catch (error) {
       next(error)
       // console.log(error, 'error gaes'); 
@@ -327,7 +336,7 @@ class Controller {
           "X-RapidAPI-Host": 'spotify-downloader.p.rapidapi.com'
         }
       })   
-      res.status(200).json(data) 
+      res.status(200).json(data.link) 
     } catch (error) {
       next(error)
       // console.log(error, 'error gaes'); 
