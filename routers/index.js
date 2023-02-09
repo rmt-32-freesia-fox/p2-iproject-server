@@ -9,6 +9,11 @@ const router = require('express').Router();
 router.post('/register', ControllerUsers.registerUser);
 router.post('/login', ControllerUsers.loginUser);
 router.get('/popcourse', ControllerCourse.twelevCourse);
+router.post('/googlesign', ControllerUsers.forGoogleLogin);
+router.post('/github', ControllerUsers.githubLogin);
+router.post('/resetpassword', ControllerUsers.forToken);
+router.post('/newpassword', ControllerUsers.forReset);
+
 router.use(authentication);
 router.get('/motivation', ControllerApi.motivation);
 router.use('/courses', routerCourse);

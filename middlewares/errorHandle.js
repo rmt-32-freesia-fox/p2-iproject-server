@@ -18,6 +18,10 @@ const errorMsg = (error, req, res, next) => {
       resStatus = 400;
       resMessage = 'Course already in your favorite';
       break;
+    case 'subsribe_now':
+      resStatus = 400;
+      resMessage = 'please subsribe to watch video';
+      break;
     case 'already subscribe':
       resStatus = 400;
       resMessage = 'already subscribe';
