@@ -1,6 +1,8 @@
 const { comparePassword } = require('../helpers/bcrypt')
 const { encodedToken } = require('../helpers/jwt')
 const { User } = require('../models')
+const { OAuth2Client } = require('google-auth-library');
+const client = new OAuth2Client('338073874974-rrups1f7nt5urgppren0eiunnvhlm6hk.apps.googleusercontent.com');
 
 class UserController {
     static async register(req, res, next) {
@@ -45,7 +47,7 @@ class UserController {
             const token = req.headers["google-auth-token"]
             const ticket = await client.verifyIdToken({
                 idToken: token,
-                audience: 338073874974 - rrups1f7nt5urgppren0eiunnvhlm6hk.apps.googleusercontent.com,
+                audience: '338073874974-rrups1f7nt5urgppren0eiunnvhlm6hk.apps.googleusercontent.com',
             });
             const payload = ticket.getPayload();
             const { email, name } = payload
@@ -68,7 +70,7 @@ class UserController {
                 message = `customer with email ${email} has been Found`
                 code = 200
             }
-            const access_token = generateToken({
+            const access_token = encodedToken({
                 id: User.id
             })
             res.status(code).json({ message, access_token, username: user.username })

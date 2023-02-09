@@ -10,12 +10,40 @@ class MovieController {
                 method: 'GET',
                 url: 'https://imdb-top-100-movies.p.rapidapi.com/',
                 headers: {
-                    'X-RapidAPI-Key': 'a19ac7857cmsh9fb1c28537353eep13be81jsnc2cf2963c3ac',
+                    'X-RapidAPI-Key': '2e49e0f5b0msh29f18cffd1cf153p1e2596jsnb0ce53987731',
                     'X-RapidAPI-Host': 'imdb-top-100-movies.p.rapidapi.com'
                 }
             };
             const response = await axios(options)
-            res.status(200).json({ data: response.data })
+            // console.log(response.data);
+            const output = response.data
+            console.log(output.title);
+            let { page, genre, search, limit } = req.query;
+            console.log(search);
+            let result;
+
+            let query = {
+                limit: 20,
+            };
+            console.log(output.map(el => el.title));
+            if (genre && genre !== '') {
+                result = output.filter((el) => el.genre[0] == genre || el.genre[1] == genre || el.genre[2] == genre);
+            } else if (search && search !== '') {
+                result = output.filter((el) => el.title == search);
+            } else {
+                result = output;
+            }
+
+            if (page) {
+                query.offset = (page - 1) * limit
+            } else {
+                query.offset = 0;
+            }
+            const currentPage = +page ? +page : 0;
+            const totalPage = Math.ceil(output.length / query.limit);
+
+            const data = result.slice(query.offset, query.offset + query.limit);
+            res.status(200).json({ data, currentPage, totalPage })
         } catch (error) {
             console.log(error);
             next(error)
@@ -28,7 +56,7 @@ class MovieController {
                 method: 'GET',
                 url: `https://imdb-top-100-movies.p.rapidapi.com/${id}`,
                 headers: {
-                    'X-RapidAPI-Key': 'a19ac7857cmsh9fb1c28537353eep13be81jsnc2cf2963c3ac',
+                    'X-RapidAPI-Key': '2e49e0f5b0msh29f18cffd1cf153p1e2596jsnb0ce53987731',
                     'X-RapidAPI-Host': 'imdb-top-100-movies.p.rapidapi.com'
                 }
             };
