@@ -1,0 +1,42 @@
+[
+    {
+        "imageUrl": "https://images-fe.ssl-images-amazon.com/images/I/619ht2WrGTL._AC_UL750_SR750,750_.jpg",
+        "title": "Clean Code: A Handbook of Agile Software Craftsmanship",
+        "author": "Robert C. Martin",
+        "publisher": "Prentice Hall",
+        "price": "Rp 100.000",
+        "review": "-"
+    },
+    {
+        "imageUrl": "https://n4.sdlcdn.com/imgs/b/z/6/Introduction-To-Algorithms-Paperback-English-SDL474587042-1-8ecff.jpg",
+        "title": "Introduction to Algorithms",
+        "author": "Thomas H. Cormen",
+        "publisher": "The MIT Press",
+        "price": "Rp 120.000",
+        "review": "-"
+    },
+    {
+        "imageUrl": "https://mit-press-us.imgix.net/covers/9780262543231.jpg?auto=format&w=298",
+        "title": "Structure and Interpretation of Computer Programs (SICP)",
+        "author": "Gerald Jay Sussman",
+        "publisher": "The MIT Press",
+        "price": "Rp 170.000",
+        "review": "-"
+    },
+    {
+        "imageUrl": "https://images.tokopedia.net/img/cache/700/product-1/2018/5/3/14481426/14481426_676f9964-0e18-49b5-a7e6-b8814aac4983_410_500.jpg",
+        "title": "Code Complete: A Practical Handbook of Software Construction",
+        "author": "Steve McConnell",
+        "publisher": "Microsoft Press",
+        "price": "Rp 235.000",
+        "review": "-"
+    },
+    {
+        "imageUrl": "https://m.media-amazon.com/images/I/51eSAiAoLuL._SX395_BO1,204,203,200_.jpg",
+        "title": "Design Patterns: Elements of Reusable Object-Oriented Software",
+        "author": "Erich Gamma",
+        "publisher": "Addison-Wesley Professional",
+        "price": "Rp 205.000",
+        "review": "-"
+    }
+]
