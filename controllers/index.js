@@ -90,17 +90,30 @@ class UserController {
   }
 
   static  getNews(req, res, next) {
+    let page = req.query.page
     const options = {
       method: "GET",
       url: "https://api.jikan.moe/v4/schedules",
       params: {  
-        limit: "10",
+        // sfw: true,
+        // q: "naruto",
+        // order_by : "popularity",
+        // sort: "desc",
+        limit: 15,
+        page: 1,
       }
     };
+    if (page) {
+      options.params.page = page
+    }
+    console.log(options.params.page);
+    console.log(page);
+    console.log(req.query);
 
     axios
       .request(options)
       .then((response) => {
+        // console.log(response);
         res.status(200).json(response.data);
       })
       .catch((error) => {
