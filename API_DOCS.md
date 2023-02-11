@@ -556,3 +556,15 @@ _Response (200 - OK)_
     "totalPrice": "Rp 2.700.000,00"
 }
 ```
+
+### GLobal Error
+
+_Response (500 - Internal server error!)_
+
+```
+
+{
+"message": "Internal server error"
+}
+
+```
