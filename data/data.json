@@ -1,0 +1,34 @@
+{
+    "Events" : [
+        {
+            "name" : "Komik Fest",
+            "date" : "9 April 2023",
+            "location" : "Konoha",
+            "description" : "Perhelatan komik terbesar di dunia ninja"
+        },
+        {
+            "name" : "Festival Kuliner Jajanan Jepang",
+            "date" : "9 Mei 2023",
+            "location" : "San Andreas",
+            "description" : "Baxaar dan expo berbagai macam kuliner khas negeri samurai"
+        },
+        {
+            "name" : "Cosplay Attack On Titan",
+            "date" : "18 Februari 2024",
+            "location" : "Magelang",
+            "description" : "Lomba bagus bagusan kostum memperebutkan piala dari bapak Lord yang terhormat"
+        },
+        {
+            "name" : "Lomba J-Pop Fest",
+            "date" : "26 Juni 2023",
+            "location" : "Atlantis",
+            "description" : "Kompetisi Band bergenre J-POP yang pasti meriah sekali"
+        },
+        {
+            "name" : "Pelatihan Menggambar Manga",
+            "date" : "16 Juli 2023",
+            "location" : "Indonesia",
+            "description" : "Dalam rangka menyambut Hari Ulang Tahun Pak Kades yang ke 35"
+        }
+    ]
+}
