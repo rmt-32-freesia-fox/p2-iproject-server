@@ -1,24 +1,23 @@
 const { User } = require('../models')
 
-const baseUrl = process.env.BASEURL
-const client_redirect_url = process.env.CLIENT_REDIRECT_URL
+const baseUrl = process.env.BASEURL // This server's link
 
-// console.log(baseUrl, client_redirect_url, 'HAZEH');
+const client_redirect_url = process.env.CLIENT_REDIRECT_URL // Your deployed url to get access_token and use it to access server's endpoints
 
-const client_id = process.env.CLIENT_ID; // Your client id
-const client_secret = process.env.CLIENT_SECRET; // Your secret
-const server_key = process.env.SERVER_KEY
-const buffer = 'Basic ' + (new Buffer.from(client_id + ':' + client_secret).toString('base64'))
+const client_id = process.env.CLIENT_ID; // Your spotify client id
+
+const client_secret = process.env.CLIENT_SECRET; // Your spotify secret
+
+const server_key = process.env.SERVER_KEY // Your midtrans key
+
+const buffer = 'Basic ' + (new Buffer.from(client_id + ':' + client_secret).toString('base64')) // base64 data for spotify authorization process
 
 const axios = require('axios')
+
 const midtransClient = require('midtrans-client');
 
 
 class Controller {
-
-  static async get(req, res, next) {
-    res.send(req.query)
-  }
 
   static async redirect(req, res, next) {
     try {
@@ -34,17 +33,9 @@ class Controller {
           userId: id
         }
       })
-      // console.log(user, created);
-      // let {id: idi} = user
-      // let access_token = generateToken({ id }) 
-      // let status = (created) ? 201 : 200
-      // res.status(status).json({access_token})  
-      // console.log('access_tokenhaZeh', data, 'access_tokenhaZeh');
       res.redirect(client_redirect_url + '/?token=' + data)
-      // res.redirect(client_redirect_url + '/?token=' + data) 
     } catch (error) {
       next(error)
-      // console.log(error.response.data, 'error nich');
     }
   }
 
@@ -60,22 +51,18 @@ class Controller {
             grant_type: "authorization_code"
           },
           headers: {
-            // Authorization: 'Basic Mjk2OTRkOTNlMWQyNDUxOGFlYzM0NTUxZWQzNDljNWU6YmI2NTk2ZjkzMTkzNDA3OGIzMGY5OTNiYjM2YWI4Mzk=',
             Authorization: buffer,
             "Content-Type": 'application/x-www-form-urlencoded'
           }
         })
-      // console.log('trigger', req);
       return req
     } catch (error) {
-      // console.log(error, 'error gaesu');
       throw error
     }
   }
 
   static async getMidtransToken(req, res, next) {
     const { access_token } = req.headers
-
     try {
 
       let profile = await Controller.getProfile(access_token)
@@ -91,7 +78,7 @@ class Controller {
 
       let parameter = {
         "transaction_details": {
-          "order_id": "macnesa_" + Math.random(), // harus unique 
+          "order_id": "macSpotify_" + Math.random(), // harus unique 
           "gross_amount": 10000
         },
         "credit_card": {
@@ -106,24 +93,16 @@ class Controller {
 
       let transactionToken = request.token;
 
-      const updateDb = await User.update({ paymentToken: transactionToken }, {
+      await User.update({ paymentToken: transactionToken }, {
         where: {
           userId: id
         }
       })
-      // console.log(updateDb);
-
-      // trans action token
-      // console.log('transactionToken:',request); 
       res.status(201).json({ payment_token: transactionToken })
     } catch (error) {
       next(error)
-      // console.log(error);
     }
   }
-
-
-
 
   static async getProfile(access_token) {
     try {
@@ -137,7 +116,6 @@ class Controller {
         })
       return data
     } catch (error) {
-      // console.log(error);
       throw error
     }
   }
@@ -157,36 +135,8 @@ class Controller {
       res.status(200).json({ spotify: data, isPaid })
     } catch (error) {
       next(error)
-      // console.log(error, 'error gaes');
     }
   }
-  //   {
-  //     "country": "ID",
-  //     "display_name": "Mac",
-  //     "explicit_content": {
-  //         "filter_enabled": false,
-  //         "filter_locked": false
-  //     },
-  //     "external_urls": {
-  //         "spotify": "https://open.spotify.com/user/31agqd53jnrxrn6cz64zatuegxje"
-  //     },
-  //     "followers": {
-  //         "href": null,
-  //         "total": 1
-  //     },
-  //     "href": "https://api.spotify.com/v1/users/31agqd53jnrxrn6cz64zatuegxje",
-  //     "id": "31agqd53jnrxrn6cz64zatuegxje",
-  //     "images": [
-  //         {
-  //             "height": null,
-  //             "url": "https://i.scdn.co/image/ab6775700000ee8553e1c5f011cca9134d43fdf2",
-  //             "width": null
-  //         }
-  //     ],
-  //     "product": "free",
-  //     "type": "user",
-  //     "uri": "spotify:user:31agqd53jnrxrn6cz64zatuegxje"
-  // }
 
   static async myTopTracks(req, res, next) {
     const { limit } = req.query
@@ -205,7 +155,6 @@ class Controller {
       res.status(200).json(data)
     } catch (error) {
       next(error)
-      // console.log(error, 'error gaes');
     }
   }
 
@@ -226,7 +175,6 @@ class Controller {
       res.status(200).json(data)
     } catch (error) {
       next(error)
-      // console.log(error, 'error gaes'); 
     }
   }
 
@@ -247,7 +195,6 @@ class Controller {
       res.status(200).json(data)
     } catch (error) {
       next(error)
-      // console.log(error, 'error gaes'); 
     }
   }
 
@@ -268,14 +215,12 @@ class Controller {
       res.status(200).json(data)
     } catch (error) {
       next(error)
-      // console.log(error, 'error gaes'); 
     }
   }
 
   static async getTopGlobal(req, res, next) {
     const { access_token } = req.headers
     let url = `https://api.spotify.com/v1/playlists/37i9dQZEVXbMDoHDwVN2tF`
-    // let url = `https://api.spotify.com/v1/playlists/37i9dQZEVXbMDoHDwVN2tF/tracks?limit=10` 
 
     try {
       const { data } = await
@@ -289,7 +234,6 @@ class Controller {
       res.status(200).json(data)
     } catch (error) {
       next(error)
-      // console.log(error, 'error gaes'); 
     }
   }
 
@@ -297,35 +241,29 @@ class Controller {
   static async userSubscribed(req, res, next) {
     const { access_token, payment_token } = req.headers
     try {
-      let profile = await Controller.getProfile(access_token)
-      let { country, display_name, id } = profile
+      const { id: userId } = await Controller.getProfile(access_token)
 
-      let findUser = await User.findOne({
+      const { paymentToken } = await User.findOne({
         where: {
-          userId: id
+          userId
         }
       })
 
-      const { paymentToken } = findUser
-
-      console.log(paymentToken);
-      console.log(payment_token);
       if (payment_token !== paymentToken) throw { code: 403 }
 
       let subscribed = await User.update({ isPaid: true }, {
         where: {
-          userId: id
+          userId
         }
       })
+
       res.status(200).json({ message: 'subscribed' })
     } catch (error) {
       next(error)
-      // console.log(error, 'error gaes'); 
     }
   }
 
   static async downloadSong(req, res, next) {
-    const { access_token } = req.headers
     const { id } = req.params
     let url = `https://spotify-downloader.p.rapidapi.com/SpotifytrackDownloader?id=` + id
     try {
@@ -341,7 +279,6 @@ class Controller {
       res.status(200).json(data.link)
     } catch (error) {
       next(error)
-      // console.log(error, 'error gaes'); 
     }
   }
 }
