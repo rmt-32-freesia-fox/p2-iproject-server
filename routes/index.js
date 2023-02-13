@@ -1,10 +1,12 @@
 const { Controller } = require('../controllers')
-const { errorHandler,  auth } = require('../middlewares')
-const router = require('express').Router()  
+const { errorHandler, auth } = require('../middlewares')
+const router = require('express').Router()
 
 
 
-// router.get('/', Controller.get)
+router.get('/', (req, res, next) => {
+  res.send('root')
+})
 
 
 
