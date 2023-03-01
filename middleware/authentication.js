@@ -4,7 +4,7 @@ const { decodedToken } = require("../helpers/jwt");
 async function authentication(req, res, next) {
   try {
     let { access_token } = req.headers;
-
+    console.log(access_token);
     if (!access_token) {
       // dia harus ngirim token
       throw { name: "UnAuthentication" };

@@ -39,6 +39,11 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           notNull: { msg: "Password is required" },
           notEmpty: { msg: "Password is required" },
+          isValidPhone() {
+            if (this.password.length < 8) {
+              throw new Error(`Password Length Must Be more than 8`);
+            }
+          },
         },
       },
       role: {
@@ -55,6 +60,11 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           notNull: { msg: "PhoneNumber is required" },
           notEmpty: { msg: "PhoneNumber is required" },
+          isValidPhone() {
+            if (this.phoneNumber.length > 14) {
+              throw new Error(`PhoneNumber Length Must Be less than 14`);
+            }
+          },
         },
       },
       status: {

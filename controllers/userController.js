@@ -1,7 +1,7 @@
 const { User } = require("../models");
 const { comparePassword } = require("../helpers/bcrypt");
 const { generateToken } = require("../helpers/jwt");
-const { confirmationRegistered, confirmationSwitchStatus } = require("../helpers/nodemailer");
+const { confirmationRegistered, confirmationSubscribe } = require("../helpers/nodemailer");
 const midtransClient = require("midtrans-client");
 const { CLIENT_ID } = process.env;
 const { OAuth2Client } = require("google-auth-library");
@@ -54,6 +54,7 @@ class Controller {
           const access_token = generateToken({
             id: user.id,
           });
+          console.log(user);
           res.status(200).json({ id: user.id, access_token, username: user.username, role: user.role });
         }
       }
@@ -97,8 +98,9 @@ class Controller {
         id: user.id,
         status: user.status,
       });
+      console.log(user.dataValues.status);
 
-      res.status(code).json({ message, access_token, username: name, id: user.id, status: user.status });
+      res.status(code).json({ message, access_token, username: name, id: user.id, status: user.dataValues.status });
     } catch (error) {
       console.log(error);
       next(error);
@@ -131,6 +133,10 @@ class Controller {
           },
         };
 
+        const content = `Hi ${findUser.username}!, “Thank you for subscribing to gymster. Have a nice day. Don't forget the 5 stars too`;
+        const subject = `Information Gymster Member`;
+        confirmationSubscribe(findUser, content, subject);
+
         const midtransToken = await snap.createTransaction(parameter);
         res.status(201).json(midtransToken);
       }
@@ -151,7 +157,7 @@ class Controller {
       } else {
         const patchStatus = await users.update({ status: "Member" });
 
-        res.status(200).json({ message: patchStatus.username + "has been Member" });
+        res.status(200).json({ message: patchStatus.username + "has been Member", users });
       }
     } catch (error) {
       console.log(error);

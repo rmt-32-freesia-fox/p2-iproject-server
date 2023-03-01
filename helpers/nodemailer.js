@@ -25,9 +25,9 @@ function confirmationRegistered(payload, content, subject) {
   });
 }
 
-function confirmationSwitchStatus(payload, content, subject) {
+function confirmationSubscribe(payload, content, subject) {
   const mailOptions = {
-    from: "projectCashierApp@gmail.com",
+    from: "gymster.official1@gmail.com",
     to: payload.email,
     subject: subject,
     text: content,
@@ -44,5 +44,5 @@ function confirmationSwitchStatus(payload, content, subject) {
 
 module.exports = {
   confirmationRegistered,
-  confirmationSwitchStatus,
+  confirmationSubscribe,
 };

@@ -97,5 +97,27 @@ class Controller {
       next(error);
     }
   }
+
+  static async bmiCalculator(req, res, next) {
+    try {
+      const { age, weight, height } = req.query;
+
+      const options = {
+        method: "GET",
+        url: "https://mega-fitness-calculator1.p.rapidapi.com/bmi",
+        params: { weight: "100", height: "169" },
+        headers: {
+          "X-RapidAPI-Key": process.env.RapidAPIKey,
+          "X-RapidAPI-Host": process.env.RapidAPIHostBmi,
+        },
+      };
+      const result = await axios(options);
+      // console.log(result.data);
+      res.status(200).json(result.data.info);
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  }
 }
 module.exports = Controller;
