@@ -8,7 +8,12 @@ const port = process.env.PORT || 3000;
 const routes = require("./routers");
 const errHandler = require("./middleware/errHandler");
 
-// app.get("/", console.log("Hello"));
+app.get("/", (req, res) => {
+  res.status(200).json({
+    message: "Server is Live",
+    status: "OK",
+  });
+});
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
