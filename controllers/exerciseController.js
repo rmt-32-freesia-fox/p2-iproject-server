@@ -100,12 +100,12 @@ class Controller {
 
   static async bmiCalculator(req, res, next) {
     try {
-      const { age, weight, height } = req.query;
+      const { weight, height } = req.query;
 
       const options = {
         method: "GET",
         url: "https://mega-fitness-calculator1.p.rapidapi.com/bmi",
-        params: { weight: "100", height: "169" },
+        params: { weight: weight, height: height },
         headers: {
           "X-RapidAPI-Key": process.env.RapidAPIKey,
           "X-RapidAPI-Host": process.env.RapidAPIHostBmi,
