@@ -10,7 +10,7 @@ class MovieController {
                 method: 'GET',
                 url: 'https://imdb-top-100-movies.p.rapidapi.com/',
                 headers: {
-                    'X-RapidAPI-Key': 'fdfe930c64msh13a9fac771a121dp1277cajsn17e5d9e11748',
+                    'X-RapidAPI-Key': '0d15f04b38mshbbcfe8fc9c39467p1d788djsn683b07c5bcf9',
                     'X-RapidAPI-Host': 'imdb-top-100-movies.p.rapidapi.com'
                 }
             };
@@ -58,7 +58,7 @@ class MovieController {
                 method: 'GET',
                 url: `https://imdb-top-100-movies.p.rapidapi.com/${id}`,
                 headers: {
-                    'X-RapidAPI-Key': 'fdfe930c64msh13a9fac771a121dp1277cajsn17e5d9e11748',
+                    'X-RapidAPI-Key': '0d15f04b38mshbbcfe8fc9c39467p1d788djsn683b07c5bcf9',
                     'X-RapidAPI-Host': 'imdb-top-100-movies.p.rapidapi.com'
                 }
             };
