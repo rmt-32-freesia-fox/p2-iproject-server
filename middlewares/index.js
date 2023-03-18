@@ -33,8 +33,8 @@ async function auth(req, res, next) {
     const { access_token } = req.headers
     if (!access_token) throw { code: 401 }
 
-    const { id } = await Controller.getProfile(access_token)
-
+    const { id, country } = await Controller.getProfile(access_token)
+    
     const findUser = await User.findOne({
       where: {
         userId: id
@@ -42,7 +42,7 @@ async function auth(req, res, next) {
     })
     if (!findUser) throw { code: 401 }
     req.token = access_token
-
+    req.userCountry = country
     next()
   } catch (error) {
     next(error)

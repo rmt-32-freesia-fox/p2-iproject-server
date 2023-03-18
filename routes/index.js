@@ -24,7 +24,13 @@ router.get('/topArtists', Controller.myTopArtists)
 
 router.get('/recently', Controller.myRecentlyPlayed)
 
+router.get('/nowPlaying', Controller.myCurrentPlaying)
+
 router.get('/findSongs', Controller.findsomeSongs)
+
+router.get('/topTracksByArtist', Controller.getTopTracksByArtist)
+
+router.get('/tracksByTopOneTrack', Controller.getTracksRecommendationsByTopOneTrack)
 
 router.get('/topGlobal', Controller.getTopGlobal)
 
