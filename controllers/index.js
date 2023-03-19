@@ -218,7 +218,7 @@ class Controller {
   static async findsomeSongs(req, res, next) {
     const { limit, q } = req.query;
     const { access_token } = req.headers;
-    let url = `https://api.spotify.com/v1/search?q=${q}&type=track`;
+    let url = `https://api.spotify.com/v1/search?q=${q}&type=track&limit=2`;
     if (limit) url += `&limit=${limit}`;
     try {
       const { data } = await axios({
@@ -232,6 +232,61 @@ class Controller {
     } catch (error) {
       next(error);
     }
+  }
+  
+  
+  static async findSongsByAi (req, res, next) {
+    console.log(req.body); 
+        const { access_token } = req.headers; 
+    const strin = ["shabbos", "purim", "jewish pesach"]
+     
+      Promise.all(strin.map(strind => {
+        
+            const q = encodeURIComponent(strind);
+            let url = `https://api.spotify.com/v1/search?q=${q}&type=track&limit=2`;
+
+            return axios({
+            url,
+            method: 'get',
+            headers: {
+              Authorization: `Bearer ` + access_token,
+            }
+          }) 
+        
+      }))
+      .then(response => {
+        let result = []
+        response.forEach(each => {
+          each.data.tracks.items.forEach((each,index) => {  
+            result.push(each)
+          })
+        })
+        
+        
+        console.log(result, "simcha");
+        
+        res.status(200).json(result);
+        
+        
+      })
+      .catch(error =>  next(error))
+    
+    
+    // const { limit, q } = req.query;
+    // let url = `https://api.spotify.com/v1/search?q=${q}&type=track&limit=2`;
+    // if (limit) url += `&limit=${limit}`;
+    // try {
+    //   const { data } = await axios({
+    //     method: "get",
+    //     url,
+    //     headers: {
+    //       Authorization: `Bearer ` + access_token,
+    //     },
+    //   });
+    //   res.status(200).json(data);
+    // } catch (error) {
+    //   next(error);
+    // }
   }
 
   static async getTopGlobal(req, res, next) {
@@ -247,6 +302,42 @@ class Controller {
         },
       });
       res.status(200).json(data);
+    } catch (error) {
+      next(error);
+    }
+  }
+  
+  
+  
+  static async getTopLocal(req, res, next) {
+    const { access_token } = req.headers; 
+    const userCountry = new Intl.DisplayNames(['en'], {type: 'region'}).of(req.userCountry).replace(/\s+/g, '-'); //in english
+    
+    let url = `https://api.spotify.com/v1/search?type=playlist&q=Top%2050%20${userCountry}&limit=3`;
+    
+    try {
+      const { data } = await axios({
+        method: "get",
+        url,
+        headers: {
+          Authorization: `Bearer ` + access_token,
+        },
+      });
+      
+      const top50songPlaylistLink = data.playlists.items[0].href
+      
+      const { data: resuld } = await axios({
+        method: "get",
+        url: top50songPlaylistLink,
+        headers: {
+          Authorization: `Bearer ` + access_token,
+        },
+      });
+       
+      
+      // console.log(resuld) 
+       
+      res.status(200).json(resuld);
     } catch (error) {
       next(error);
     }

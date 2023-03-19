@@ -28,11 +28,15 @@ router.get('/nowPlaying', Controller.myCurrentPlaying)
 
 router.get('/findSongs', Controller.findsomeSongs)
 
+router.post('/findSongsByAi', Controller.findSongsByAi)
+
 router.get('/topTracksByArtist', Controller.getTopTracksByArtist)
 
 router.get('/tracksByTopOneTrack', Controller.getTracksRecommendationsByTopOneTrack)
 
 router.get('/topGlobal', Controller.getTopGlobal)
+
+router.get('/topLocal', Controller.getTopLocal)
 
 router.patch('/subcribed', Controller.userSubscribed)
 
