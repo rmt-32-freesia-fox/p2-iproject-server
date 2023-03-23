@@ -22,19 +22,23 @@ class Controller {
   static async redirect(req, res, next) {
     try {
       const { code } = req.query;
+      
+      
       const token = await Controller.secondCall(code);
       const data = token.data.access_token;
-
+      
       const request = await Controller.getProfile(data);
       const { id } = request;
-
+      
       let [user, created] = await User.findOrCreate({
         where: {
           userId: id,
         },
       });
+      
       res.redirect(client_redirect_url + "/?token=" + data);
     } catch (error) {
+      console.log(error, "moideh es hashem");
       next(error);
     }
   }
@@ -218,7 +222,8 @@ class Controller {
   static async findsomeSongs(req, res, next) {
     const { limit, q } = req.query;
     const { access_token } = req.headers;
-    let url = `https://api.spotify.com/v1/search?q=${q}&type=track&limit=2`;
+    // let url = `https://api.spotify.com/v1/search?q=${q}&type=track,album,playlist,artist&limit=2`;
+    let url = `https://api.spotify.com/v1/search?q=${q}&type=track&limit=30`;
     if (limit) url += `&limit=${limit}`;
     try {
       const { data } = await axios({

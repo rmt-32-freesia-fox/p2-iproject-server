@@ -52,5 +52,16 @@
 //   const countryName = displayNames.of(code); // mendapatkan nama negara dari kode negara
 // });
 
-console.log(new Intl.DisplayNames(['en'], {type: 'region'}).of("US")// membuat objek Intl.DisplayNames dengan bahasa Inggris dan jenis data region
-); // menampilkan hasil dalam format kode negara: nama negara
+// console.log(new Intl.DisplayNames(['en'], {type: 'region'}).of("US")// membuat objek Intl.DisplayNames dengan bahasa Inggris dan jenis data region
+// ); // menampilkan hasil dalam format kode negara: nama negara
+
+
+
+
+
+
+
+console.log("Basic " +
+new Buffer.from("79fab6b902af4bd6b4c192b808b8a074" + ":" + "8eb89806ce3c40f08d656e2363f9bbc1").toString("base64"));
+
+ 
